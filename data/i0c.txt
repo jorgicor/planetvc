@@ -1,0 +1,40 @@
+exits 1 1 0 0 ~
+new_path 2 11 ~
+add_path_point 4 11 ~
+add_path_point 4 9 ~
+add_path_point 6 9 ~
+add_path_point 6 11 ~
+add_path_point 8 11 ~
+add_path_point 8 9 ~
+add_path_point 10 9 ~
+add_path_point 10 11 ~
+add_path_point 12 11 ~
+add_path_point 10 11 ~
+add_path_point 10 9 ~
+add_path_point 8 9 ~
+add_path_point 8 11 ~
+add_path_point 6 11 ~
+add_path_point 6 9 ~
+add_path_point 4 9 ~
+add_path_point 4 11 ~
+add_path_point 2 11 ~
+new_path 6 6 ~
+add_path_point 4 6 ~
+add_path_point 6 6 ~
+new_path 11 5 ~
+add_path_point 12 5 ~
+add_path_point 11 5 ~
+spawn wasp 0 0 ldir ~
+set_path 0 0 128 1 ~
+spawn wasp 0 0 ldir ~
+set_path 0 3 128 1 ~
+spawn wasp 0 0 ldir ~
+set_path 0 6 128 1 ~
+spawn platform 7 6 0 4 ~
+set_path 1 0 64 1 ~
+spawn caterpillar 0 0 x ~
+set_path 2 1 64 1 ~
+spawn oxigen 7 10 ~
+spawn oxigen 7 3 ~
+spawn cosmonaut 0 11 14 11 0 5 14 4 0 ~
+.

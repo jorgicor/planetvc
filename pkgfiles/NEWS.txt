@@ -1,0 +1,22 @@
+2016-08-05
+
+	* Version 1.05
+
+	* The GNU/Linux package now includes executables for 32 and 64 bits,
+	  as well as a precompiled SDL2 library for 32 and 64 bits.
+	  'planetvc' is now a script that selects between the 32 or the
+	  64 bits executable. The executables and library have been compiled
+	  on Ubuntu 12.04.  Because of this, they require a GNU/Linux
+	  distribution with a GNU libc of version 2.15 at least.
+
+	* Updated the README.txt to reflect these changes.
+
+2016-07-29
+
+	* Version 1.04
+
+	* Reduced some collision boxes, people have a lot of problems with the
+	  first wasps.
+
+	* Fixes for Polish and Portuguese languages.
+

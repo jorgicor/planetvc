@@ -1,0 +1,9 @@
+exits 1 1 0 0 ~
+spawn draco 7 7 ldir SASB ~
+spawn lavatongue 5 10 SLSRSLR ~
+spawn draco 13 7 ldir SABSASAC ~
+spawn oxigen 9 2 ~
+spawn cosmonaut 0 7 14 4 0 7 14 4 0 ~
+.
+First dragon: jump every two shots.
+First dragon: jump after 3rd, 5th, 9th, etc.

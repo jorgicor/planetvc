@@ -1,0 +1,7 @@
+music jungle.xm ~
+exits 0 1 0 0 ~
+spawn oxigen 10 9 ~
+spawn stargate 0 8 1 -1 -1 -1 0 1 ~ 
+spawn stargate 4 1 2 0x41 0 -1 ~  
+spawn cosmonaut 2 11 14 11 6 4 14 4 0 ~
+.

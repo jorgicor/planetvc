@@ -1,0 +1,14 @@
+ESPAÑOL
+es
+FRANÇAIS
+fr
+ITALIANO
+it
+LSF (PEANO)
+il
+POLSKI
+pl
+PORTUGUÊS
+pt
+~
+This file has to be saved in utf8.

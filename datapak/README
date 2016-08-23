@@ -1,0 +1,39 @@
+This is README of planetvc-data package.
+
+Install
+=======
+
+We have two packages. One is planetvc, the other planetvc-data. 'planetvc'
+builds the engine of the game. 'planetvc-data' contains the graphics, music,
+levels, etc. of the game.  The game is separated in these two packages to allow
+GNU/Linux distributions to separate them between free, non-free, etc. planetvc
+is GPL, but planetvc-data is CC-NC-SA.
+
+Both packages come with a GNU build system, meaning that you can follow the
+instructions in INSTALL to build and install the packages (that is, use a
+simple './configure && make && make install' to install them).
+
+Without options, the executable will install in /usr/bin and the game data
+will install in /usr/share/planetvc-data . The executable expects the game
+data on that folder.
+
+You can change where to install the game by passing --prefix to the configure
+script. For example, using './configure --prefix=/usr/local' will install in
+/usr/local. But remember to pass the same prefix to the configure script of
+the 'planetvc-data' package, so it installs in the same places.
+
+License
+=======
+
+"The Planet of the vicious Creatures - Data" (c) 2016 Jorge Giner
+
+"The Planet of the Vicious Creatures - Data" is licensed under a
+Creative Commons Attribution-ShareAlike 4.0 International License
+
+You should have received a copy of the license along with this
+work (file COPYING).  If not, see
+<http://creativecommons.org/licenses/by-sa/4.0/>.
+
+-----------
+August 2016
+Jorge Giner

@@ -1,0 +1,28 @@
+This is version 4.3.13 of libxmp-lite. It's under MIT/Expat license. See
+README .
+
+This is not the original package bundled by the authors. For that, visit
+http://xmp.sourceforge.net .
+
+I embedded the package in the game, following the autotools guidelines. Things
+were working fine on Linux, but on Windows I had problems. The same happened
+when I tried to run "make dist" . These problems were due to my lack of
+knowledge only. So bassically I have taken all the .c and .h files, I have put
+them in this folder and then I compile them with the game. In the Makefile.am
+of the root folder you will see:
+
+AM_CPPFLAGS = -DLIBXMP_CORE_PLAYER -DLIBXMP_CORE_DISABLE_IT -DBUILDING_STATIC
+
+This is to enable or disable parts of the code that previously were done
+with the 'configure' script of the package.
+
+Apart from that I had to change some paths to some header files (for files
+that were prevously under a 'loaders' folder).
+
+Sorry.
+
+----
+
+August 2016
+Jorge Giner
+

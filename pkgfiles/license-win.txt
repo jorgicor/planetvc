@@ -1,0 +1,27 @@
+                     The Planet of the Vicious Creatures 
+
+                         * Full version for Windows *
+
+                        Copyright (c) 2016 Jorge Giner
+
+-------
+LICENSE
+-------
+
+This version of the Software for Windows operating systems cannot be
+distributed. You should have obtained a copy from the Author. If you transfer
+your copy to another person, you must not retain any copy. You may use and
+copy the Software. The file 'data.pak' and its contents are under the Creative
+Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License,
+included in the file 'ccncsa4.txt'.
+
+The file SDL2.dll comes with its own license. Please read 'README-SDL.txt'.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+

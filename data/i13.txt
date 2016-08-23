@@ -1,0 +1,21 @@
+exits 1 1 0 0 ~
+new_path 11 10 ~
+add_path_point 3 10 ~
+add_path_point 11 10 ~
+spawn bat 0 0 ldir ~
+set_path 0 0 128 1 ~
+new_path 11 9 ~
+add_path_point 3 9 ~
+add_path_point 11 9 ~
+spawn bat 0 0 ldir ~
+set_path 1 0 112 1 ~
+new_path 11 8 ~
+add_path_point 3 8 ~
+add_path_point 11 8 ~
+spawn bat 0 0 ldir ~
+set_path 2 0 96 1 ~
+spawn drop 7 4 32 1 ~
+spawn oxigen 2 10 ~
+spawn oxigen 11 5 ~
+spawn cosmonaut 0 10 14 10 0 3 14 5 1 ~
+.

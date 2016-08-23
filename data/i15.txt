@@ -1,0 +1,12 @@
+exits 1 1 0 0 ~
+spawn drop 3 7 16 1 ~
+new_path 8 7 ~
+add_path_point 10 7 ~
+add_path_point 8 7 ~
+spawn bat 8 7 rdir ~
+set_path 0 0 128 1 ~
+spawn spider 3 1 34 64 45 ~
+spawn oxigen 6 7 ~
+spawn oxigen 8 2 ~
+spawn cosmonaut 0 10 14 9 0 5 14 4 0 ~
+.

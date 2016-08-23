@@ -1,0 +1,26 @@
+exits 1 1 0 0 ~
+new_path 3 4 ~
+add_path_point 5 4 ~
+add_path_point 3 4 ~
+spawn platform 4 5 2 4 ~
+set_path 0 0 64 1 ~
+new_path 8 7 ~
+add_path_point 10 7 ~
+add_path_point 8 7 ~
+spawn platform 8 7 2 4 ~
+set_path 1 1 64 1 ~
+new_path 6 5 ~
+add_path_point 10 5 ~
+add_path_point 6 5 ~
+spawn fenix 8 5 rdir ~
+set_path 2 0 112 1 ~
+new_path 4 2 ~
+add_path_point 10 2 ~
+add_path_point 4 2 ~
+spawn fenix 8 5 rdir ~
+set_path 3 1 112 1 ~
+spawn oxigen 2 2 ~
+spawn cosmonaut 0 8 14 8 0 8 14 8 0 ~
+.
+Wait for the two birds to go to the right vertically synchronized
+and the lower cloud going left.

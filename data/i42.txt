@@ -1,0 +1,5 @@
+music win.xm ~
+fadein ~
+wait ~
+endstate ~
+.

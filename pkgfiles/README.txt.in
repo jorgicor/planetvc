@@ -1,0 +1,338 @@
+                               Johanna Brahe in
+                     The Planet of the Vicious Creatures
+
+                                    v@PACKAGE_VERSION@
+                        Copyright (c) 2016 Jorge Giner
+
+        1.  Introduction
+        2.  How to play
+        3.  Game-pads
+        4.  Scoring
+        5.  Languages
+        6.  Windows full version
+        7.  Windows demo version
+        8.  GNU/Linux version
+        9.  Other files
+        10. Requirements
+        11. Modifying the game
+        12. Credits
+        13. Contact
+
+---------------
+1. Introduction
+---------------
+
+Portals were found on Earth long ago. We don't know who made them, but we
+managed to make them work, as we discovered that they can teleport us to a
+place were other portal exists. But to come back, we need to find a portal in
+the destination connected to the original.
+
+We needed a special group of astronauts willing to take the risks, and Johanna
+Brahe always succeeded. So after we discovered a new destination, Gliese 581,
+appropriate in terms of gravity, geology and atmosphere, we offered her the new
+mission, and she accepted.
+
+--------------
+2. How to play
+--------------
+
+Side note: You can switch between full screen and a windowed mode by pressing
+Alt + Enter at any time.
+
+By default, you can move with the arrow keys of your keyboard:
+
+ARROW UP    - JUMP
+ARROW DOWN  - CROUCH
+ARROW LEFT  - GO LEFT
+ARROW RIGHT - GO RIGHT
+
+You can press simultaneously UP and LEFT/RIGHT to jump in that direction.
+
+Your play area is a single screen level. Always, to get to another level, you
+need to take at least one oxygen bubble that you will find floating in the
+air.
+
+When you enter a level, your first job is to spot where the oxygen bubble is,
+and think how you can reach it, using platforms and avoiding the vicious
+creatures of the planet. If they touch you, you will be in serious peril, as
+they can open a breach on your space suit. Don't fall into the water or into
+the lava, this is mortal!
+
+When you reach an active portal, you can travel through it by walking to their
+center (not jumping).
+
+If you think that you have made wrong moves and you are in a situation where
+you think you can't succeed, you can press the 'RESTART' key, which defaults
+to your keyboard key SPACE, to restart a level from the same point you
+entered it. This way you can think again and try to learn the patterns without
+losing any life. If you have been touched by a creature, or you fell into the
+water or water, you can restart as well, but a life will be already lost.
+
+No level is impossible, you have to think before acting and, of course, you
+have to practice to train your skills. Little by little you will learn the
+patterns and the first levels will seem to you very easy compared to the first
+times you played, and you will finish them without thinking.
+
+To help you try, you can use the 'PRACTICE MODE'. This mode is activated when
+you press the number '0' (zero) on your keyboard. The level will restart, in
+the same way as if you pressed 'RESTART', but this time, although you can
+die, you will not lose any life. So you can try all the times you want until
+you learn the patterns and master the jumps.
+
+But in 'PRACTICE MODE' you can't pass to the next level. You will need to end
+the 'PRACTICE MODE' by pressing '0' again, and finish the level normally.
+
+In any case, if you find a level to be very difficult so you think it is even
+impossible, you can always go to the game menu and select OPTIONS - DEMO. Here
+you can see how every level in the game can be finished.
+
+The game is difficult, but we ensure you that it can be finished. If other
+people have done it, you can do it. Practice little by little each day and you
+will see how you make progress.
+
+                "YOU WANT FAME... WELL, FAME COSTS. AND RIGHT
+                 HERE IS WHERE YOU START PAYING... IN SWEAT!"
+
+------------
+3. Game-pads
+------------
+
+The game should work with game-pads. Use the digital or analog pads to move.
+The rest of buttons are (you will need to find them in a compatible game-pad):
+
+                        Xbox game-pad   Playstation game-pad
+
+Jump                    A               Cross
+Restart/Skip text       B               Circle
+Practice mode           X               Square
+In game menu/ESC        Y/START         Triangle/START/OPTIONS
+
+The left and right buttons (the ones close to the left and right triggers) can
+be used to crouch as well.
+
+----------
+4. Scoring
+----------
+
+When you are playing, you can see in the bottom right corner the number of
+levels you finished and the total you need to win. When you die or finish the
+game, you will be able to put your initials in the score table of the game!
+
+------------
+5. Languages
+------------
+
+The game comes in English, Spanish, French, Portuguese, Italian, Polish and
+Latino sine flexio. You can change the language in the main menu.
+
+If you would like the game in your language, you can traslate it if you want
+and I will add the translation to the game. I can send you the text file.
+There are aprox. 20 sentences and 20 loose words. I will put you in the
+credits. The only restriction is that at this moment I can only support new
+translations for languages that use the characters already in the game, plus
+German characters and Russian (Cyrillic) characters. For other languages,
+please let me know first.
+
+-----------------------
+6. Windows full version
+-----------------------
+
+Run the game with planetvc.exe .
+
+The files in the Windows full version are:
+
+README.txt      This file.
+NEWS.txt        Latest changes.
+FAQ.txt         Frequently asked questions.
+planetvc.exe    Game executable.
+data.pak        Game data.
+license.txt     License.
+ccncsa4.txt     Creative Commons BY-NC-SA 4 license.
+SDL2.dll        Simple DirectMedia Layer library, version 2.
+README-SDL.txt  README for SDL2.dll.
+
+-----------------------
+7. Windows demo version
+-----------------------
+
+The files in the Windows demo version are:
+
+README.txt      This file.
+NEWS.txt        Latest changes.
+FAQ.txt         Frequently asked questions.
+planetvc.exe    Game executable.
+data.pak        Demo game data.
+license.txt     License.
+ccncnd4.txt     Creative Commons BY-NC-ND 4 license.
+SDL2.dll        Simple DirectMedia Layer library, version 2.
+README-SDL.txt  README for SDL2.dll.
+
+The demo version only features the first 16 levels of the game. When you reach
+the last level you will return to the main menu.
+
+The full version of the game features 18 additional levels in two different
+environments: a cavern environment and a lava environment. In the demo
+version, if you go to OPTIONS - DEMO, you can see the 16 levels of the demo
+plus one level of each of the two additional environments.
+
+--------------------
+8. GNU/Linux Version
+--------------------
+
+README.txt      This file.
+NEWS.txt        Latest changes.
+FAQ.txt         Frequently asked questions.
+planetvc        Script to run the game.
+data.pak        Game data.
+license.txt     License.
+ccncsa4.txt     Creative Commons BY-NC-SA 4 license.
+README-SDL.txt  README for SDL2 library.
+pvc32           32 bits game executable.
+pvc64           64 bits game executable.
+x86/            Contains a precompiled 32 bits SDL2 library.
+x86_64/         Contains a precompiled 64 bits SDL2 library.
+
+Run the game using the script 'planetvc'. The script will select the correct
+executable depending on your system: if you are on a 64 bits system it will
+choose 'pvc32', otherwise it will choose pvc64.
+
+The script gives priority to the precompiled SDL2 library bundled with the
+game (in the folders x86/ and x86_64/). These libraries will be selected
+instead of the ones on your system. If you want to give priority to the SDL2
+library on your system, run pvc32 or pvc64 directly.
+
+The game requires a glibc at version 2.15 at least.
+I have tested the game in Ubuntu 12.04 and Slackware 14.1, on 32 and 64 bits.
+Both distributions, if they have the full updates, meet the glibc requisite.
+
+IMPORTANT: The GNU/Linux version is not supported! I can't guarantee that it
+will work on the millions of distributions out there. Of course, you can send
+me bug reports and, if time permits I can try to solve the problems if I know
+how!
+
+--------------
+9. Other files
+--------------
+
+The game will create this little files on your system:
+
+prefs.txt       Selected game keys and language.
+hiscore.txt     Table with scores.
+log.txt         Game log, to spot errors. (It won't be more than 8 KB).
+log.txt.1       Backup of the last log.txt. (It won't be more than 8 KB).
+
+- On Windows Vista and up, these files will be created in:
+
+        C:\Users\[username]\AppData\Roaming\jorgicor\planetvc
+
+  or, on Windows XP in:
+
+	C:\Documents and Settings\[username]\Application Data\jorgicor\planetvc
+
+  where [username] is your user name on Windows. Note that 'Users', 'AppData',
+  and 'Application Data' can be translated on your system to your local
+  language.
+
+- On Linux, these will be in:
+
+        /home/[username]/.local/share/jorgicor/planetvc/"
+
+  where [username] is your user name on Linux.
+
+You can remove the 'planetvc' folder on any system if you don't plan to play
+the game again.
+
+If you want to reset the table of scores, you only need to remove the file
+'hiscore.txt'.
+
+----------------
+10. Requirements
+----------------
+
+Windows
+-------
+
+Windows XP, Vista, 7, 8, 8.1, 10
+1 megabyte of hard disk aprox.
+15 megabytes of RAM aprox.
+
+GNU/Linux
+---------
+
+GNU libc with version 2.15 at least.
+1 megabyte of hard disk aprox.
+15 megabytes of RAM aprox.
+
+Note: The game consumes 5% to 8% of CPU on a computer from 2003.
+
+----------------------
+11. Modifying the game
+----------------------
+
+In the full version of the game, the file 'data.pak' is no more than a ZIP
+file. You can modify and share it respecting the license.  The game is able to
+read the files from inside the 'data.pak' or you can extract the files and the
+game will read them individually. To make this work, if normally the game
+follows this structure:
+
+planetvc.exe
+data.pak
+
+If you want to work with the extracted files, you have to unzip 'data.pak'
+into a folder named 'data'. So the final structure will be:
+
+planetvc.exe
+data.pak
+data\
+
+And inside the folder data\ will be the files that were inside 'data.pak'.
+
+Finally, you have to remove 'data.pak' (or better rename it) because the game
+prioritizes the pak over individual files.
+
+If you want to modify the files and make a new 'data.pak' for sharing
+(following the license) you have to create a new ZIP file named 'data.pak'
+with all the files inside the folder data\ without compression, that is,
+telling your ZIP software to only store the files. Do not add the folder data\
+to the ZIP file, just the files inside it.
+
+I don't provide right now documentation on how to modify the game or write new
+levels. You will have to find out by yourself. If you are very interested or
+have questions, fell free to write me (I understand Spanish, English and some
+Italian). I'll be glad to answer you when time permits.
+
+-----------
+12. Credits
+-----------
+
+Jorge Giner Cordero, for graphics, music and coding, and translation to LSF.
+Ana Catarina Ribeiro Dias Alves, for the Portuguese translation.
+Anna Jakubiec, for the French and Polish translations.
+Fabio Tricarico for the Italian translation.
+
+THANKS TO ALL THE TRANSLATORS FOR THE HARD WORK!
+
+Thanks to Anna Jakubiek and Antonio Vicente Bordería Giner for the English
+corrections.
+
+Thanks to Angelo Mendola for other language corrections.
+
+THANKS TO ALL THE FRIENDS WHO TESTED THE GAME!
+
+-----------
+13. Contact
+-----------
+
+For bug reports or to praise the author, contact Jorge Giner Cordero:
+
+http://jorgicor.sdfeu.org
+jorge.giner@hotmail.com
+
+The game, and (I hope) future games, can be found at:
+
+itch.io (jorgicor)
+gamejolt.com (jorgicor)
+
+-----
+ END
+-----

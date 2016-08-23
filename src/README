@@ -1,0 +1,171 @@
+This is README of planetvc package.
+
+Install
+=======
+
+We have two packages. One is planetvc, the other planetvc-data. 'planetvc'
+builds the engine of the game. 'planetvc-data' contains the graphics, music,
+levels, etc. of the game.  The game is separated in these two packages to allow
+GNU/Linux distributions to separate them between free, non-free, etc. planetvc
+is GPL, but planetvc-data is CC-NC-SA.
+
+Both packages come with a GNU build system, meaning that you can follow the
+instructions in INSTALL to build and install the packages (that is, use a
+simple './configure && make && make install' to install them).
+
+Without options, the executable will install in /usr/bin and the game data
+will install in /usr/share/planetvc-data . The executable expects the game
+data on that folder.
+
+You can change where to install the game by passing --prefix to the configure
+script. For example, using './configure --prefix=/usr/local' will install in
+/usr/local. But remember to pass the same prefix to the configure script of
+the 'planetvc-data' package, so it installs in the same places.
+
+License
+=======
+
+The package is under the GPL v3 license (see COPYING).
+
+But some parts of the source are under Expat/MIT license: source code in
+/cbase, /kernel, /gamelib and /libxmp-lite.
+
+Configure options
+=================
+
+--enable-sdl-datadir
+
+	By default the executable is compiled to look for the data in
+$(datadir)/planetvc-data, where datadir is by default /usr/share or whatever
+you used when using the configure script. To make the program look for the
+data in the places where the SDL library tells us instead, we use this flag.
+For example, for GNU/Linux and Windows, if configuring using this flag, the
+game executable will try to open the data in the same folder of the
+executable. (This is used to make standalone binary distributions).
+
+--enable-x11
+
+	This will link with the X11 library. If you use XDM as the login
+manager, the program will refuse to start with: 'XDM authorization key matches
+an existing client!'.
+	One option is to enable ...
+	Another option is to enable this flag to link with X.
+	The solution used in the standalone binary distributions of the game
+has been to compile a patched version of the SDL 2 library to bypass this, and
+bundle it with the game, so the game does not depend on any version of the X
+library. But if you are compiling for yourself, then there is no problem in
+using this flag if you get that XDM error.
+
+--enable-debugmode
+
+	Adds some debugging for synchronization of dragons and lava tongues.
+And makes the game to start in windowed mode. Nothing more.
+
+--enable-demoversion
+
+	Compiles a demo version of the program. Only useful for the author.
+Will require a demo version of the game data.
+
+Portability
+===========
+
+We assume Windows, Linux, BSD's or Mac little endian.
+
+We assume char 8 bits, short 16 bits, int 32 bits.
+
+For now we don't use long: on a 32 bit machine, it is 32 bits. But on a 64 bit
+machine, it is 32 bits on Windows but 64 bits on Linux. If we are in the need
+for a 64 bit data type, we will see in the future.
+
+libxmp-lite
+===========
+
+The source code of libxmp-lite is embedded. Its license is MIT.  It is used to
+play .MOD tracker files.
+
+Some of the compilation flags that we use in Makefile.am AM_CPPFLAGS are for
+the use of this library only:
+
+AM_CPPFLAGS = -DLIBXMP_CORE_PLAYER -DLIBXMP_CORE_DISABLE_IT -DBUILDING_STATIC
+
+Compiling on Windows
+====================
+
+Install cygwin with i686-w64-ming32-gcc, bc.
+
+Go to libsdl.org and download the development libraries for mingw.
+
+Inside cygwin terminal and inside the sdl libraries folder type 'make native':
+this will install the library.
+
+Then compile the project with:
+./configure --host=i686-w64-mingw32 --enable-sdl-datadir
+make
+
+For developers: debugging the program
+=====================================
+
+* * * * 
+
+ SDL gives a lot of memory leaks when using this methods, so it is not useful.
+
+* * * *
+
+On a GNU/Linux system, you can call configure like this:
+
+./configure CPPFLAGS="-DDEBUG"
+
+This will compile the program with memory leaks detection support .
+
+To check for memory leaks, first you have to export MALLOC_TRACE with a
+name of the file that will contain the log for the leaks, and then call the
+mtrace tool that should be installed in your system if you have the GNU C
+compiler and the GNU libc.
+
+You can make a quick script for this on the top level directory of the
+distribution, to run the game and see the leaks if any in one shot:
+
+#!/bin/sh
+export MALLOC_TRACE=./leaks
+./planetvc
+mtrace ./planetvc leaks
+
+Call it 'run.sh' and and then make it executable:
+
+chmod +x run.sh
+
+Now you can run the game with:
+
+./run.sh
+
+And when it closes you will see the memory leaks info, if any.
+
+Debugging and CORE file
+=======================
+
+When the program stops due to an segmentation fault or an assertion failing,
+a core dump file should be generated and you can use it with gdb to debug.
+
+If it is not generated, maybe is due to your current shell limits.
+
+Run 'ulimit -a' to know the current active limits. If core file size is 0,
+run 'ulimit -c unlimited' to allow the creation of the core file.
+
+The core file will be in the process working directory.
+
+The name of the file is configured in the system. Look in
+/proc/sys/kernel/core_pattern and /proc/sys/kernel/core_uses_pid. These two
+specify the name of the core file and if the pid of the process is appended to
+the file name. Note that the name can be a path. For example:
+
+mkdir -p /var/core
+echo "/var/core/core" > /proc/sys/kernel/core_pattern
+echo 1 > /proc/sys/kernel/core_uses_pid
+
+This will create the core file in /var/core with the name 'core' and the pid of
+the process appended.
+
+----
+
+August 2016
+Jorge Giner

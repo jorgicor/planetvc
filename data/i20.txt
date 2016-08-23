@@ -1,0 +1,6 @@
+music lava.xm ~
+exits 0 1 0 0 ~
+spawn stargate 4 1 5 0 0 -1 0 1 ~
+spawn oxigen 10 6 ~
+spawn cosmonaut 6 4 14 7 6 4 14 7 0 ~
+.

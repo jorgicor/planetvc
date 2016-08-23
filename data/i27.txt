@@ -1,0 +1,7 @@
+exits 1 1 0 0 ~
+spawn lavashot 3 12 0 30 -932 12 ~
+spawn lavashot 9 12 1 17 -864 16 ~
+spawn drop 8 5 8 0 ~
+spawn oxigen 12 9 ~
+spawn cosmonaut 0 10 14 9 4 3 14 9 0 ~
+.

@@ -1,0 +1,25 @@
+exits 1 1 0 0 ~
+new_path 2 2 ~
+add_path_point 5 2 ~
+add_path_point 8 2 ~
+add_path_point 11 2 ~
+add_path_point 2 2 ~
+new_path 11 2 ~
+add_path_point 8 2 ~
+add_path_point 5 2 ~
+add_path_point 2 2 ~
+add_path_point 11 2 ~
+spawn moth 0 0 ~
+set_path 0 0 128 1 ~
+spawn moth 0 0 ~
+set_path 0 1 64 1 ~
+spawn moth 0 0 ~
+set_path 1 0 64 1 ~
+spawn moth 0 0 ~
+set_path 1 1 128 1 ~
+spawn grasshopper 12 11 SLSLRSRU ~
+spawn grasshopper 2 11 RSURSLLRSUL ~
+spawn oxigen 5 3 ~
+spawn oxigen 7 10 ~
+spawn cosmonaut 0 11 14 11 0 5 14 5 0 ~
+.

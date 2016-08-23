@@ -1,0 +1,10 @@
+Intro
+=====
+
+This program takes a zip file takes the signatures of the central directory
+headers and obfustates them: each signature is 4 bytes, we exchange the lower
+4 bits and higher 4 bits of each byte.
+
+-----------
+August 2016
+Jorge Giner

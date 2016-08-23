@@ -1,0 +1,53 @@
+#!/bin/sh
+
+# This script takes all files inside data/, optimizes some of them, and
+# generates a data.pak inside datapak/ with all files zipped without
+# compression.
+# It needs ImageMagick, bc and zip installed.
+# It needs to create a temporary folder datapak.tmp/ .
+
+make_data () {
+	for fd in "$datad"/*.bmp; do
+		f=`basename $fd`
+		origsize=$(stat -c%s $fd)
+		ncolors=$(identify -format %k $fd)
+		convert $fd -colors $ncolors BMP3:"$buildd"/$f
+		newsize=$(stat -c%s "$buildd"/$f)
+		percent=`echo "$newsize*100/$origsize" | bc`
+		if [ $newsize -lt $origsize ]; then
+			echo "File $f (ncolors $ncolors) will be $percent% of original"
+		else
+			cp $fd "$buildd"
+		fi
+	done
+	cp "$datad"/*.txt "$buildd"
+	cp "$datad"/*.xm "$buildd"
+	cp "$datad"/*.wav "$buildd"
+}
+
+confirm () {
+	while true; do
+		read -p "${1:-Continue?} [y/n]: " yn
+		case $yn in
+			[Yy]* ) return 0 ; break ;;
+			[Nn]* ) return 1 ; break ;;
+		*) echo "Please answer yes or no." ;;
+		esac
+	done
+}
+
+srcd=`dirname "$0"`
+datad="$srcd/data"
+datapakd="$srcd/datapak"
+buildd=data.build
+if [ -d "$buildd" ]; then
+	echo '****** WARNING! ******'
+	echo We need a temporary folder named $buildd here,
+	echo but it already exists.
+	confirm "Folder $buildd will be removed now, continue?" || exit 0
+	rm -r "$buildd"
+fi
+mkdir -p "$buildd"
+make_data
+zip -FS -j -Zstore "$datapakd"/data.pak "$buildd"/*
+rm -r "$buildd"

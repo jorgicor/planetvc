@@ -1,0 +1,23 @@
+exits 1 1 0 0 ~
+new_path 11 7 ~
+add_path_point 2 7 ~
+add_path_point 11 7 ~
+new_path 7 12 ~
+add_path_point 10 12 ~
+add_path_point 7 12 ~
+new_path 2 12 ~
+add_path_point 4 12 ~
+add_path_point 2 12 ~
+spawn platform 0 0 0 4 ~
+set_path 0 0 48 1 ~
+spawn platform 6 1 1 4 ~
+spawn drop 6 2 16 0 ~
+spawn drop 8 2 8 0 ~
+spawn caterpillar 0 0 x ~
+set_path 1 0 128 1 ~
+spawn caterpillar 0 0 x ~
+set_path 2 0 128 1 ~
+spawn oxigen 7 3 ~
+spawn oxigen 7 9 ~
+spawn cosmonaut 0 11 14 11 0 5 14 4 0 ~
+.

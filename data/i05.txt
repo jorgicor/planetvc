@@ -1,0 +1,36 @@
+exits 1 1 0 0 ~
+new_path 11 9 ~
+add_path_point 9 9 ~
+add_path_point 11 9 ~
+spawn platform 11 9 0 4 ~
+set_path 0 0 64 1 ~
+new_path 4 9 ~
+add_path_point 6 9 ~
+add_path_point 4 9 ~
+spawn platform 0 0 0 4 ~
+set_path 1 0 64 1 ~
+new_path 4 6 ~
+add_path_point 5 6 ~
+add_path_point 4 6 ~
+spawn platform 0 0 0 4 ~
+set_path 2 1 64 1 ~
+new_path 7 3 ~
+add_path_point 9 3 ~
+add_path_point 7 3 ~
+spawn platform 0 0 0 4 ~
+set_path 3 0 64 1 ~
+new_path 6 3 ~
+add_path_point 10 7 ~
+add_path_point 6 3 ~
+spawn wasp 0 0 rdir ~
+set_path 4 0 96 1 ~
+new_path 1 0 ~
+add_path_point 4 0 ~
+add_path_point 1 0 ~
+spawn wasp 0 0 ldir ~
+set_path 5 0 64 1 ~
+spawn lavatongue 8 10 SRLSRSSRSL ~
+spawn oxigen 11 1 ~
+spawn oxigen 6 12 ~
+spawn cosmonaut 0 11 14 11 0 4 14 5 0 ~
+.

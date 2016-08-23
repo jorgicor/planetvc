@@ -1,0 +1,88 @@
+                               Johanna Brahe in
+                     The Planet of the Vicious Creatures
+
+                        Copyright (c) 2016 Jorge Giner
+
+--------------------------------------
+FREQUENTLY ASKED QUESTIONS (FAQ v1.01)
+--------------------------------------
+
+        1. Which is the language LSF (PEANO) in the game?
+        2. Why is the astronaut in the game called Johanna Brahe?
+        3. What is Gliese 581?
+        4. How can the game occupy only 1 megabyte?
+        5. Where did the author take inspiration?
+        6. Which is the game palette?
+
+1. Which is the language LSF (PEANO) in the game?
+-------------------------------------------------
+
+Latino sine flexio. It is an international auxiliary language, proposed by
+Giuseppe Peano first in 1903. As everyone in the universities used Latin, and
+everyone had a Latin dictionary, he proposed to use a simplified version of it
+for International communication. This were previous to the First and Second
+World Wars. (After these wars, English has become the dominant language for
+science and international communication).
+
+The simplification consists mainly in using the ablative of all the words, and
+use always the imperative for the verbs.
+
+Giuseppe Peano founded the "Academia pro Interlingua", and the language was
+called 'Interlingua' for some time. Don't confuse it with the language
+'Interlingua' that exists today with the assigned ISO code 'ia'. This new
+'Interlingua' uses the name with permission of the "Academia pro Interlingua".
+
+The original Interlingua used the Latin vocabulary, but always trying to
+select the words that ended in the English language (with priority) and in
+French, Spanish, Italian, Portuguese, German and Russian languages.
+
+You can read more here:
+
+https://sites.google.com/site/latinosineflexio/
+
+2. Why is the astronaut in the game called Johanna Brahe?
+---------------------------------------------------------
+
+To praise Johannes Kepler and Tycho Brahe.
+
+3. What is Gliese 581?
+----------------------
+
+Correctly, Gliese 581 g. An actual planet orbiting the red dwarf Gliese 581.
+It would be near the habitable zone of the star. Read more on Wikipedia.
+
+4. How can the game occupy only 1 megabyte?
+-------------------------------------------
+
+First, the game has a resolution of 256x224 pixels, which was common in arcade
+games. This requires little space for graphics.
+
+Second, because it is done by hand, so you, the final player, have the least
+resources consumed in your computer. The author did not use any game making
+tool, so he knows exactly what goes into the program.
+
+The author philosophy is minimalism. He only used the tools he needed for the
+job: the GNU C compiler and the SDL library. This is about 60 MB in his
+computer. He didn't use any game making tool or compiler that installs in his
+computer gigabytes. The author used a 13 years old computer.
+
+Please read:
+
+"A plea for lean software", by Niklaus Wirth
+https://www.inf.ethz.ch/personal/wirth/Articles/LeanSoftware.pdf
+
+5. Where did the author take inspiration?
+-----------------------------------------
+
+Gameplay is based on "Abu Simbel, Profanation", by Dinamic, 1985. The killing
+drops and hard gameplay comes from there.
+
+Portals, of course from the film "Stargate", 1994.
+
+The title of the game tries to mimic pulp science fiction.
+
+6. Which is the game palette?
+-----------------------------
+
+The game uses only the 27 colors that the Amstrad CPC computer was capable of.
+

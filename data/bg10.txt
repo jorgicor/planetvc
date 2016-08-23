@@ -1,0 +1,3 @@
+stargate 1 7
+stargate 4 1
+.

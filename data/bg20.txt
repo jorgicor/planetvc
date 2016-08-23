@@ -1,0 +1,12 @@
+planet 12 2
+star1 1 5
+star1 2 9
+star1 3 2
+star1 4 8
+star1 6 4
+star1 9 1
+star1 9 6
+star1 11 10
+star1 13 8
+stargate 4 1
+.

@@ -1,0 +1,8 @@
+music cavern.xm ~
+exits 0 1 0 0 ~
+spawn oxigen 10 11 ~
+spawn oxigen 13 5 ~
+spawn stargate 1 7 4 0x20 5 6 ~ 
+spawn stargate 4 1 7 0 0 -1 0 3 ~ 
+spawn cosmonaut 3 10 14 10 6 4 14 5 2 ~
+.

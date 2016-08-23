@@ -1,0 +1,25 @@
+exits 1 1 0 0 ~
+new_path 4 12 ~
+add_path_point 10 12 ~
+add_path_point 4 12 ~
+new_path 2 11 ~
+add_path_point 6 11 ~
+add_path_point 2 11 ~
+new_path 2 6 ~
+add_path_point 2 7 ~
+add_path_point 6 7 ~
+add_path_point 6 4 ~
+add_path_point 2 4 ~
+add_path_point 2 6 ~
+spawn caterpillar 4 12 x ~
+set_path 0 0 64 1 ~
+spawn caterpillar 2 11 flipv ~
+set_path 1 0 96 1 ~
+spawn wasp 0 0 ldir ~
+set_path 2 0 192 1 ~
+spawn wasp 0 0 ldir ~
+set_path 2 3 192 1 ~
+spawn oxigen 12 11 ~
+spawn oxigen 4 3 ~
+spawn cosmonaut 0 11 14 11 0 8 14 5 0~
+.

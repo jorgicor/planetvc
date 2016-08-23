@@ -1,0 +1,11 @@
+music menu.xm ~
+spawn spider 4 1 42 16 45 ~
+spawn spider 10 1 48 32 45 ~
+spawn deadcosmo 7 10 ~
+textfc 0 4 32 HI-SCORE~
+spawn hiscore 0 9 ~
+wait_hiscore ~
+spawn gameover 0 4 ~
+wait ~
+endstate ~
+.

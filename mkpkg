@@ -1,0 +1,276 @@
+#!/bin/sh
+
+make_data_dir () {
+	cd $datadir
+	for f in *.bmp; do
+		origsize=$(stat -c%s $f)
+		ncolors=$(identify -format %k $f)
+		convert $f -colors $ncolors BMP3:"$databuilddir"/$f
+		newsize=$(stat -c%s "$databuilddir"/$f)
+		percent=`echo "$newsize*100/$origsize" | bc`
+		if [ $newsize -lt $origsize ]; then
+			echo "File $f (ncolors $ncolors) will be $percent% of original"
+		else
+			cp $f "$databuilddir"/$f
+		fi
+	done
+	cp *.txt "$databuilddir"
+	cp *.xm "$databuilddir"
+	cp *.wav "$databuilddir"
+	cd $startdir
+}
+
+pkg_full_data () {
+	zip -FS -Zstore -j "$basedir"/data.pak "$databuilddir"/*
+}
+
+# patches the data dir with demo data
+demoize_data_dir () {
+	cp "$pkgfilesdir"/demo/init.txt "$databuilddir"
+	cp "$pkgfilesdir"/demo/i43.txt "$databuilddir"
+
+	cd "$databuilddir"
+	rm r1[0-2].txt i1[0-2].txt \
+		r1[4-8].txt i1[4-8].txt \
+		r20.txt i20.txt \
+		r2[2-8].txt i2[2-8].txt
+	rm demo_1[4-7].txt demo_19.txt demo_20.txt \
+		demo_2[2-9].txt \
+		demo_3?.txt demo_4?.txt
+	rm r4[1-2].txt i4[1-2].txt
+	rm bg10.txt bg18.txt
+	rm bg20.txt bg28.txt
+	rm bg42.txt
+	mv demo_18.txt demo_14.txt
+	mv demo_21.txt demo_15.txt
+	rm lavashot.bmp lavashot.wav
+	rm spider.bmp
+	rm fish.bmp fishshot.bmp fishshot.wav
+	rm end.bmp win.xm cavern.xm lava.xm
+	cd "$startdir"
+}
+
+pkg_demo_data () {
+	zip -FS -Zstore -j "$basedir"/demodata.pak "$databuilddir"/*
+	"$pakcloakbuilddir"/pakcloak "$basedir"/demodata.pak "$basedir"/demodata-cloak.pak
+}
+
+make_pakcloak () {
+	echo "Building pakcloak..."
+	cd "$pakcloakbuilddir"
+	"$pakcloakdir"/configure && make
+	cd $startdir
+}
+
+check_tree () {
+	mkdir -p "$bundledir"
+	mkdir -p "$srcbuilddir"
+	mkdir -p "$pakcloakbuilddir"
+	mkdir -p "$linuxdir"/bin/x86
+	mkdir -p "$linuxdir"/bin/x86_64
+	mkdir -p "$windir"
+	mkdir -p "$windemodir"
+}
+
+copy_files () {
+	# Linux files
+	cp "$basedir"/data.pak "$linuxdir"/bin
+	cp "$pkgfilesdir"/run-linux "$linuxdir"/planetvc
+	cp "$pkgfilesdir"/x86/libSDL2-2.0.so.0 "$linuxdir"/bin/x86/.
+	cp "$pkgfilesdir"/x86_64/libSDL2-2.0.so.0 "$linuxdir"/bin/x86_64/.
+	cp "$pkgfilesdir"/FAQ.txt "$linuxdir"/.
+	cp "$pkgfilesdir"/NEWS.txt "$linuxdir"/.
+	cp "$pkgfilesdir"/license-linux.txt "$linuxdir"/license.txt
+	cp "$pkgfilesdir"/README-SDL.txt "$linuxdir"/.
+	cp "$pkgfilesdir"/ccncsa4.txt "$linuxdir"/.
+	sed "s/@PACKAGE_VERSION@/$dotver/" \
+		"$pkgfilesdir"/README.txt.in > \
+		"$linuxdir"/README.txt
+
+	# Windows full version files
+	cp "$basedir/data.pak" "$windir"/.
+	cp "$pkgfilesdir"/x86/SDL2.dll "$windir"/.
+	sed $sedmask "$pkgfilesdir"/FAQ.txt > "$windir"/FAQ.txt
+	sed $sedmask "$pkgfilesdir"/NEWS.txt > "$windir"/NEWS.txt
+	sed $sedmask "$pkgfilesdir"/license-win.txt > "$windir"/license.txt
+	sed $sedmask "$pkgfilesdir"/README-SDL.txt > "$windir"/README-SDL.txt
+	sed $sedmask "$pkgfilesdir"/ccncsa4.txt > "$windir"/ccncsa4.txt
+	sed $sedmask "$linuxdir"/README.txt > "$windir"/README.txt
+	cp "$pkgfilesdir"/x86/SDL2.dll "$windir"/.
+
+	# Windows demo files
+	cp "$basedir"/demodata-cloak.pak "$windemodir"/data.pak
+	cp "$pkgfilesdir"/x86/SDL2.dll "$windemodir"/.
+	sed $sedmask "$pkgfilesdir"/FAQ.txt > "$windemodir"/FAQ.txt
+	sed $sedmask "$pkgfilesdir"/NEWS.txt > "$windemodir"/NEWS.txt
+	sed $sedmask "$pkgfilesdir"/demo/license.txt > "$windemodir"/license.txt
+	sed $sedmask "$pkgfilesdir"/README-SDL.txt > "$windemodir"/README-SDL.txt
+	sed $sedmask "$pkgfilesdir"/demo/ccncnd4.txt > "$windemodir"/ccncnd4.txt
+	cp "$windir"/README.txt "$windemodir"/.
+}
+
+make_data () {
+	check_tree
+	make_pakcloak
+	rm -rf "$databuilddir"
+	mkdir -p "$databuilddir"
+	make_data_dir
+	pkg_full_data
+	demoize_data_dir
+	pkg_demo_data
+	rm -rf "$databuilddir"
+	copy_files
+}
+
+make_programs () {
+	check_tree
+	cd "$srcbuilddir"
+	if [ $LINUX = 1 ]; then
+		echo "Making full $os $archbits bits"
+		if [ $BITS64 = 1 ]; then
+			"$srcdir"/configure $addops && make && \
+				$stripcmd planetvc && \
+				cp planetvc "$linuxdir"/bin/pvc64
+		else
+			"$srcdir"/configure $addops && \
+				make && $stripcmd planetvc && \
+				cp planetvc "$linuxdir"/bin/pvc32
+		fi
+	elif [ $WINDOWS = 1 ]; then
+		echo "Making full $os $archbits bits"
+
+		"$srcdir"/configure $addops && make && \
+		       	$stripcmd planetvc$ext && \
+			cp planetvc$ext "$windir"/.
+
+		echo "Making demo $os $archbits bits"
+
+		"$srcdir"/configure $addops --enable-demoversion && \
+			make && $stripcmd planetvc$ext && \
+			cp planetvc$ext "$windemodir"/.
+	fi
+	cd "$startdir"
+}
+
+show_menu () {
+	echo "*********"
+	echo " M E N U "
+	echo "*********"
+	echo "1. Make data"
+	echo "2. Compile the versions for $os $archbits bits"
+	echo "3. Push to store"
+	echo "0. Exit"
+}
+
+push_store () {
+	cd "$basedir"
+	tar -uvf "$storedir"/bundle.tar bundle
+	cd "$startdir"
+}
+
+read_option () {
+	local choice
+	echo -n "Select option: "
+	read choice
+	case $choice in
+		1) make_data ;;
+		2) make_programs ;;
+		3) push_store ;;
+		0) exit 0 ;;
+		*) echo "Wrong option" ;;
+	esac
+}
+
+confirm () {
+	while true; do
+		read -p "${1:-Continue?} [y/n]: " yn
+		case $yn in
+			[Yy]* ) return 0 ; break ;;
+			[Nn]* ) return 1 ; break ;;
+		*) echo "Please answer yes or no." ;;
+		esac
+	done
+}
+
+case $# in
+	3) ;;
+	*) echo "mkpkg majver minver storedir (example: mkpkg 1 03 /run/media/usb)" ; exit 1 ;;
+esac
+
+WINDOWS=0
+LINUX=0
+BITS64=0
+archbits="32"
+
+os=`uname -o`
+arch=`uname -m`
+if [ $os = "Cygwin" ]; then
+	WINDOWS=1
+elif [ $os = "GNU/Linux" ]; then
+	LINUX=1
+else
+	echo "Unrecognized OS $os"
+	exit 1
+fi
+
+if [ $arch = "x86_64" ]; then
+	if [ $LINUX = 1 ]; then
+		BITS64=1
+		archbits="64"
+	fi
+fi
+
+majver=$1
+minver=$2
+dotver="$1.$2"
+ver="$1$2"
+storedir=`readlink -f "$3"`
+if [ ! -d "$storedir" ]; then
+	echo "$storedir does not exist"
+	exit 1
+fi
+
+basedir=`readlink -f pkg.build`
+basedir=`basename "$basedir"`
+if [ -d $basedir ]; then
+	echo '****** WARNING! ******'
+	echo The folder $basedir already exists.
+	echo We will generate and remove files under this folder.
+	confirm "Continue?" || exit 0
+fi
+basedir=`readlink -f pkg.build`
+
+startdir=`readlink -f .`
+pkgdir=`dirname "$0"`
+pkgdir=`readlink -f "$pkgdir"`
+srcdir="$pkgdir"/src
+pakcloakdir="$pkgdir"/pakcloak
+datadir="$pkgdir"/data
+pkgfilesdir="$pkgdir"/pkgfiles
+prog=planetvc
+srcbuilddir="$basedir"/src.build
+pakcloakbuilddir="$basedir"/pakcloak.build
+databuilddir="$basedir"/data.build
+bundledir="$basedir"/bundle
+linuxdir="$bundledir"/$prog-linux-$ver
+windir="$bundledir"/$prog-win-$ver
+windemodir="$bundledir"/$prog-demo-win-$ver
+addops=
+ext=
+sedmask='s/$//'
+ccomp=gcc
+stripcmd=strip
+if [ $WINDOWS = 1 ]; then
+	addops='--host=i686-w64-mingw32'
+	ext='.exe'
+	ccomp='i686-w64-mingw32-gcc'
+	stripcmd='i686-w64-mingw32-strip'
+fi
+addops="$addops --enable-sdl-datadir"
+
+while true
+do
+	show_menu
+	read_option
+done
+

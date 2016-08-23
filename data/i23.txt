@@ -1,0 +1,16 @@
+exits 1 1 0 0 ~
+spawn oxigen 8 5 ~
+new_path 5 5 ~
+add_path_point 9 5 ~
+add_path_point 5 5 ~
+new_path 6 6 ~
+add_path_point 9 6 ~
+add_path_point 6 6 ~
+spawn fenix 6 5 rdir ~
+set_path 0 0 128 1 ~
+spawn fenix 6 5 rdir ~
+set_path 1 1 64 1 ~
+spawn draco 6 8 ldir AS ~
+spawn cosmonaut 0 7 14 8 0 7 14 8 0 ~
+.
+Wait for dragon to spit 2 fires, jump and jump.

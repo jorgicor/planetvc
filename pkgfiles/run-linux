@@ -1,0 +1,89 @@
+#!/bin/sh
+
+# This script is used for two reasons:
+#
+# 1. Selecting the proper executable depending on your architecture: 32-bits or
+#    64-bits.
+#
+# 2. Choosing our precompiled SDL2 library inside x86 or x86_64 before your
+#    system SDL2 library.
+#
+# If any of these things does not work for you, you may:
+#
+# 1. Launch the script with --use-my-sdl . The script will choose to use the
+#    SDL2 library installed on your system instead of the bundled one.
+#
+# 2. Launch the script with --m32 to launch the 32-bits binary or --m64 to
+#    launch the 64-bits binary.
+#    This option can be combined with --use-my-sdl .
+
+show_help () {
+echo This script is used for two reasons:
+echo
+echo 1. Selecting the proper executable depending on your architecture: 32-bits
+echo    or echo 64-bits.
+echo
+echo 2. Choosing our precompiled SDL2 library inside x86 or x86_64 instead of
+echo    the SDL2 library on your system.
+echo
+echo If any of these things does not work for you, you may use a combination of
+echo these options:
+echo
+echo 1. Launch the script with --use-my-sdl . The script will choose to use the
+echo    SDL2 library installed on your system instead of the bundled one.
+echo
+echo 2. Launch the script with --m32 to launch the 32-bits binary or --m64 to
+echo    launch the 64-bits binary.
+}
+
+use_my_sdl=0
+m32=0
+m64=0
+for op in "$@"; do
+	case "$op" in
+		"--use-my-sdl") use_my_sdl=1 ;;
+		"--m32") m32=1 ; m64=0 ;;
+		"--m64") m64=1 ; m32=0 ;;
+		"--help") show_help ; exit 0 ;;
+		*) echo "Unknown option $op" ;
+		   echo "";
+		   echo "Launch with --help for the list of options." ;
+		   exit 1 ;;
+	esac
+done
+
+pwddir=`pwd`
+dirname=`dirname "$0"`
+cd "$dirname"
+basedir=`pwd`
+cd "$pwddir"
+bindir="$basedir"/bin
+m32dir="$basedir"/bin/x86
+m64dir="$basedir"/bin/x86_64
+libname=libSDL2-2.0.so.0
+
+if [ $m32 -eq 1 ]; then
+	arch=x86
+elif [ $m64 -eq 1 ]; then
+	arch=x86_64
+else
+	arch=`uname -m`
+fi
+
+cd "$bindir"
+
+if [ $arch = "x86_64" ]; then
+	if [ $use_my_sdl -eq 1 ]; then
+		./pvc64
+	else
+		SDL_DYNAMIC_API="$m64dir"/$libname ./pvc64
+	fi
+else
+	if [ $use_my_sdl -eq 1 ]; then
+		./pvc32
+	else
+		SDL_DYNAMIC_API="$m32dir"/$libname ./pvc32
+	fi
+fi
+cd "$pwddir"
+

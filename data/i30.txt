@@ -1,0 +1,5 @@
+music menu.xm ~
+spawn draco 0  2 rdir SSSSSSSSSSSSSA ~
+spawn draco 14 5 ldir SSSSBSSSSSSSSC ~
+spawn menu 0 0 JOHANNA BRAHE|IN|© 2016 JORGE GINER~
+.

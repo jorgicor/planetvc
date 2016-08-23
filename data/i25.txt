@@ -1,0 +1,9 @@
+exits 1 1 0 0 ~
+spawn lavashot 4 12 0 10 -800 16 ~
+spawn lavashot 5 12 0 20 -800 16 ~
+spawn draco 9 8 ldir AS ~
+spawn draco 11 5 ldir SA ~
+spawn oxigen 12 2 ~
+spawn cosmonaut 0 8 14 2 0 8 14 2 0 ~
+.
+Wait for dragon below to spit fire each time.
