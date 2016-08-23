@@ -1,0 +1,3 @@
+#!/bin/sh
+
+git archive --prefix=pkg/ -o planetvc-pkg.tar.gz HEAD
