@@ -75,36 +75,42 @@ check_tree () {
 copy_files () {
 	# Linux files
 	cp "$basedir"/data.pak "$linuxdir"/bin
+	cp "$srcdir"/gcdb/gamecontrollerdb.txt "$linuxdir"/bin
+	cp "$srcdir"/gcdb/README-gcdb "$linuxdir"/README-gcdb
 	cp "$pkgfilesdir"/run-linux "$linuxdir"/planetvc
 	cp "$pkgfilesdir"/x86/libSDL2-2.0.so.0 "$linuxdir"/bin/x86/.
 	cp "$pkgfilesdir"/x86_64/libSDL2-2.0.so.0 "$linuxdir"/bin/x86_64/.
-	cp "$pkgfilesdir"/FAQ.txt "$linuxdir"/.
-	cp "$pkgfilesdir"/NEWS.txt "$linuxdir"/.
-	cp "$pkgfilesdir"/license-linux.txt "$linuxdir"/license.txt
-	cp "$pkgfilesdir"/README-SDL.txt "$linuxdir"/.
-	cp "$pkgfilesdir"/ccncsa4.txt "$linuxdir"/.
+	cp "$pkgfilesdir"/FAQ.txt "$linuxdir"/FAQ
+	cp "$pkgfilesdir"/NEWS.txt "$linuxdir"/NEWS
+	cp "$pkgfilesdir"/license-linux.txt "$linuxdir"/LICENSE
+	cp "$pkgfilesdir"/README-SDL.txt "$linuxdir"/README-SDL
+	cp "$pkgfilesdir"/ccncsa4.txt "$linuxdir"/ccncsa4.txt
 	sed "s/@PACKAGE_VERSION@/$dotver/" \
 		"$pkgfilesdir"/README.txt.in > \
-		"$linuxdir"/README.txt
+		"$linuxdir"/README
 
 	# Windows full version files
 	cp "$basedir/data.pak" "$windir"/.
+	cp "$srcdir"/gcdb/gamecontrollerdb.txt "$windir"
+	sed $sedmask "$srcdir"/gcdb/README-gcdb > "$windir"/README-gcdb.txt
 	cp "$pkgfilesdir"/x86/SDL2.dll "$windir"/.
 	sed $sedmask "$pkgfilesdir"/FAQ.txt > "$windir"/FAQ.txt
 	sed $sedmask "$pkgfilesdir"/NEWS.txt > "$windir"/NEWS.txt
-	sed $sedmask "$pkgfilesdir"/license-win.txt > "$windir"/license.txt
+	sed $sedmask "$pkgfilesdir"/license-win.txt > "$windir"/LICENSE.txt
 	sed $sedmask "$pkgfilesdir"/README-SDL.txt > "$windir"/README-SDL.txt
 	sed $sedmask "$pkgfilesdir"/ccncsa4.txt > "$windir"/ccncsa4.txt
-	sed $sedmask "$linuxdir"/README.txt > "$windir"/README.txt
+	sed $sedmask "$linuxdir"/README > "$windir"/README.txt
 	cp "$pkgfilesdir"/x86/SDL2.dll "$windir"/.
 
 	# Windows demo files
 	cp "$basedir"/demodata-cloak.pak "$windemodir"/data.pak
+	cp "$windir"/gamecontrollerdb.txt "$windemodir"
+	cp "$windir"/README-gcdb.txt "$windemodir"
 	cp "$pkgfilesdir"/x86/SDL2.dll "$windemodir"/.
-	sed $sedmask "$pkgfilesdir"/FAQ.txt > "$windemodir"/FAQ.txt
-	sed $sedmask "$pkgfilesdir"/NEWS.txt > "$windemodir"/NEWS.txt
-	sed $sedmask "$pkgfilesdir"/demo/license.txt > "$windemodir"/license.txt
-	sed $sedmask "$pkgfilesdir"/README-SDL.txt > "$windemodir"/README-SDL.txt
+	cp "$windir"/FAQ.txt "$windemodir"
+	cp "$windir"/NEWS.txt "$windemodir"
+	cp "$windir"/README-SDL.txt "$windemodir"
+	sed $sedmask "$pkgfilesdir"/demo/license.txt > "$windemodir"/LICENSE.txt
 	sed $sedmask "$pkgfilesdir"/demo/ccncnd4.txt > "$windemodir"/ccncnd4.txt
 	cp "$windir"/README.txt "$windemodir"/.
 }

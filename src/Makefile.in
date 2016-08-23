@@ -88,7 +88,9 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 bin_PROGRAMS = planetvc$(EXEEXT)
-@USE_SDL_DATADIR_FALSE@am__append_1 = -DPP_DATADIR='"$(pkgdatadir)-data"'
+@USE_SDL_DATADIR_FALSE@am__append_1 = -DPP_DATADIR='"$(pkgdatadir)-data"' \
+@USE_SDL_DATADIR_FALSE@		     -DPP_PROG_DATADIR='"$(pkgdatadir)"'
+
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/am_path_sdl2.m4 \
@@ -97,15 +99,16 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/am_path_sdl2.m4 \
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(top_srcdir)/configure \
-	$(am__configure_deps) $(nobase_dist_doc_DATA) \
-	$(am__DIST_COMMON)
+	$(am__configure_deps) $(dist_pkgdata_DATA) \
+	$(nobase_dist_doc_DATA) $(am__DIST_COMMON)
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = config.h
 CONFIG_CLEAN_FILES = game/resource.rc
 CONFIG_CLEAN_VPATH_FILES =
-am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(docdir)"
+am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkgdatadir)" \
+	"$(DESTDIR)$(docdir)"
 PROGRAMS = $(bin_PROGRAMS)
 am__planetvc_SOURCES_DIST = game/resource.rc cbase/cbase.h \
 	cbase/cbase.c cbase/kassert.h cbase/kassert.c kernel/kernel.h \
@@ -299,7 +302,7 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-DATA = $(nobase_dist_doc_DATA)
+DATA = $(dist_pkgdata_DATA) $(nobase_dist_doc_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) \
 	$(LISP)config.h.in
 # Read a list of newline-separated strings from the standard input,
@@ -448,6 +451,7 @@ AM_CFLAGS = $(WARN_CFLAGS)
 nobase_dist_doc_DATA = README NEWS COPYING \
 		       libxmp-lite/README libxmp-lite/README2
 
+dist_pkgdata_DATA = data/gamecontrollerdb.txt
 EXTRA_DIST = icon/icon.ico
 planetvc_CPPFLAGS = -DLIBXMP_CORE_PLAYER -DLIBXMP_CORE_DISABLE_IT \
 	-DBUILDING_STATIC $(am__append_1)
@@ -2235,6 +2239,27 @@ libxmp-lite/planetvc-xm_load.obj: libxmp-lite/xm_load.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='libxmp-lite/xm_load.c' object='libxmp-lite/planetvc-xm_load.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -c -o libxmp-lite/planetvc-xm_load.obj `if test -f 'libxmp-lite/xm_load.c'; then $(CYGPATH_W) 'libxmp-lite/xm_load.c'; else $(CYGPATH_W) '$(srcdir)/libxmp-lite/xm_load.c'; fi`
+install-dist_pkgdataDATA: $(dist_pkgdata_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(dist_pkgdata_DATA)'; test -n "$(pkgdatadir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(pkgdatadir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(pkgdatadir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(pkgdatadir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(pkgdatadir)" || exit $$?; \
+	done
+
+uninstall-dist_pkgdataDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(dist_pkgdata_DATA)'; test -n "$(pkgdatadir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(pkgdatadir)'; $(am__uninstall_files_from_dir)
 install-nobase_dist_docDATA: $(nobase_dist_doc_DATA)
 	@$(NORMAL_INSTALL)
 	@list='$(nobase_dist_doc_DATA)'; test -n "$(docdir)" || list=; \
@@ -2486,7 +2511,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(PROGRAMS) $(DATA) config.h
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(docdir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkgdatadir)" "$(DESTDIR)$(docdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -2552,7 +2577,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-nobase_dist_docDATA
+install-data-am: install-dist_pkgdataDATA install-nobase_dist_docDATA
 
 install-dvi: install-dvi-am
 
@@ -2599,7 +2624,8 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-binPROGRAMS uninstall-nobase_dist_docDATA
+uninstall-am: uninstall-binPROGRAMS uninstall-dist_pkgdataDATA \
+	uninstall-nobase_dist_docDATA
 
 .MAKE: all install-am install-strip
 
@@ -2611,14 +2637,15 @@ uninstall-am: uninstall-binPROGRAMS uninstall-nobase_dist_docDATA
 	distclean-hdr distclean-tags distcleancheck distdir \
 	distuninstallcheck dvi dvi-am html html-am info info-am \
 	install install-am install-binPROGRAMS install-data \
-	install-data-am install-dvi install-dvi-am install-exec \
-	install-exec-am install-html install-html-am install-info \
-	install-info-am install-man install-nobase_dist_docDATA \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic pdf pdf-am ps ps-am \
-	tags tags-am uninstall uninstall-am uninstall-binPROGRAMS \
+	install-data-am install-dist_pkgdataDATA install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am install-man \
+	install-nobase_dist_docDATA install-pdf install-pdf-am \
+	install-ps install-ps-am install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic pdf pdf-am ps ps-am tags tags-am uninstall \
+	uninstall-am uninstall-binPROGRAMS uninstall-dist_pkgdataDATA \
 	uninstall-nobase_dist_docDATA
 
 .PRECIOUS: Makefile

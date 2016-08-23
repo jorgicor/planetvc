@@ -6,6 +6,8 @@ AM_CFLAGS = $(WARN_CFLAGS)
 nobase_dist_doc_DATA = README NEWS COPYING \
 		       libxmp-lite/README libxmp-lite/README2
 
+dist_pkgdata_DATA = gcdb/gamecontrollerdb.txt gcdb/README-gcdb
+
 EXTRA_DIST = icon/icon.ico
 
 bin_PROGRAMS = planetvc
@@ -14,7 +16,8 @@ planetvc_CPPFLAGS = -DLIBXMP_CORE_PLAYER -DLIBXMP_CORE_DISABLE_IT \
 		    -DBUILDING_STATIC
 
 if !USE_SDL_DATADIR
-planetvc_CPPFLAGS += -DPP_DATADIR='"$(pkgdatadir)-data"'
+planetvc_CPPFLAGS += -DPP_DATADIR='"$(pkgdatadir)-data"' \
+		     -DPP_PROG_DATADIR='"$(pkgdatadir)"'
 endif
 
 planetvc_CFLAGS = $(SDL_CFLAGS) $(AM_CFLAGS)

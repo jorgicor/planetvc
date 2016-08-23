@@ -141,15 +141,17 @@ Run the game with planetvc.exe .
 
 The files in the Windows full version are:
 
+planetvc.exe    Game executable.
+data.pak        Game data.
 README.txt      This file.
 NEWS.txt        Latest changes.
 FAQ.txt         Frequently asked questions.
-planetvc.exe    Game executable.
-data.pak        Game data.
 license.txt     License.
 ccncsa4.txt     Creative Commons BY-NC-SA 4 license.
 SDL2.dll        Simple DirectMedia Layer library, version 2.
 README-SDL.txt  README for SDL2.dll.
+gamecontrollerdb.txt    Mappings for old joysticks.
+README-gcdb.txt README fot gamecontrollerdb.txt .
 
 -----------------------
 7. Windows demo version
@@ -157,15 +159,17 @@ README-SDL.txt  README for SDL2.dll.
 
 The files in the Windows demo version are:
 
+planetvc.exe    Game executable.
+data.pak        Demo game data.
 README.txt      This file.
 NEWS.txt        Latest changes.
 FAQ.txt         Frequently asked questions.
-planetvc.exe    Game executable.
-data.pak        Demo game data.
 license.txt     License.
 ccncnd4.txt     Creative Commons BY-NC-ND 4 license.
 SDL2.dll        Simple DirectMedia Layer library, version 2.
 README-SDL.txt  README for SDL2.dll.
+gamecontrollerdb.txt    Mappings for old joysticks.
+README-gcdb.txt README fot gamecontrollerdb.txt .
 
 The demo version only features the first 16 levels of the game. When you reach
 the last level you will return to the main menu.
@@ -179,18 +183,21 @@ plus one level of each of the two additional environments.
 8. GNU/Linux Version
 --------------------
 
-README.txt      This file.
-NEWS.txt        Latest changes.
-FAQ.txt         Frequently asked questions.
 planetvc        Script to run the game.
-data.pak        Game data.
-license.txt     License.
+README          This file.
+README-SDL      README for SDL2 library.
+README-gcdb     README fot gamecontrollerdb.txt .
+NEWS            Latest changes.
+FAQ             Frequently asked questions.
+LICENSE         License.
 ccncsa4.txt     Creative Commons BY-NC-SA 4 license.
-README-SDL.txt  README for SDL2 library.
-pvc32           32 bits game executable.
-pvc64           64 bits game executable.
-x86/            Contains a precompiled 32 bits SDL2 library.
-x86_64/         Contains a precompiled 64 bits SDL2 library.
+bin/
+  data.pak      Game data.
+  pvc32         32 bits game executable.
+  pvc64         64 bits game executable.
+  x86/          Contains a precompiled 32 bits SDL2 library.
+  x86_64/       Contains a precompiled 64 bits SDL2 library.
+  gamecontrollerdb.txt  Mappings for old joysticks.
 
 Run the game using the script 'planetvc'. The script will select the correct
 executable depending on your system: if you are on a 64 bits system it will

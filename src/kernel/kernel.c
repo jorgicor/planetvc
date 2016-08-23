@@ -27,9 +27,17 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "config.h"
 #include <SDL.h>
 #include <stdarg.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define GAMECONTROLLERDB_TXT "gamecontrollerdb.txt"
 
 #if !defined(PP_DATADIR)
 	#define PP_DATADIR "."
+#endif
+
+#if !defined(PP_PROG_DATADIR)
+	#define PP_PROG_DATADIR "."
 #endif
 
 enum {
@@ -62,6 +70,7 @@ static SDL_Window *s_win = NULL;
 static struct kernel_canvas s_kcanvas;
 static void *s_data = NULL;
 static char *s_data_path = NULL;
+static char *s_prog_data_path = NULL;
 static int s_fullscreen;
 
 static void (*on_frame)(void *data);
@@ -871,34 +880,6 @@ static int run_loop(const struct kernel_config *kcfg)
 	return KERNEL_E_OK;
 }
 
-static void init_data_path(void)
-{
-	if (SDL_DATADIR_ON) {
-		s_data_path = SDL_GetBasePath();
-		if (s_data_path == NULL) {
-			s_data_path = SDL_strdup("./");
-		}
-	} else {
-		s_data_path = SDL_strdup(PP_DATADIR "/");
-	}
-}
-
-static int run_init_paths(const struct kernel_config *kcfg)
-{
-	int ret;
-
-	init_data_path();
-	if (s_data_path != NULL) {
-		ret = run_loop(kcfg);
-	} else {
-		ret = KERNEL_E_ERROR;
-	}
-	if (s_data_path != NULL) {
-		SDL_free(s_data_path);
-	}
-	return ret;
-}
-
 static int run_backbuf(const struct kernel_config *kcfg)
 {
 	int ret;
@@ -908,7 +889,7 @@ static int run_backbuf(const struct kernel_config *kcfg)
 	if (s_backbuf == NULL) {
 		ret = KERNEL_E_ERROR;
 	} else {
-		ret = run_init_paths(kcfg);
+		ret = run_loop(kcfg);
 		SDL_FreeSurface(s_backbuf);
 		s_backbuf = NULL;
 	}
@@ -989,6 +970,61 @@ static int run_win(const struct kernel_config *kcfg)
 	return ret;
 }
 
+static void init_data_paths(void)
+{
+	if (SDL_DATADIR_ON) {
+		s_data_path = SDL_GetBasePath();
+		if (s_data_path == NULL) {
+			s_data_path = SDL_strdup("./");
+		}
+		s_prog_data_path = SDL_strdup(s_data_path);
+	} else {
+		s_data_path = SDL_strdup(PP_DATADIR "/");
+		s_prog_data_path = SDL_strdup(PP_PROG_DATADIR "/");
+	}
+}
+
+static int run_load_gamepad_db(const struct kernel_config *kcfg)
+{
+	int n;
+	char *fname;
+
+	fname = NULL;
+	if (s_prog_data_path != NULL) {
+		fname = malloc(strlen(s_prog_data_path) +
+			strlen(GAMECONTROLLERDB_TXT) + 1);
+	}
+
+	if (fname != NULL) {
+		strcpy(fname, s_prog_data_path);
+		strcat(fname, GAMECONTROLLERDB_TXT);
+		n = SDL_GameControllerAddMappingsFromFile(fname);
+		ktrace("mappings added %d", n);
+		free(fname);
+	}
+
+	return run_win(kcfg);
+}
+
+static int run_init_paths(const struct kernel_config *kcfg)
+{
+	int ret;
+
+	init_data_paths();
+	if (s_data_path != NULL) {
+		ret = run_load_gamepad_db(kcfg);
+	} else {
+		ret = KERNEL_E_ERROR;
+	}
+	if (s_data_path != NULL) {
+		SDL_free(s_data_path);
+	}
+	if (s_prog_data_path != NULL) {
+		SDL_free(s_prog_data_path);
+	}
+	return ret;
+}
+
 static int run(const struct kernel_config *kcfg, void *data)
 {
 	int ret;
@@ -1012,7 +1048,7 @@ static int run(const struct kernel_config *kcfg, void *data)
 		ret = KERNEL_E_ERROR;
 	} else {
 		s_data = data;
-		ret = run_win(kcfg);
+		ret = run_init_paths(kcfg);
 		s_data = NULL;
 		SDL_Quit();
 	}
