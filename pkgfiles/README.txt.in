@@ -146,7 +146,7 @@ data.pak        Game data.
 README.txt      This file.
 NEWS.txt        Latest changes.
 FAQ.txt         Frequently asked questions.
-license.txt     License.
+LICENSE.txt     License.
 ccncsa4.txt     Creative Commons BY-NC-SA 4 license.
 SDL2.dll        Simple DirectMedia Layer library, version 2.
 README-SDL.txt  README for SDL2.dll.
@@ -164,7 +164,7 @@ data.pak        Demo game data.
 README.txt      This file.
 NEWS.txt        Latest changes.
 FAQ.txt         Frequently asked questions.
-license.txt     License.
+LICENSE.txt     License.
 ccncnd4.txt     Creative Commons BY-NC-ND 4 license.
 SDL2.dll        Simple DirectMedia Layer library, version 2.
 README-SDL.txt  README for SDL2.dll.
