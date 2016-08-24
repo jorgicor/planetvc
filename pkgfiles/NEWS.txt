@@ -9,10 +9,6 @@
 	  joysticks and game controllers. The game loads it at start so there
 	  should be better support for joysticks not previously recognized.
 
-	* Better support for GNU/Linux, now we use SDL_DYNAMIC_API to load the
-	  bundled SDL library instead of LD_LIBRARY_PATH which was failing in
-	  some cases.
-
 	* Better launch script for GNU/Linux. Now you can use the options:
 
 	  --help to show the list of options;
@@ -22,6 +18,8 @@
 
 	  --m32 or --m64 to launch the 32-bits or 64-bits binary directly
 	  without letting the script select one depending on your system.
+
+	  The script now uses LD_PRELOAD instead of LD_LIBRARY_PATH.
 
 2016-08-05
 
