@@ -1,0 +1,12 @@
+2016-08-24
+
+	* This changes are for Haiku mainly.
+
+	* spider.c, stargate.c: fallback to math.h if not tgmath.h .
+
+	* stargate.c: fixed declarations after statement.
+
+	* kassert.c: checking for va_copy, if not, fallback to memcpy.
+
+	* configure.ac: checking for tgmath and
+	--Wdeclaration-aflter-statement.
