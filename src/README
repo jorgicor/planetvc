@@ -165,6 +165,31 @@ echo 1 > /proc/sys/kernel/core_uses_pid
 This will create the core file in /var/core with the name 'core' and the pid of
 the process appended.
 
+Bundling SDL2
+=============
+
+We can use:
+
+LD_TRACE_LOADED_OBJECTS=1 /lib/ld-linux.so.2 ./planetvc to see which libraries get loaded.
+
+Using:
+
+LD_LIBRARY_PATH=<path to our bundled sdl2> LD_TRACE_LOADED_OBJECTS=1 /lib/ld-linux.so.2 ./planetvc
+
+should load our SDL2 library, but it is not working on Slackware I don't know
+why, maybe because we have to change at link time the rpath to something like
+$ORIGIN/x86 .
+
+Currently, we use:
+
+LD_PRELOAD=<path to our bundled sdl2>/libSDL2-2.0.so.0 LD_TRACE_LOADED_OBJECTS=1 /lib/ld-linux.so.2 ./planetvc
+
+that is:
+
+LD_PRELOAD=<path to our bundled sdl2>/libSDL2-2.0.so.0 ./planetvc
+
+This seems to work ok.
+
 ----
 
 August 2016

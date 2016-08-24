@@ -1,22 +1,5 @@
 #!/bin/sh
 
-# This script is used for two reasons:
-#
-# 1. Selecting the proper executable depending on your architecture: 32-bits or
-#    64-bits.
-#
-# 2. Choosing our precompiled SDL2 library inside x86 or x86_64 before your
-#    system SDL2 library.
-#
-# If any of these things does not work for you, you may:
-#
-# 1. Launch the script with --use-my-sdl . The script will choose to use the
-#    SDL2 library installed on your system instead of the bundled one.
-#
-# 2. Launch the script with --m32 to launch the 32-bits binary or --m64 to
-#    launch the 64-bits binary.
-#    This option can be combined with --use-my-sdl .
-
 show_help () {
 echo This script is used for two reasons:
 echo
@@ -76,13 +59,13 @@ if [ $arch = "x86_64" ]; then
 	if [ $use_my_sdl -eq 1 ]; then
 		./pvc64
 	else
-		SDL_DYNAMIC_API="$m64dir"/$libname ./pvc64
+		LD_PRELOAD="$m64dir"/$libname ./pvc64
 	fi
 else
 	if [ $use_my_sdl -eq 1 ]; then
 		./pvc32
 	else
-		SDL_DYNAMIC_API="$m32dir"/$libname ./pvc32
+		LD_PRELOAD="$m32dir"/$libname ./pvc32
 	fi
 fi
 cd "$pwddir"
