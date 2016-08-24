@@ -58,7 +58,7 @@ pkg_demo_data () {
 make_pakcloak () {
 	echo "Building pakcloak..."
 	cd "$pakcloakbuilddir"
-	"$pakcloakdir"/configure && make
+	"$pakcloakdir"/configure $addops && make
 	cd $startdir
 }
 
@@ -134,24 +134,24 @@ make_programs () {
 	if [ $LINUX = 1 ]; then
 		echo "Making full $os $archbits bits"
 		if [ $BITS64 = 1 ]; then
-			"$srcdir"/configure $addops && make && \
+			"$srcdir"/configure $planetvc_addops && make && \
 				$stripcmd planetvc && \
 				cp planetvc "$linuxdir"/bin/pvc64
 		else
-			"$srcdir"/configure $addops && \
+			"$srcdir"/configure $planetvc_addops && \
 				make && $stripcmd planetvc && \
 				cp planetvc "$linuxdir"/bin/pvc32
 		fi
 	elif [ $WINDOWS = 1 ]; then
 		echo "Making full $os $archbits bits"
 
-		"$srcdir"/configure $addops && make && \
+		"$srcdir"/configure $planetvc_addops && make && \
 		       	$stripcmd planetvc$ext && \
 			cp planetvc$ext "$windir"/.
 
 		echo "Making demo $os $archbits bits"
 
-		"$srcdir"/configure $addops --enable-demoversion && \
+		"$srcdir"/configure $planetvc_addops --enable-demoversion && \
 			make && $stripcmd planetvc$ext && \
 			cp planetvc$ext "$windemodir"/.
 	fi
@@ -272,7 +272,7 @@ if [ $WINDOWS = 1 ]; then
 	ccomp='i686-w64-mingw32-gcc'
 	stripcmd='i686-w64-mingw32-strip'
 fi
-addops="$addops --enable-sdl-datadir"
+planetvc_addops="$addops --enable-sdl-datadir"
 
 while true
 do
