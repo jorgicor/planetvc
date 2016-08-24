@@ -4199,6 +4199,41 @@ else
   :
 fi
 
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether C compiler accepts -Wdeclaration-after-statement" >&5
+$as_echo_n "checking whether C compiler accepts -Wdeclaration-after-statement... " >&6; }
+if ${ax_cv_check_cflags___Wdeclaration_after_statement+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+
+  ax_check_save_flags=$CFLAGS
+  CFLAGS="$CFLAGS  -Wdeclaration-after-statement"
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+int
+main ()
+{
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+  ax_cv_check_cflags___Wdeclaration_after_statement=yes
+else
+  ax_cv_check_cflags___Wdeclaration_after_statement=no
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+  CFLAGS=$ax_check_save_flags
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_check_cflags___Wdeclaration_after_statement" >&5
+$as_echo "$ax_cv_check_cflags___Wdeclaration_after_statement" >&6; }
+if test "x$ax_cv_check_cflags___Wdeclaration_after_statement" = xyes; then :
+  WARN_CFLAGS="$WARN_FLAGS -Wdeclaration-after-statement"
+else
+  :
+fi
+
 
 
 WINDOWS_RC_VERSION=`echo $PACKAGE_VERSION | sed 's/\./,/g; s/0\([1-9]\)/\1/g; s/$/,0,0/'`
@@ -5184,6 +5219,18 @@ do :
 if test "x$ac_cv_header_mcheck_h" = xyes; then :
   cat >>confdefs.h <<_ACEOF
 #define HAVE_MCHECK_H 1
+_ACEOF
+
+fi
+
+done
+
+for ac_header in tgmath.h
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "tgmath.h" "ac_cv_header_tgmath_h" "$ac_includes_default"
+if test "x$ac_cv_header_tgmath_h" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_TGMATH_H 1
 _ACEOF
 
 fi

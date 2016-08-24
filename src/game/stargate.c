@@ -6,7 +6,13 @@
 #include "cbase/cbase.h"
 #include "kernel/kernel.h"
 #include "cbase/kassert.h"
-#include <tgmath.h>
+#include "config.h"
+
+#ifdef HAVE_TGMATH_H
+#	include <tgmath.h>
+#else
+#	include <math.h>
+#endif
 
 #define ID			i0
 #define GOTO_MAPID		i1
@@ -284,14 +290,14 @@ int stargate_get_id(struct actor *pac)
  */
 int stargate_check_teleport(struct actor *pac, struct actor *pcosmo, int oldx)
 {
-	int newx, w2;
+	int newx, w2, midx;
 
 	if (pac->update == stargate_idle)
 		return 0;
 	if (pac->ID != s_active_stargate_id)
 		return 0;
 
-	int midx = pac->psp->x + te_p2w(pac->psp->pframe->r.w / 2);
+	midx = pac->psp->x + te_p2w(pac->psp->pframe->r.w / 2);
 	w2 = te_p2w(pcosmo->psp->pframe->r.w/2);
 	oldx += w2;
 	newx = pcosmo->psp->x + w2;

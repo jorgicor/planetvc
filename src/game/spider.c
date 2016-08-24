@@ -7,8 +7,14 @@
 #include "debug.h"
 #include "kernel/kernel.h"
 #include "cbase/kassert.h"
-#include <tgmath.h>
+#include "config.h"
 #include <string.h>
+
+#ifdef HAVE_TGMATH_H
+#	include <tgmath.h>
+#else
+#	include <math.h>
+#endif
 
 static struct bmp *bmp_spider = NULL;
 

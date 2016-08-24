@@ -25,13 +25,16 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "cbase.h"
 
 #ifndef STDLIB_H
-#define STDLIB_H
-#include <stdlib.h>
+#	define STDLIB_H
+#	include <stdlib.h>
+#endif
+
+#ifndef va_copy
+#	define va_copy(dst, src) memcpy(&dst, &src, sizeof(va_list))
 #endif
 
 static FILE *s_fp;
 static kassert_log_fun_t s_pf;
-
 
 void kassert_set_log_file(FILE *fp)
 {
