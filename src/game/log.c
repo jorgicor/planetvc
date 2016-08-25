@@ -72,8 +72,8 @@ void log_init(void)
 
 	if (fsize > MAX_LOG_SIZE) {
 		/* remove log.old if any */
-		fprintf(stderr, oldpath);
-		fprintf(stderr, path);
+		fprintf(stderr, "%s", oldpath);
+		fprintf(stderr, "%s", path);
 		remove(oldpath);
 		rename(path, oldpath);
 		fp = fopen(path, "wb");

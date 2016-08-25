@@ -1,3 +1,10 @@
+2016-08-25
+
+	* log.c (log_init): using explicit format string for fprintf to fix
+	security warnings.
+
+	* main.c: including SDL.h so that main become SDL_main on Android.
+
 2016-08-24
 
 	* This changes are for Haiku mainly.

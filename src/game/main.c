@@ -43,6 +43,7 @@
 #include "gamelib/mixer.h"
 #include "kernel/kernel.h"
 #include "cbase/kassert.h"
+#include <SDL.h>
 
 #ifndef STDLIB_H
 #define STDLIB_H
@@ -59,7 +60,7 @@
 #include <time.h>
 #endif
 
-int main(void)
+int main(int argc, char *argv[])
 {
 #ifdef DEBUG
 #ifdef HAVE_MCHECK_H
