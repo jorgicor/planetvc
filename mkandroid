@@ -1,0 +1,165 @@
+#!/bin/sh
+
+APP="org.jorgicor.planetvc"
+
+case $# in
+	1) SDLPATH="$1" ;;
+	*) echo "Usage ./mkandroid path_to_sdl_sources" ; exit 1 ;;
+esac
+
+if [ ! -d $SDLPATH ]; then
+	echo "Can't find $SDLPATH."
+	exit 1
+fi
+
+NDKBUILD=`which ndk-build`
+if [ -z "$NDKBUILD" ];then
+    echo "Could not find the ndk-build utility, install Android's NDK and add it to the path"
+    exit 1
+fi
+
+ANDROID=`which android`
+if [ -z "$ANDROID" ];then
+    echo "Could not find the android utility, install Android's SDK and add it to the path"
+    exit 1
+fi
+
+ANT=`which ant`
+if [ -z "$ANT" ];then
+    echo "Could not find the ant utility, install Android's SDK and add it to the path"
+    exit 1
+fi
+
+PKGPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+NCPUS="1"
+case "$OSTYPE" in
+    darwin*)
+        NCPU=`sysctl -n hw.ncpu`
+        ;; 
+    linux*)
+        if [ -n `which nproc` ]; then
+            NCPUS=`nproc`
+        fi  
+        ;;
+  *);;
+esac
+
+SDLPATH="$( cd "$SDLPATH" ; pwd -P )"
+BASEPATH=`pwd -P`
+BUILDPATH="$BASEPATH"/'android.build'
+
+make_project () {
+	if [ ! -f "$PKGPATH"/datapak/data.pak ]; then
+	    echo "Could not find $PKGPATH/datapak/data.pak"
+	    return
+	fi
+
+	rm -rf "$BUILDPATH"
+	mkdir -p "$BUILDPATH"
+	cp -r "$PKGPATH"/android-project/* "$BUILDPATH"
+
+	cp "$PKGPATH"/datapak/data.pak "$BUILDPATH"/assets
+
+	ln -s "$SDLPATH"/src "$BUILDPATH"/jni/SDL
+	ln -s "$SDLPATH"/include "$BUILDPATH"/jni/SDL
+	cp -r "$SDLPATH"/Android.mk "$BUILDPATH"/jni/SDL
+
+	sed -i "s|org\.libsdl\.app|$APP|g" "$BUILDPATH"/AndroidManifest.xml
+
+	# Make sources list
+	cd "$PKGPATH"/src
+	ls -1 -R cbase/*.c > "$BUILDPATH"/sources.list
+	ls -1 -R kernel/*.c >> "$BUILDPATH"/sources.list
+	ls -1 -R gamelib/*.c >> "$BUILDPATH"/sources.list
+	ls -1 -R libxmp-lite/*.c >> "$BUILDPATH"/sources.list
+	ls -1 -R game/*.c >> "$BUILDPATH"/sources.list
+	cd "$BASEPATH"
+
+	while read -r line; do
+		name="$line"
+		sources="$sources $name"
+	done < "$BUILDPATH"/sources.list
+
+	sed -i "s|YourSourceHere.c|$sources|g" "$BUILDPATH"/jni/src/Android.mk
+
+	ln -s "$PKGPATH"/src/cbase "$BUILDPATH"/jni/src
+	ln -s "$PKGPATH"/src/kernel "$BUILDPATH"/jni/src
+	ln -s "$PKGPATH"/src/gamelib "$BUILDPATH"/jni/src
+	ln -s "$PKGPATH"/src/libxmp-lite "$BUILDPATH"/jni/src
+	ln -s "$PKGPATH"/src/game "$BUILDPATH"/jni/src
+
+	APPARR=(${APP//./ })
+
+	# Create an inherited Activity
+	cd "$BUILDPATH"/src
+	for folder in "${APPARR[@]}"
+	do
+	    mkdir -p $folder
+	    cd $folder
+	done
+
+	ACTIVITY="${folder}Activity"
+	# Upper case first letter
+	ACTIVITY="$(tr '[:lower:]' '[:upper:]' <<< ${ACTIVITY:0:1})${ACTIVITY:1}"
+
+	sed -i "s|SDLActivity|$ACTIVITY|g" "$BUILDPATH"/AndroidManifest.xml
+	sed -i "s|SDLActivity|$APP|g" "$BUILDPATH"/build.xml
+
+	# Fill in a default Activity
+	echo "package $APP;" > "$ACTIVITY.java"
+	echo "import org.libsdl.app.SDLActivity;" >> "$ACTIVITY.java"
+	echo "public class $ACTIVITY extends SDLActivity {}" >> "$ACTIVITY.java"
+
+	cd "$BASEPATH"
+
+	# Update project and build
+	cd "$BUILDPATH"
+	"$ANDROID" update project --path "$BUILDPATH" --target android-12
+	cd "$BASEPATH"
+}
+
+build () {
+	cd "$BUILDPATH"
+	"$NDKBUILD" -j $NCPUS $NDKARGS
+	"$ANT" debug
+	cd "$BASEPATH"
+
+	APK="$BUILDPATH/bin/$APP-debug.apk"
+
+	if [ -f "$APK" ]; then
+	    echo "Your APK is ready at $APK"
+	    echo "To install to your device: "
+	    echo "cd  $BUILDPATH"
+	    echo "ant debug install"
+	else
+		echo "There was an error building the APK"
+	fi
+}
+
+show_menu () {
+	echo "*********"
+	echo " M E N U "
+	echo "*********"
+	echo "1. Recreate project skeleton in ./android.build"
+	echo "2. Build"
+	echo "0. Exit"
+}
+
+read_option () {
+	local choice
+	echo -n "Select option: "
+	read choice
+	case $choice in
+		1) make_project ;;
+		2) build ;;
+		0) exit 0 ;;
+		*) echo "Wrong option" ;;
+	esac
+}
+
+while true
+do
+	show_menu
+	read_option
+done
