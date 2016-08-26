@@ -29,12 +29,16 @@ import android.graphics.drawable.Drawable;
 import android.media.*;
 import android.hardware.*;
 import android.content.pm.ActivityInfo;
+import android.content.res.AssetManager;
 
 /**
     SDL Activity
 */
 public class SDLActivity extends Activity {
     private static final String TAG = "SDL";
+
+    private AssetManager mAssetManager;
+    private static native void loadAssetManager(AssetManager mgr);
 
     // Keep track of the paused state
     public static boolean mIsPaused, mIsSurfaceReady, mHasFocus;
@@ -186,6 +190,9 @@ public class SDLActivity extends Activity {
                 SDLActivity.onNativeDropFile(filename);
             }
         }
+
+	mAssetManager = getResources().getAssets();
+	loadAssetManager(mAssetManager);
     }
 
     // Events

@@ -975,7 +975,11 @@ static void init_data_paths(void)
 	if (SDL_DATADIR_ON) {
 		s_data_path = SDL_GetBasePath();
 		if (s_data_path == NULL) {
-			s_data_path = SDL_strdup("./");
+#			if defined(ANDROID)
+				s_data_path = SDL_strdup("");
+#			else
+				s_data_path = SDL_strdup("./");
+#			endif
 		}
 		s_prog_data_path = SDL_strdup(s_data_path);
 	} else {

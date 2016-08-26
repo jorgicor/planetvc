@@ -59,7 +59,7 @@ make_project () {
 	mkdir -p "$BUILDPATH"
 	cp -r "$PKGPATH"/android-project/* "$BUILDPATH"
 
-	cp "$PKGPATH"/datapak/data.pak "$BUILDPATH"/assets
+	cp -r "$PKGPATH"/data "$BUILDPATH"/assets
 
 	ln -s "$SDLPATH"/src "$BUILDPATH"/jni/SDL
 	ln -s "$SDLPATH"/include "$BUILDPATH"/jni/SDL

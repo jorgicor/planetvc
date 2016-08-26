@@ -27,6 +27,14 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <string.h>
 #include <limits.h>
 
+#if defined(ANDROID)
+#	include <errno.h>
+#	include <jni.h>
+#	include <android/asset_manager.h>
+#	include <android/asset_manager_jni.h>
+#	include <android/log.h>
+#endif
+
 /**
  * At the end of a .zip file we have the END OF CENTRAL DIRECTORY RECORD, with
  * this layout:
@@ -97,6 +105,66 @@ struct zip_cdh {
 #pragma pack()
 
 static const char *s_base_path = "";
+
+#if !defined(ANDROID)
+
+#define platform_fopen fopen
+
+#endif	/* if !defined(ANDROID) */
+
+#if defined(ANDROID)
+static AAssetManager *s_android_asset_manager;
+
+JNIEXPORT void JNICALL
+Java_org_libsdl_app_SDLActivity_loadAssetManager(JNIEnv *env,
+						 jobject obj,
+						 jobject assetManager)
+{
+	s_android_asset_manager = AAssetManager_fromJava(env, assetManager);
+	if (s_android_asset_manager == NULL) {
+		__android_log_print(ANDROID_LOG_ERROR, "name.cpp",
+			"error loading asset manager");
+	} else {
+		__android_log_print(ANDROID_LOG_VERBOSE, "name.cpp",
+			"loaded asset manager");
+	}
+}
+
+static int android_file_read(void *cookie, char *buf, int size)
+{
+	return AAsset_read((AAsset *) cookie, buf, size);
+}
+
+static int android_file_write(void *cookie, const char *buf, int size)
+{
+	return EACCES;
+}
+
+static fpos_t android_file_seek(void *cookie, fpos_t offset, int from)
+{
+	return AAsset_seek((AAsset *) cookie, offset, from);
+}
+
+static int android_file_close(void *cookie)
+{
+	AAsset_close((AAsset *) cookie);
+	return 0;
+}
+
+static FILE *android_file_open(const char *fname, const char *mode)
+{
+	AAsset *asset = AAssetManager_open(s_android_asset_manager, fname, 0);
+	if (asset) {
+		return funopen(asset, android_file_read, android_file_write,
+			       android_file_seek, android_file_close);	
+	}
+	
+	return NULL;
+}
+
+#define platform_fopen android_file_open
+
+#endif	/* if defined(ANDROID) */
 
 /**
  * Seeks the central directory in a .zip file.
@@ -313,9 +381,11 @@ static FILE *try_open_pak(const char *pak, const char *fname,
 	strcat(path, pak);
 	strcat(path, ".pak");
 
-	fp = fopen(path, "rb");
+	ktrace("try open pak %s", path);
+	fp = platform_fopen(path, "rb");
 	if (fp == NULL)
 		return NULL;
+	ktrace("opened");
 
 	if (seek_central_dir(fp) != 0)
 		goto fail;
@@ -413,7 +483,11 @@ FILE* open_file(const char *fname, unsigned int *fsize)
 		*fsize = UINT_MAX;
 	strcpy(path, s_base_path);
 	strcat(path, fname);
-	return fopen(path, "rb");
+	ktrace("open file %s", path);
+	fp = platform_fopen(path, "rb");
+	if (fp != NULL)
+		ktrace("opened");
+	return fp;
 }
 
 /*
