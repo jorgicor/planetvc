@@ -303,10 +303,9 @@ with all the files inside the folder data\ without compression, that is,
 telling your ZIP software to only store the files. Do not add the folder data\
 to the ZIP file, just the files inside it.
 
-I don't provide right now documentation on how to modify the game or write new
-levels. You will have to find out by yourself. If you are very interested or
-have questions, fell free to write me (I understand Spanish, English and some
-Italian). I'll be glad to answer you when time permits.
+Documentation on how to modify the game or write new levels is found in the
+file MODIFY.html . You can find it online too at
+http://jorgicor.sdfeu.org/planetvc/modify.html .
 
 -----------
 12. Credits
@@ -334,11 +333,6 @@ For bug reports or to praise the author, contact Jorge Giner Cordero:
 
 http://jorgicor.sdfeu.org
 jorge.giner@hotmail.com
-
-The game, and (I hope) future games, can be found at:
-
-itch.io (jorgicor)
-gamejolt.com (jorgicor)
 
 -----
  END

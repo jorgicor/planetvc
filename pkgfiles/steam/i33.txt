@@ -1,0 +1,25 @@
+music menu.xm ~
+clrscr ~
+textf 1 7 TRANSLATION~
+textf 1 10 m ANA ALVES (PT)~
+textf 1 12 m ANNA JAKUBIEC (FR, PL)~
+textf 1 14 m FABIO TRICARICO (IT)~
+textf 1 16 m JORGE GINER (LSF)~
+wait ~
+clrscr ~
+textf 1 6 TOOLS~
+textf 1 9 m GNU GCC, AUTOTOOLS~
+textf 1 11 m LIBSDL, LIBXMP-LITE~
+textf 1 13 m GRAPHX2, MILKYTRACKER~
+textf 1 15 m SLACKWARE LINUX~
+textf 1 17 m MINGW-W64, CYGWIN~
+textf 1 19 m VIM, IMAGEMAGICK~
+textf 1 21 m BFXR, SOX, AUDACITY~
+wait ~
+clrscr ~
+textf 1 10 GRAPHICS, MUSIC, PROGRAMMING~
+textf 1 14 m JORGE GINER CORDERO~
+textf 1 16 m HTTP://JORGICOR.SDFEU.ORG~
+wait ~
+scroll 0x30 ~
+.
