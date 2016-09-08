@@ -381,11 +381,11 @@ static FILE *try_open_pak(const char *pak, const char *fname,
 	strcat(path, pak);
 	strcat(path, ".pak");
 
-	ktrace("try open pak %s", path);
+	/* ktrace("try open pak %s", path); */
 	fp = platform_fopen(path, "rb");
 	if (fp == NULL)
 		return NULL;
-	ktrace("opened");
+	/* ktrace("opened"); */
 
 	if (seek_central_dir(fp) != 0)
 		goto fail;
@@ -483,10 +483,12 @@ FILE* open_file(const char *fname, unsigned int *fsize)
 		*fsize = UINT_MAX;
 	strcpy(path, s_base_path);
 	strcat(path, fname);
-	ktrace("open file %s", path);
+	/* ktrace("open file %s", path); */
 	fp = platform_fopen(path, "rb");
+	/*
 	if (fp != NULL)
 		ktrace("opened");
+	*/
 	return fp;
 }
 

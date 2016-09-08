@@ -4229,7 +4229,7 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ax_cv_check_cflags___Wdeclaration_after_statement" >&5
 $as_echo "$ax_cv_check_cflags___Wdeclaration_after_statement" >&6; }
 if test "x$ax_cv_check_cflags___Wdeclaration_after_statement" = xyes; then :
-  WARN_CFLAGS="$WARN_FLAGS -Wdeclaration-after-statement"
+  WARN_CFLAGS="$WARN_CFLAGS -Wdeclaration-after-statement"
 else
   :
 fi

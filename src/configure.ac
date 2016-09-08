@@ -36,8 +36,8 @@ AC_PROG_SED
 
 AX_CHECK_COMPILE_FLAG([-Wall], [WARN_CFLAGS="-Wall"], [], [])
 AX_CHECK_COMPILE_FLAG([-Wdeclaration-after-statement],
-		      [WARN_CFLAGS="$WARN_FLAGS -Wdeclaration-after-statement"],
-		      [], [])
+	      [WARN_CFLAGS="$WARN_CFLAGS -Wdeclaration-after-statement"],
+	      [], [])
 AC_SUBST(WARN_CFLAGS)
 
 WINDOWS_RC_VERSION=`echo $PACKAGE_VERSION | sed 's/\./,/g; s/0\(@<:@1-9@:>@\)/\1/g; s/$/,0,0/'`
