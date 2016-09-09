@@ -1,7 +1,7 @@
 #!/bin/sh
 
 make_data_dir () {
-	cd $datadir
+	cd "$datadir"
 	for f in *.bmp; do
 		origsize=$(stat -c%s $f)
 		ncolors=$(identify -format %k $f)
@@ -17,7 +17,7 @@ make_data_dir () {
 	cp *.txt "$databuilddir"
 	cp *.xm "$databuilddir"
 	cp *.wav "$databuilddir"
-	cd $startdir
+	cd "$startdir"
 }
 
 pkg_full_data () {
@@ -60,19 +60,21 @@ demoize_data_dir () {
 
 pkg_demo_data () {
 	zip -FS -Zstore -j "$basedir"/demodata.pak "$databuilddir"/*
-	"$pakcloakbuilddir"/pakcloak "$basedir"/demodata.pak "$basedir"/demodata-cloak.pak
+	"$pakcloakbuilddir"/pakcloak "$basedirrel"/demodata.pak \
+		"$basedirrel"/demodata-cloak.pak
 }
 
 pkg_steam_demo_data () {
 	zip -FS -Zstore -j "$basedir"/steamdemodata.pak "$databuilddir"/*
-	"$pakcloakbuilddir"/pakcloak "$basedir"/steamdemodata.pak "$basedir"/steamdemodata-cloak.pak
+	"$pakcloakbuilddir"/pakcloak "$basedirrel"/steamdemodata.pak \
+		"$basedirrel"/steamdemodata-cloak.pak
 }
 
 make_pakcloak () {
 	echo "Building pakcloak..."
 	cd "$pakcloakbuilddir"
 	"$pakcloakdir"/configure $addops && make
-	cd $startdir
+	cd "$startdir"
 }
 
 check_tree () {
@@ -179,14 +181,14 @@ make_programs () {
 
 		"$srcdir"/configure $planetvc_addops && make && \
 		       	$stripcmd planetvc$ext && \
-			cp planetvc$ext "$windir"/. \
+			cp planetvc$ext "$windir"/. && \
 			cp planetvc$ext "$winsteamdir"/.
 
 		echo "Making demo $os $archbits bits"
 
 		"$srcdir"/configure $planetvc_addops --enable-demoversion && \
 			make && $stripcmd planetvc$ext && \
-			cp planetvc$ext "$windemodir"/. \
+			cp planetvc$ext "$windemodir"/. && \
 			cp planetvc$ext "$winsteamdemodir"/.
 	fi
 	cd "$startdir"
@@ -264,25 +266,31 @@ majver=$1
 minver=$2
 dotver="$1.$2"
 ver="$1$2"
-storedir=`readlink -f "$3"`
+storedir="$3"
 if [ ! -d "$storedir" ]; then
 	echo "$storedir does not exist"
 	exit 1
 fi
+storedir=$(cd  "$storedir" ; pwd -P)
 
-basedir=`readlink -f pkg.build`
-basedir=`basename "$basedir"`
-if [ -d $basedir ]; then
+basedirrel="pkg.build"
+basedir="$basdirrel"
+if [ -d "$basedir" ]; then
 	echo '****** WARNING! ******'
 	echo The folder $basedir already exists.
 	echo We will generate and remove files under this folder.
 	confirm "Continue?" || exit 0
+else
+	mkdir -p "$basedir"
 fi
-basedir=`readlink -f pkg.build`
+if [ ! -d "$basedir" ]; then
+	echo '****** Error: ' $basedir ' could not be created ******'
+	exit 1
+fi
+basedir=$(cd "$basedir"; pwd -P)
 
-startdir=`readlink -f .`
-pkgdir=`dirname "$0"`
-pkgdir=`readlink -f "$pkgdir"`
+startdir=`pwd -P`
+pkgdir=$(cd `dirname "$0"`; pwd -P)
 srcdir="$pkgdir"/src
 pakcloakdir="$pkgdir"/pakcloak
 datadir="$pkgdir"/data
