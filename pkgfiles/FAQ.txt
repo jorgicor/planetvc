@@ -4,7 +4,7 @@
                         Copyright (c) 2016 Jorge Giner
 
 --------------------------------------
-FREQUENTLY ASKED QUESTIONS (FAQ v1.01)
+FREQUENTLY ASKED QUESTIONS (FAQ v1.02)
 --------------------------------------
 
         1. Which is the language LSF (PEANO) in the game?
@@ -20,9 +20,9 @@ FREQUENTLY ASKED QUESTIONS (FAQ v1.01)
 Latino sine flexio. It is an international auxiliary language, proposed by
 Giuseppe Peano first in 1903. As everyone in the universities used Latin, and
 everyone had a Latin dictionary, he proposed to use a simplified version of it
-for International communication. This were previous to the First and Second
-World Wars. (After these wars, English has become the dominant language for
-science and international communication).
+for International communication. This was before the First and Second World
+Wars. (After these wars, English has become the dominant language for science
+and international communication).
 
 The simplification consists mainly in using the ablative of all the words, and
 use always the imperative for the verbs.
@@ -30,7 +30,8 @@ use always the imperative for the verbs.
 Giuseppe Peano founded the "Academia pro Interlingua", and the language was
 called 'Interlingua' for some time. Don't confuse it with the language
 'Interlingua' that exists today with the assigned ISO code 'ia'. This new
-'Interlingua' uses the name with permission of the "Academia pro Interlingua".
+'Interlingua' uses the name with permission from the "Academia pro
+Interlingua".
 
 The original Interlingua used the Latin vocabulary, but always trying to
 select the words that ended in the English language (with priority) and in

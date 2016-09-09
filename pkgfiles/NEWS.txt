@@ -6,8 +6,8 @@
 
 	* Added required copyright notice for libxmp-lite in license file.
 
-	* Removed references for itch.io or gamejolt.com for the Steam
-	  versions.
+	* Removed references for itch.io or gamejolt.com in the versions for
+	  Steam.
 
 2016-08-24
 
