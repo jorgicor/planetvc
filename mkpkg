@@ -274,7 +274,7 @@ fi
 storedir=$(cd  "$storedir" ; pwd -P)
 
 basedirrel="pkg.build"
-basedir="$basdirrel"
+basedir="$basedirrel"
 if [ -d "$basedir" ]; then
 	echo '****** WARNING! ******'
 	echo The folder $basedir already exists.
