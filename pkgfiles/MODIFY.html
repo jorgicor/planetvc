@@ -1,19 +1,103 @@
-<!doctype html public "-//W3C//DTD HTML 4.0 Transitional //EN">
+<!DOCTYPE html>
 <html>
 <head>
-  <meta name="GENERATOR" content="mkd2html 2.1.8a DEBUG DL=BOTH ID-ANCHOR GITHUB-TAGS FENCED-CODE">
-  <meta http-equiv="Content-Type"
-        content="text/html; charset=utf-8">  <title>Modifying &lsquo;The Planet of the Vicious Creatures&rsquo;</title>
+	<meta charset="utf-8">
+	
+	<style>
+	pre {
+		padding: 8px ;
+		border: 1px dotted blue ;
+		background-color: lavender ;
+	}
+	</style>
+	<title>Modifying &lsquo;The Planet of the Vicious Creatures&rsquo;</title>
 </head>
 <body>
-<h1>Intro</h1>
+<h1 style="text-align:center">Modifying &lsquo;The Planet of the Vicious Creatures&rsquo;</h1>
+<p style="text-align:center">28 August 2016</p>
+<p style="text-align:center">Jorge Giner</p>
+<hr style="clear: left">
+<ul>
+ <li><a href="#License">License</a></li>
+ <li><a href="#Intro">Intro</a></li>
+ <li><a href="#Unpacking%20the%20data">Unpacking the data</a></li>
+ <li><a href="#UTF-8">UTF-8</a></li>
+ <li><a href="#The%20contents">The contents</a></li>
+ <li><a href="#The%20game%20states">The game states</a></li>
+ <li><a href="#The%20init%20file">The init file</a></li>
+ <li><a href="#The%20levels">The levels</a>
+ <ul>
+  <li><a href="#Modifying%20while%20playing">Modifying while playing</a></li>
+  <li><a href="#The%20room%20file">The room file</a></li>
+  <li><a href="#The%20background%20file">The background file</a></li>
+  <li><a href="#The%20init%20file">The init file</a>
+  <ul>
+   <li><a href="#exits%20command">exits command</a></li>
+   <li><a href="#spawn%20command">spawn command</a>
+   <ul>
+    <li><a href="#bat">bat</a></li>
+    <li><a href="#caterpillar">caterpillar</a></li>
+    <li><a href="#cosmonaut">cosmonaut</a></li>
+    <li><a href="#deadcosmo">deadcosmo</a></li>
+    <li><a href="#draco">draco</a></li>
+    <li><a href="#drop">drop</a></li>
+    <li><a href="#fenix">fenix</a></li>
+    <li><a href="#fish">fish</a></li>
+    <li><a href="#grasshopper">grasshopper</a></li>
+    <li><a href="#lavashot">lavashot</a></li>
+    <li><a href="#lavatongue">lavatongue</a></li>
+    <li><a href="#moth">moth</a></li>
+    <li><a href="#oxigen">oxigen</a></li>
+    <li><a href="#spider">spider</a></li>
+    <li><a href="#wasp">wasp</a></li>
+    <li><a href="#platform">platform</a></li>
+    <li><a href="#gameover">gameover</a></li>
+    <li><a href="#menu">menu</a></li>
+    <li><a href="#hiscore">hiscore</a></li>
+    <li><a href="#stargate">stargate</a></li>
+   </ul>
+   </li>
+   <li><a href="#music">music</a></li>
+   <li><a href="#new_path">new_path</a></li>
+   <li><a href="#add_path_point">add_path_point</a></li>
+   <li><a href="#set_path">set_path</a></li>
+   <li><a href="#wait">wait</a></li>
+   <li><a href="#wait_hiscore">wait_hiscore</a></li>
+   <li><a href="#text">text</a></li>
+   <li><a href="#textf">textf</a></li>
+   <li><a href="#textfc">textfc</a></li>
+   <li><a href="#clrscr">clrscr</a></li>
+   <li><a href="#scroll">scroll</a></li>
+   <li><a href="#load">load</a></li>
+   <li><a href="#endstate">endstate</a></li>
+   <li><a href="#fadeout">fadeout</a></li>
+   <li><a href="#fadein">fadein</a>
+</li>
+  </ul>
+  </li>
+ </ul>
+ </li>
+ <li><a href="#Languages">Languages</a></li>
+ <li><a href="#Demo%20files">Demo files</a></li>
+</ul>
+
+<h1 id="License">License</h1>
+
+<pre><code>Copyright © 2016 Jorge Giner
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+</code></pre>
+
+<h1 id="Intro">Intro</h1>
 
 <p>The game is designed so you can easily modify or create new levels. This
 document describes how you can start modifying the game.</p>
 
 <p>Only the full version of the game can be modified.</p>
 
-<h1>Unpacking the data</h1>
+<h1 id="Unpacking%20the%20data">Unpacking the data</h1>
 
 <p>The game assets and levels come in a file named <em>data.pak</em>. This file is no
 more than a <em>ZIP</em> file. To begin working with it, extract all the files it
@@ -33,12 +117,12 @@ data/cosmonau.bmp
 for a directory named <em>data/</em>, because of that, we renamed <em>data.pak</em> to
 <em>origdata.pak</em>.</p>
 
-<h1>UTF-8</h1>
+<h1 id="UTF-8">UTF-8</h1>
 
 <p>All the files, at least the files which  contain text strings with characters
 not in the ASCII character set, should be saved in UTF-8 format.</p>
 
-<h1>The contents</h1>
+<h1 id="The%20contents">The contents</h1>
 
 <p>The game contents are:</p>
 
@@ -56,7 +140,7 @@ state.</li>
 </ul>
 
 
-<h1>The game states</h1>
+<h1 id="The%20game%20states">The game states</h1>
 
 <p>The game can be in one of these states:</p>
 
@@ -73,7 +157,7 @@ the over state but not in this state.</li>
 </ul>
 
 
-<h1>The init file</h1>
+<h1 id="The%20init%20file">The init file</h1>
 
 <p>This is a sample of the game init file:</p>
 
@@ -116,7 +200,7 @@ starts.</li>
 
 <p>The init file must end with a tilde <code>~</code> on alone on a line.</p>
 
-<h1>The levels</h1>
+<h1 id="The%20levels">The levels</h1>
 
 <p>Each level is described by a <em>room</em> file, for example <em>r0f.txt</em>, and an
 optional <em>init</em> file, which must have the same name except that it starts with
@@ -147,7 +231,7 @@ left, the level 0f will be loaded; and if you exit level 0f to the right, level
 maximum: to use more, you have to place portals to travel to another level on
 another row of the above grid.</p>
 
-<h2>Modifying while playing</h2>
+<h2 id="Modifying%20while%20playing">Modifying while playing</h2>
 
 <p>The best way to work is to go to the level you want to modify in the game. Open
 the <em>room</em> and <em>init</em> file for the level with a text editor and start
@@ -169,7 +253,7 @@ the level that you want to modify.</li>
 </ul>
 
 
-<h2>The room file</h2>
+<h2 id="The%20room%20file">The room file</h2>
 
 <p>Each room file <code>r??.txt</code> specifies the background and tiles of the level. For
 example:</p>
@@ -201,7 +285,7 @@ to have 16 by 16 tiles, so there is a direct mapping between the number we
 write here and the tile we choose. For example, if we use 3A, the tile on row 4
 column 11 (A is the decimal number 10) will be selected (we count from 0).</p>
 
-<h2>The background file</h2>
+<h2 id="The%20background%20file">The background file</h2>
 
 <p>The background file specifies some graphics to put at some positions to make
 the background of the room. For example, this is <em>bgplanet.txt</em>:</p>
@@ -240,7 +324,7 @@ are:</p>
 </ul>
 
 
-<h2>The init file</h2>
+<h2 id="The%20init%20file">The init file</h2>
 
 <p>The init file is optional. If specified, it contains a list of commands to
 execute when the level is loaded. For example:</p>
@@ -266,7 +350,7 @@ tilde, or you will be adding a space to the end text.</p>
 
 <p>Let&rsquo;s see all the commands available one by one.</p>
 
-<h3>exits command</h3>
+<h3 id="exits%20command">exits command</h3>
 
 <pre><code>exits &lt;left&gt; &lt;right&gt; &lt;up&gt; &lt;down&gt;
 example: exits 1 1 0 0
@@ -277,14 +361,14 @@ game if the player can exit from the current level from the left, right, top or
 bottom in this order. A number 1 means that there is an exit to that side. Top
 and bottom, that is, the last two, must be always 0.</p>
 
-<h3>spawn command</h3>
+<h3 id="spawn%20command">spawn command</h3>
 
 <pre><code>spawn &lt;what&gt; &lt;x tile pos&gt; &lt;y tile pos&gt; [arguments]
 </code></pre>
 
 <p>The <em>spanw</em> command is used to populate the room with enemies or other objects. We always specify the id of the object to spawn and its initial position. Then, each object can take different arguments.</p>
 
-<h4>bat</h4>
+<h4 id="bat">bat</h4>
 
 <pre><code>spawn bat &lt;x&gt; &lt;y&gt; &lt;dir&gt;
 example: spawn bat 7 8 ldir
@@ -293,7 +377,7 @@ example: spawn bat 7 8 ldir
 <p>Spawns a bat, <code>&lt;dir&gt;</code> can be <code>ldir</code> to start looking to the left, or <code>rdir</code> to
 start looking to the right.</p>
 
-<h4>caterpillar</h4>
+<h4 id="caterpillar">caterpillar</h4>
 
 <pre><code>spawn caterpillar &lt;x&gt; &lt;t&gt; &lt;flip&gt;
 example: spawn caterpillar 7 8 none
@@ -302,7 +386,7 @@ example: spawn caterpillar 7 8 none
 <p>Spawns a caterpillar. <code>&lt;flip&gt;</code>can be <code>flipv</code> to draw the caterpillar upside
 down (to place it on ceilings), or anything else to draw it on the ground.</p>
 
-<h4>cosmonaut</h4>
+<h4 id="cosmonaut">cosmonaut</h4>
 
 <pre><code>spawn cosmonaut &lt;x&gt; &lt;y&gt; &lt;x0&gt; &lt;y0&gt; &lt;x1&gt; &lt;y1&gt; &lt;x2&gt; &lt;y2&gt; &lt;x3&gt; &lt;y3&gt; &lt;def&gt;
 example: spawn cosmonaut 10 11 0 10 13 10 0 13 7 1 7 0 ~
@@ -319,14 +403,14 @@ when you take an oxygen bubble.</p>
 left-top, right-top, because the game always makes the helper arrow to point to
 the left for the positions 0 and 2, and to the right for the positions 1 and 3.</p>
 
-<h4>deadcosmo</h4>
+<h4 id="deadcosmo">deadcosmo</h4>
 
 <pre><code>spawn deadcosmo &lt;x&gt; &lt;y&gt;
 </code></pre>
 
 <p>Spawns a dead cosmonaut.</p>
 
-<h4>draco</h4>
+<h4 id="draco">draco</h4>
 
 <pre><code>spawn drawco &lt;x&gt; &lt;y&gt; &lt;dir&gt; &lt;action string&gt;
 example: spawn draco 7 8 rdir SSASB
@@ -349,7 +433,7 @@ actions are:</p>
 </ul>
 
 
-<h4>drop</h4>
+<h4 id="drop">drop</h4>
 
 <pre><code>spawn drop &lt;x&gt; &lt;y&gt; &lt;accel&gt; &lt;color&gt;
 example: spawn drop 7 1 16 1
@@ -358,14 +442,14 @@ example: spawn drop 7 1 16 1
 <p>Spawns a drop that will fall until it reaches the ground or a platform.
 <code>&lt;accel&gt;</code> is the acceleration. <code>&lt;color&gt;</code> can be 0 or 1.</p>
 
-<h4>fenix</h4>
+<h4 id="fenix">fenix</h4>
 
 <pre><code>spawn fenix &lt;x&gt; &lt;y&gt; &lt;dir&gt;
 </code></pre>
 
 <p>Spawn a fenix bird. The syntax is the same as for the bat.</p>
 
-<h4>fish</h4>
+<h4 id="fish">fish</h4>
 
 <pre><code>spawn fish &lt;x&gt; &lt;y&gt; &lt;dir&gt; &lt;frames&gt; &lt;vy&gt; &lt;ay&gt;
 example: spawn fish 5 11 rdir 48 -850 16
@@ -375,7 +459,7 @@ example: spawn fish 5 11 rdir 48 -850 16
 <code>&lt;frames&gt;</code> is the number of frames to wait until shooting (30 is one second).
 <code>&lt;vy&gt;</code> is the initial speed of the shot and <code>&lt;ay&gt;</code> the gravity.</p>
 
-<h4>grasshopper</h4>
+<h4 id="grasshopper">grasshopper</h4>
 
 <pre><code>spawn grassshopper &lt;x&gt; &lt;y&gt; &lt;action_string&gt;
 example: spawn grasshopper 2 11 RSURSLLRSUL
@@ -392,7 +476,7 @@ case letters. In this case they are:</p>
 </ul>
 
 
-<h4>lavashot</h4>
+<h4 id="lavashot">lavashot</h4>
 
 <pre><code>spawn lavashot &lt;x&gt; &lt;y&gt; &lt;two_tiles&gt; &lt;frames&gt; &lt;vy&gt; &lt;ay&gt;
 example: spawn lavashot 4 12 0 10 -800 16
@@ -404,7 +488,7 @@ that tile and the next. <code>&lt;frames&gt;</code> is the number of frames to w
 jumping (30 is one second). <code>&lt;vy&gt;</code> is the initial velocity and <code>&lt;ay&gt;</code> the
 gravity.</p>
 
-<h4>lavatongue</h4>
+<h4 id="lavatongue">lavatongue</h4>
 
 <pre><code>spawn lavatongue &lt;x&gt; &lt;y&gt; &lt;action_string&gt;
 </code></pre>
@@ -418,14 +502,14 @@ gravity.</p>
 </ul>
 
 
-<h4>moth</h4>
+<h4 id="moth">moth</h4>
 
 <pre><code>spawn moth &lt;x&gt; &lt;y&gt;
 </code></pre>
 
 <p>Spawns an electric moth.</p>
 
-<h4>oxigen</h4>
+<h4 id="oxigen">oxigen</h4>
 
 <pre><code>spawn oxigen &lt;x&gt; &lt;y&gt;
 </code></pre>
@@ -433,7 +517,7 @@ gravity.</p>
 <p>Spawns an oxygen bubble. Sorry for the typo, but in the game you must use
 <code>oxigen</code> instead of <code>oxygen</code>.</p>
 
-<h4>spider</h4>
+<h4 id="spider">spider</h4>
 
 <pre><code>spawn spider &lt;x&gt; &lt;y&gt; &lt;radius&gt; &lt;aw&gt; &lt;start_angle&gt;
 example: spawn spider 3 1 34 64 45 
@@ -444,7 +528,7 @@ example: spawn spider 3 1 34 64 45
 acceleration and <code>&lt;start_angle&gt;</code> is the angle in degrees where to start.
 (<em>TODO</em>: check this.)</p>
 
-<h4>wasp</h4>
+<h4 id="wasp">wasp</h4>
 
 <pre><code>spawn wasp &lt;x&gt; &lt;y&gt; &lt;dir&gt;
 example: spawn wasp 5 7 ldir
@@ -452,7 +536,7 @@ example: spawn wasp 5 7 ldir
 
 <p>Spawns a wasp. <code>&lt;dir&gt;</code> can be <code>ldir</code> or <code>rdir</code>.</p>
 
-<h4>platform</h4>
+<h4 id="platform">platform</h4>
 
 <pre><code>spawn platform &lt;x&gt; &lt;y&gt; &lt;anim&gt; &lt;anim_speed&gt;
 example: spawn platform 0 0 0 4
@@ -470,7 +554,7 @@ example: spawn platform 0 0 0 4
 <p><code>&lt;anim_speed&gt;</code> is the animation speed: it is the number of frames to show the
 current animation frame before passing to the next one.</p>
 
-<h4>gameover</h4>
+<h4 id="gameover">gameover</h4>
 
 <pre><code>spawn gameover &lt;x&gt; &lt;y&gt;
 </code></pre>
@@ -478,7 +562,7 @@ current animation frame before passing to the next one.</p>
 <p>Spawns the GAME OVER animated text. Only the <code>&lt;y&gt;</code> coordinate is used: it is
 centered horizontally.</p>
 
-<h4>menu</h4>
+<h4 id="menu">menu</h4>
 
 <pre><code>spawn menu &lt;x&gt; &lt;y&gt; &lt;text&gt;
 example: spawn menu 0 0 JOHANNA BRAHE|IN|© 2016 JORGE GINER~ 
@@ -488,14 +572,14 @@ example: spawn menu 0 0 JOHANNA BRAHE|IN|© 2016 JORGE GINER~
 string with three elements separated by a <code>|</code> . The two first are drawn at the
 top usgin two lines. The last is drawn at the bottom after the version number.</p>
 
-<h4>hiscore</h4>
+<h4 id="hiscore">hiscore</h4>
 
 <pre><code>spawn hiscore &lt;x&gt; &lt;y&gt;
 </code></pre>
 
 <p>Spawns the hi-score table.</p>
 
-<h4>stargate</h4>
+<h4 id="stargate">stargate</h4>
 
 <pre><code>spawn stargate &lt;x&gt; &lt;y&gt; &lt;id&gt; &lt;gotorid&gt; &lt;gotogateid&gt; &lt;nextgate&gt; &lt;ac&gt; &lt;arrowd&gt;
 example: spawn stargate 7 5 8 0x18 3 4 0 2
@@ -519,7 +603,7 @@ the cosmonaut.</li>
 </ul>
 
 
-<h3>music</h3>
+<h3 id="music">music</h3>
 
 <pre><code>music &lt;music_file_name&gt;
 example: music lava.xm
@@ -527,7 +611,7 @@ example: music lava.xm
 
 <p>Starts a music file.</p>
 
-<h3>new_path</h3>
+<h3 id="new_path">new_path</h3>
 
 <pre><code>new_path &lt;tx&gt; &lt;ty&gt;
 </code></pre>
@@ -538,14 +622,14 @@ path. The first <code>new_path</code> command that we see in the level init file
 the path number 0, the next the number 1, etc. We will use that id later to
 assign paths to spawned objects.</p>
 
-<h3>add_path_point</h3>
+<h3 id="add_path_point">add_path_point</h3>
 
 <pre><code>add_path_point &lt;tx&gt; &lt;ty&gt;
 </code></pre>
 
 <p>Adds a point to the last path created with <code>new_path</code>.</p>
 
-<h3>set_path</h3>
+<h3 id="set_path">set_path</h3>
 
 <pre><code>set_path &lt;id&gt; &lt;pointnum&gt; &lt;speed&gt; &lt;loop&gt;
 example: set_path 2 0 96 1
@@ -557,14 +641,14 @@ the path. <code>&lt;pointnum&gt;</code> is the starting point number in the path
 or 0. 1 means that when the actor reaches the end of the path it will came
 back.</p>
 
-<h3>wait</h3>
+<h3 id="wait">wait</h3>
 
 <pre><code>wait
 </code></pre>
 
 <p>Waits for the player to press <code>RETURN</code> or <code>ESC</code>.</p>
 
-<h3>wait_hiscore</h3>
+<h3 id="wait_hiscore">wait_hiscore</h3>
 
 <pre><code>wait_hiscore
 </code></pre>
@@ -573,7 +657,7 @@ back.</p>
 not.  This waits until we finish entering our initials or does nothing
 otherwise.</p>
 
-<h3>text</h3>
+<h3 id="text">text</h3>
 
 <pre><code>text &lt;x&gt; &lt;y&gt; &lt;string&gt;
 example: text 1 7 PORTALS, FOUND BURIED...
@@ -584,7 +668,7 @@ case. <code>&lt;x&gt;</code>, <code>&lt;y&gt;</code> is the tile postion where w
 positions are in 8x8 pixels coordinates (instead of 16x16). Does automatic text
 wrapping.</p>
 
-<h3>textf</h3>
+<h3 id="textf">textf</h3>
 
 <pre><code>textf &lt;x&gt; &lt;y&gt; &lt;string&gt;
 example: text 1 7 PORTALS, FOUND BURIED...
@@ -592,7 +676,7 @@ example: text 1 7 PORTALS, FOUND BURIED...
 
 <p>Like <em>text</em> but draws all the characters immediately.</p>
 
-<h3>textfc</h3>
+<h3 id="textfc">textfc</h3>
 
 <pre><code>textfc &lt;x&gt; &lt;y&gt; &lt;w&gt; &lt;string&gt;
 example: textc 1 7 24 PORTALS, FOUND BURIED...
@@ -601,14 +685,14 @@ example: textc 1 7 24 PORTALS, FOUND BURIED...
 <p>Like <em>textf</em> but draws all the characters centered. It will center the string
 at <code>x + w / 2</code>.</p>
 
-<h3>clrscr</h3>
+<h3 id="clrscr">clrscr</h3>
 
 <pre><code>clrscr
 </code></pre>
 
 <p>Clears all text drawn.</p>
 
-<h3>scroll</h3>
+<h3 id="scroll">scroll</h3>
 
 <pre><code>scroll &lt;level id&gt;
 example: scroll 0x30
@@ -617,7 +701,7 @@ example: scroll 0x30
 <p>Makes the screen to scroll from the current loaded level to the level
 specified, and then execute the new level init script.</p>
 
-<h3>load</h3>
+<h3 id="load">load</h3>
 
 <pre><code>load &lt;level_id&gt;
 example: load 0x30
@@ -625,7 +709,7 @@ example: load 0x30
 
 <p>Loads a level immediately. The next script commands are not executed.</p>
 
-<h3>endstate</h3>
+<h3 id="endstate">endstate</h3>
 
 <pre><code>endstate
 </code></pre>
@@ -643,21 +727,21 @@ executed. Each state specifies where to go when we call <em>endstate</em>:</p>
 </ul>
 
 
-<h3>fadeout</h3>
+<h3 id="fadeout">fadeout</h3>
 
 <pre><code>fadeout
 </code></pre>
 
 <p>Fades to black.</p>
 
-<h3>fadein</h3>
+<h3 id="fadein">fadein</h3>
 
 <pre><code>fadein
 </code></pre>
 
 <p>Fades from black.</p>
 
-<h1>Languages</h1>
+<h1 id="Languages">Languages</h1>
 
 <p>The file <em>langlist.txt</em> contains the languages that the game supports.</p>
 
@@ -689,8 +773,9 @@ tilde <code>~</code>.</p>
 <p>The lines can have a escape code formed by two characters: <code>\n</code>. This is used
 to instert a line break.</p>
 
-<h1>Demo files</h1>
+<h1 id="Demo%20files">Demo files</h1>
 
 <p>To be described.</p>
+
 </body>
 </html>

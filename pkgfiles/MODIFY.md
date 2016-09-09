@@ -2,6 +2,16 @@
 % Jorge Giner
 % 28 August 2016
 
+# License
+
+~~~
+Copyright © 2016 Jorge Giner
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+~~~
+
 # Intro
 
 The game is designed so you can easily modify or create new levels. This

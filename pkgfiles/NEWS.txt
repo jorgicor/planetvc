@@ -1,3 +1,14 @@
+2016-09-09
+
+	* Version 1.07
+
+	* Added guide to modify the game: MODIFY.html .
+
+	* Added required copyright notice for libxmp-lite in license file.
+
+	* Removed references for itch.io or gamejolt.com for the Steam
+	  versions.
+
 2016-08-24
 
 	* Version 1.06

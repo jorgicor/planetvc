@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<?theme style?>
+	<style>
+	pre {
+		padding: 8px ;
+		border: 1px dotted blue ;
+		background-color: lavender ;
+	}
+	</style>
+	<title><?theme title?></title>
+</head>
+<body>
+<h1 style="text-align:center"><?theme title?></h1>
+<p style="text-align:center"><?theme date?></p>
+<p style="text-align:center"><?theme author?></p>
+<hr style="clear: left">
+<?theme toc?>
+<?theme body?>
+</body>
+</html>

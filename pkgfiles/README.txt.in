@@ -304,8 +304,8 @@ telling your ZIP software to only store the files. Do not add the folder data\
 to the ZIP file, just the files inside it.
 
 Documentation on how to modify the game or write new levels is found in the
-file MODIFY.html . You can find it online too at
-http://jorgicor.sdfeu.org/planetvc/modify.html .
+file MODIFY.html which comes with the full version of the game. You can find
+it online too at http://jorgicor.sdfeu.org/planetvc/modify.html .
 
 -----------
 12. Credits
