@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #ifndef COSMONAU_H
 #define COSMONAU_H
 

@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #ifndef OVER_ST_H
 #define OVER_ST_H
 

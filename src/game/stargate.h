@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #ifndef STARGATE_H
 #define STARGATE_H
 

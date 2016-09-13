@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #ifndef GAME_H
 #define GAME_H
 

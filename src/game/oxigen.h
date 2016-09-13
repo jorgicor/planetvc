@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #ifndef OXIGEN_H
 #define OXIGEN_H
 

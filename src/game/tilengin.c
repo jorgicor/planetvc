@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #include "tilengin.h"
 #include "kernel/kernel.h"
 #include "gamelib/vfs.h"

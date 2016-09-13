@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #include "cosmonau.h"
 #include "game.h"
 #include "input.h"

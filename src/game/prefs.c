@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #include "prefs.h"
 #include "readlin.h"
 #include "confpath.h"

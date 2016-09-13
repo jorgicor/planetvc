@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #include "gplay_st.h"
 #include "game.h"
 #include "input.h"

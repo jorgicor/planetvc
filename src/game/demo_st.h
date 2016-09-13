@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #ifndef DEMO_ST_H
 #define DEMO_ST_H
 

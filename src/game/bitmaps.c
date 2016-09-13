@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #include "bitmaps.h"
 #include "cbase/cbase.h"
 #include "gamelib/vfs.h"

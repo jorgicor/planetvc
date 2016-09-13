@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #include "msgbox.h"
 #include "tilengin.h"
 #include "strdraw.h"

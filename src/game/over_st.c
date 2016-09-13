@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #include "over_st.h"
 #include "game.h"
 #include "tilengin.h"

@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #include "input.h"
 #include "kernel/kernel.h"
 #include "cbase/cbase.h"

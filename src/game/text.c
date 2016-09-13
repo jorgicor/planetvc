@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #include "text.h"
 #include "readlin.h"
 #include "gamelib/lang.h"

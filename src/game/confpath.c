@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #include "confpath.h"
 #include "gamelib/vfs.h"
 #include "kernel/kernel.h"

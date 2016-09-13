@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #include "stargate.h"
 #include "tilengin.h"
 #include "game.h"

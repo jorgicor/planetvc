@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #include "initfile.h"
 #include "gamelib/vfs.h"
 #include "cbase/kassert.h"

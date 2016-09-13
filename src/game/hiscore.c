@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #include "hiscore.h"
 #include "tilengin.h"
 #include "game.h"

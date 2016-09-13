@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #include "lavatong.h"
 #include "game.h"
 #include "tilengin.h"

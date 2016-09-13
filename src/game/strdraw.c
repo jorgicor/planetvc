@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #include "strdraw.h"
 #include "tilengin.h"
 #include "bitmaps.h"

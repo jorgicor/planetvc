@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #include "game.h"
 #include "load_st.h"
 #include "tilengin.h"

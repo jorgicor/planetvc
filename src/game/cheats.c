@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #include "cheats.h"
 #include "tilengin.h"
 #include "strdraw.h"

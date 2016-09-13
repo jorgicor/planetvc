@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #include "readlin.h"
 #include <ctype.h>
 #include <stdio.h>

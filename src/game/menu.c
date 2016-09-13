@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #include "menu.h"
 #include "text.h"
 #include "strdraw.h"

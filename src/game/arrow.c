@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #include "arrow.h"
 #include "bitmaps.h"
 #include "tilengin.h"

@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 #include "path.h"
 #include "cbase/cbase.h"
 #include "cbase/kassert.h"

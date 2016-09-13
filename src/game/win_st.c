@@ -1,3 +1,7 @@
+/*
+ * Copyright 2016 Jorge Giner Cordero
+ */
+
 /* The win state comes after end state for the player to put its name
  * and show the scores table. It is different from the over_st because
  * here the player didn't die.
