@@ -1,3 +1,11 @@
+2016-12-30
+
+	* Version 1.08
+
+	* Fixed pixels that bleed on the top and left borders, form the bottom
+	  and right borders, probably happening only when linear filtering is
+	  on on Windows.
+
 2016-09-09
 
 	* Version 1.07

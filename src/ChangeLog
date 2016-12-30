@@ -1,3 +1,9 @@
+2016-12-30
+
+	* kernel.c: we use a texture one pixel bigger than the game canvas, so
+	we avoid strange pixels bleeding on the top and left from the bottom
+	and right of the texture, probably only when linear filtering is on.
+
 2016-08-25
 
 	* log.c (log_init): using explicit format string for fprintf to fix

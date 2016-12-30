@@ -768,15 +768,20 @@ static void check_fullscreen(void)
 
 static void update(void)
 {
+	SDL_Rect sr;
+
 	check_fullscreen();
 	kernel_snd_update();
 	if (on_frame != NULL) {
 		on_frame(s_data);
 	}
-	SDL_UpdateTexture(s_backtex, NULL, s_backbuf->pixels,
-			  s_backbuf->pitch);
+
+	sr.x = sr.y = 0;
+	sr.w = s_backbuf->w;
+	sr.h = s_backbuf->h;
+	SDL_UpdateTexture(s_backtex, &sr, s_backbuf->pixels, s_backbuf->pitch);
 	SDL_RenderClear(s_renderer);
-	SDL_RenderCopy(s_renderer, s_backtex, NULL, NULL);
+	SDL_RenderCopy(s_renderer, s_backtex, &sr, NULL);
 	SDL_RenderPresent(s_renderer);
 }
 
@@ -901,9 +906,11 @@ static int run_backtex(const struct kernel_config *kcfg)
 {
 	int ret;
 
+	/* +1 to avoid texture clamping effects... */
 	s_backtex = SDL_CreateTexture(s_renderer, SDL_PIXELFORMAT_ARGB8888,
 				      SDL_TEXTUREACCESS_STREAMING,
-	       			      kcfg->canvas_width, kcfg->canvas_height);
+	       			      kcfg->canvas_width + 1,
+				      kcfg->canvas_height + 1);
 	if (s_backtex == NULL) {
 		ret = KERNEL_E_ERROR;
 	} else {

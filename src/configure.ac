@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_INIT([Planet of the Vicious Creatures],
-	[1.07],
+	[1.08],
 	[jorge.giner@hotmail.com],
 	planetvc,
 	[http://jorgicor.sdfeu.org/planetvc])
