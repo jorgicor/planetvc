@@ -116,7 +116,8 @@ enum {
 	KERNEL_NPAD_BUTTONS = KERNEL_KSC_PAD1_A - KERNEL_KSC_PAD0_A,
 	KERNEL_AXIS_H1 = 0,	/* horizontal axis */
 	KERNEL_AXIS_V1 = 1,	/* vertical axis */
-	KERNEL_NAXIS = 2
+	KERNEL_NAXIS = 2,
+	KERNEL_NFINGERS = 8,
 };
 
 /*
@@ -137,6 +138,14 @@ enum {
 	KERNEL_E_ERROR,			/* Generic error. */
 	KERNEL_E_INVALID_ARG,		/* Invalid function argument. */
 	KERNEL_E_MEM,			/* Not enough memory */
+};
+
+/* A finger touch position. */
+struct kernel_finger {
+	short valid;
+	short released;
+	float x;
+	float y;
 };
 
 /*
@@ -296,6 +305,10 @@ struct kernel_device {
 	 * Negative will be left, up. Positive right, down.
 	 */
 	int (*get_axis_value)(int npad, int axis);
+
+	void (*get_window_size)(int *w, int *h);
+	void (*insert_pad_event)(int down, int ksc);
+	const struct kernel_finger * (*get_finger)(int i);
 
 	/*
 	 * Path to read only application data.

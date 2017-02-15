@@ -54,9 +54,6 @@
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
 
-/* Android mode */
-#undef PP_ANDROID_MODE
-
 /* Enable cheats */
 #undef PP_DEBUG_ON
 
@@ -65,6 +62,9 @@
 
 /* Name of organization */
 #undef PP_ORG_NAME
+
+/* Phone mode with on screen controller */
+#undef PP_PHONE_MODE
 
 /* Use SDL to get the data folder instead of using DATADIR */
 #undef PP_SDL_DATADIR_ON

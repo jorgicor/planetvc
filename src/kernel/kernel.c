@@ -92,6 +92,8 @@ struct pad {
 
 static struct pad s_pads[KERNEL_NPADS];
 
+static struct kernel_finger s_fingers[KERNEL_NFINGERS];
+
 static SDL_LogOutputFunction s_sdl_log_func = NULL;
 
 static SDL_LogOutputFunction get_sdl_log_func(void)
@@ -706,12 +708,54 @@ static void on_joystick_axis(const SDL_JoyAxisEvent *ev)
 }
 #endif
 
+static void on_finger_down(const SDL_TouchFingerEvent *ev)
+{
+	if (ev->fingerId < 0 || ev->fingerId >= KERNEL_NFINGERS)
+		return;
+
+	s_fingers[ev->fingerId].valid = 1;
+	s_fingers[ev->fingerId].released = 0;
+	s_fingers[ev->fingerId].x = ev->x;
+	s_fingers[ev->fingerId].y = ev->y;
+}
+
+static void on_finger_motion(const SDL_TouchFingerEvent *ev)
+{
+	if (ev->fingerId < 0 || ev->fingerId >= KERNEL_NFINGERS)
+		return;
+
+	s_fingers[ev->fingerId].valid = 1;
+	s_fingers[ev->fingerId].released = 0;
+	s_fingers[ev->fingerId].x = ev->x;
+	s_fingers[ev->fingerId].y = ev->y;
+}
+
+static void on_finger_up(const SDL_TouchFingerEvent *ev)
+{
+	if (ev->fingerId < 0 || ev->fingerId >= KERNEL_NFINGERS)
+		return;
+
+	s_fingers[ev->fingerId].released = 1;
+}
+
+static void clean_released_fingers(void)
+{
+	int i;
+
+	for (i = 0; i < KERNEL_NFINGERS; i++) {
+		if (s_fingers[i].released) {
+			s_fingers[i].valid = 0;
+		}
+	}
+}
+
 static void handle_event(const SDL_Event *ev)
 {
 	switch (ev->type) {
 	case SDL_QUIT: s_running = 0; break;
 	case SDL_KEYDOWN: handle_keydown(&ev->key); break;
 	case SDL_KEYUP: handle_keyup(&ev->key); break;
+#if !defined(PP_PHONE_MODE)
 	case SDL_CONTROLLERDEVICEADDED:
 		on_controller_added(&ev->cdevice);
 	       	break;
@@ -727,6 +771,7 @@ static void handle_event(const SDL_Event *ev)
 	case SDL_CONTROLLERAXISMOTION:
 		on_controller_axis(&ev->caxis);
 		break;
+#endif
 #if KERNEL_JOYSTICK_SUPPORT
 	case SDL_JOYDEVICEADDED:
 		on_joystick_added(&ev->jdevice);
@@ -745,6 +790,17 @@ static void handle_event(const SDL_Event *ev)
 		break;
 	case SDL_JOYHATMOTION:
 		on_joystick_hat(&ev->jhat);
+		break;
+#endif
+#if defined(PP_PHONE_MODE)
+	case SDL_FINGERDOWN:
+		on_finger_down(&ev->tfinger);
+		break;
+	case SDL_FINGERMOTION:
+		on_finger_motion(&ev->tfinger);
+		break;
+	case SDL_FINGERUP:
+		on_finger_up(&ev->tfinger);
 		break;
 #endif
 	}
@@ -866,6 +922,7 @@ static int run_loop(const struct kernel_config *kcfg)
 				passed -= frame_ms;
 			update();
 			clean_first_pressed_keys();
+			clean_released_fingers();
 		}
 		if (s_running) {
 			nevents = 0;
@@ -1124,6 +1181,43 @@ static char *get_config_path(const char *org, const char *app)
 	return SDL_GetPrefPath(org, app);
 }
 
+static void get_window_size(int *w, int *h)
+{
+	if (s_win != NULL) {
+		SDL_GetWindowSize(s_win, w, h);
+	} else {
+		if (w != NULL) {
+			*w = 0;
+		}
+		if (h != NULL) {
+			*h = 0;
+		}
+	}
+}
+
+static void insert_pad_event(int down, int ksc)
+{
+	if (down) {
+		if (ksc >= 0) {
+			s_key_down[ksc] = 1;
+			s_key_first_pressed[ksc] = 1;
+		}
+	} else {
+		s_key_down[ksc] = 0;
+	}
+}
+
+static const struct kernel_finger *get_finger(int i)
+{
+	if (i < 0 || i >= KERNEL_NFINGERS)
+		return NULL;
+
+	if (s_fingers[i].valid == 0)
+		return NULL;
+
+	return &s_fingers[i];
+}
+
 static const struct kernel_device s_device = {
 	.run = run,
 	.stop = stop,
@@ -1136,6 +1230,9 @@ static const struct kernel_device s_device = {
 	.clear_down_keys = clean_key_states,
 	.get_config_path = get_config_path,
 	.trace = trace,
+	.get_window_size = get_window_size,
+	.insert_pad_event = insert_pad_event,
+	.get_finger = get_finger,
 };
 
 const struct kernel_device *kernel_get_device(void)

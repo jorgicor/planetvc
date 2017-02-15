@@ -15,8 +15,8 @@ AH_TEMPLATE([PP_DEBUG_ON], [Enable cheats])
 AH_TEMPLATE([PP_DEMO_ON], [Demo version])
 AH_TEMPLATE([PP_SDL_DATADIR_ON],
 	    [Use SDL to get the data folder instead of using DATADIR])
-AH_TEMPLATE([PP_ANDROID_MODE],
-	    [Android mode])
+AH_TEMPLATE([PP_PHONE_MODE],
+	    [Phone mode with on screen controller])
 AC_ARG_ENABLE(debugmode,
 	AS_HELP_STRING([--enable-debugmode], [compile debug version]))
 AC_ARG_ENABLE(demoversion,
@@ -26,8 +26,9 @@ AC_ARG_ENABLE(x11,
 AC_ARG_ENABLE(sdl-datadir,
 	AS_HELP_STRING([--enable-sdl-datadir],
 		[use SDL to get the data folder instead of using datadir]))
-AC_ARG_ENABLE(android-mode,
-	AS_HELP_STRING([--enable-android-mode], [simulate android]))
+AC_ARG_ENABLE(phone-mode,
+	AS_HELP_STRING([--enable-phone-mode],
+		       [phone mode with on-screen butons]))
 
 AC_CONFIG_AUX_DIR(config)
 AM_INIT_AUTOMAKE([subdir-objects -Wall -Werror -Wportability gnu])
@@ -83,8 +84,8 @@ if test "${enable_sdl_datadir}" = yes; then
 	AC_DEFINE([PP_SDL_DATADIR_ON])
 fi
 AM_CONDITIONAL(USE_SDL_DATADIR, test "${enable_sdl_datadir}" = yes)
-if test "${enable_android_mode}" = yes; then
-	AC_DEFINE([PP_ANDROID_MODE])
+if test "${enable_phone_mode}" = yes; then
+	AC_DEFINE([PP_PHONE_MODE])
 fi
 
 # Checks for library functions.

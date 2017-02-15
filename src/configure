@@ -733,7 +733,7 @@ enable_debugmode
 enable_demoversion
 enable_x11
 enable_sdl_datadir
-enable_android_mode
+enable_phone_mode
 enable_silent_rules
 enable_dependency_tracking
 with_sdl_prefix
@@ -1373,7 +1373,7 @@ Optional Features:
   --enable-x11            link with X11 libraries
   --enable-sdl-datadir    use SDL to get the data folder instead of using
                           datadir
-  --enable-android-mode   simulate android
+  --enable-phone-mode     phone mode with on-screen butons
   --enable-silent-rules   less verbose build output (undo: "make V=1")
   --disable-silent-rules  verbose build output (undo: "make V=0")
   --enable-dependency-tracking
@@ -2152,9 +2152,9 @@ if test "${enable_sdl_datadir+set}" = set; then :
   enableval=$enable_sdl_datadir;
 fi
 
-# Check whether --enable-android-mode was given.
-if test "${enable_android_mode+set}" = set; then :
-  enableval=$enable_android_mode;
+# Check whether --enable-phone-mode was given.
+if test "${enable_phone_mode+set}" = set; then :
+  enableval=$enable_phone_mode;
 fi
 
 
@@ -5267,8 +5267,8 @@ else
   USE_SDL_DATADIR_FALSE=
 fi
 
-if test "${enable_android_mode}" = yes; then
-	$as_echo "#define PP_ANDROID_MODE 1" >>confdefs.h
+if test "${enable_phone_mode}" = yes; then
+	$as_echo "#define PP_PHONE_MODE 1" >>confdefs.h
 
 fi
 
