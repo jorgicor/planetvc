@@ -24,7 +24,10 @@
 #include "gamelib/mixer.h"
 #include "kernel/kernel.h"
 #include "cbase/kassert.h"
+#ifndef CONFIG_H
+#define CONFIG_H
 #include "config.h"
+#endif
 #include <string.h>
 
 static struct wav *wav_play;

@@ -2,7 +2,10 @@
  * Copyright 2016 Jorge Giner Cordero
  */
 
+#ifndef CONFIG_H
+#define CONFIG_H
 #include "config.h"
+#endif
 
 #ifdef DEBUG
 #ifdef HAVE_MCHECK_H
@@ -36,6 +39,7 @@
 #include "gameover.h"
 #include "hiscore.h"
 #include "arrow.h"
+#include "pad.h"
 #include "text.h"
 #include "prefs.h"
 #include "strdraw.h"
@@ -90,6 +94,7 @@ int main(int argc, char *argv[])
 	strdraw_init();
 	msgbox_init();
 	balloon_init();
+	pad_init();
 	cosmonau_init();
 	oxigen_init();
 	wasp_init();

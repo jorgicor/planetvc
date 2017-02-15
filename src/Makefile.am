@@ -96,6 +96,7 @@ planetvc_SOURCES =	$(RESOURCE) \
 			game/readlin.h game/readlin.c \
 			game/demosave.h game/demosave.c \
 			game/arrow.h game/arrow.c \
+			game/pad.h game/pad.c \
 			\
 			libxmp-lite/common.h libxmp-lite/control.c \
 			libxmp-lite/dataio.c \

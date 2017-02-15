@@ -10,7 +10,10 @@
 #include "cbase/cbase.h"
 #include "kernel/kernel.h"
 #include "cbase/kassert.h"
+#ifndef CONFIG_H
+#define CONFIG_H
 #include "config.h"
+#endif
 
 #ifdef HAVE_TGMATH_H
 #	include <tgmath.h>

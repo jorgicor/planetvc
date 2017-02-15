@@ -24,7 +24,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "kernel.h"
 #include "kernel_snd.h"
 #include "cbase/kassert.h"
+#ifndef CONFIG_H
+#define CONFIG_H
 #include "config.h"
+#endif
 #include <SDL.h>
 #include <stdarg.h>
 #include <stdlib.h>

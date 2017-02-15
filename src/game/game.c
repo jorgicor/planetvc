@@ -21,11 +21,15 @@
 #include "prefs.h"
 #include "demo_st.h"
 #include "hiscore.h"
+#include "pad.h"
 #include "gamelib/vfs.h"
 #include "gamelib/mixer.h"
 #include "kernel/kernel.h"
 #include "cbase/kassert.h"
+#ifndef CONFIG_H
+#define CONFIG_H
 #include "config.h"
+#endif
 #include <ctype.h>
 #include <string.h>
 #include <stdarg.h>
@@ -1214,6 +1218,8 @@ static void on_frame(void *data)
 		switch_to_state(&load_st);
 	}
 
+	update_pad();
+
 	if (s_cheats_debug_mode)  {
 		if (kd->key_first_pressed(KERNEL_KSC_P))
 			s_step_mode = !s_step_mode;
@@ -1230,7 +1236,7 @@ static void on_sound(void *data, unsigned char *samples, int nsamples)
 	mixer_generate((short *) samples, nsamples, 0);
 }
 
-static const struct kernel_config kcfg = {
+static struct kernel_config kcfg = {
 	.title = PACKAGE_NAME,
 	.canvas_width = TE_SCRW,
 	.canvas_height = TE_SCRH,
@@ -1248,6 +1254,7 @@ int game_run(void)
 	const struct kernel_device *d;
 
 	d = kernel_get_device();
+	kcfg.canvas_height += pad_scrh();
 	ret = d->run(&kcfg, NULL);
 	return ret;
 }

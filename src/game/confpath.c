@@ -5,7 +5,10 @@
 #include "confpath.h"
 #include "gamelib/vfs.h"
 #include "kernel/kernel.h"
+#ifndef CONFIG_H
+#define CONFIG_H
 #include "config.h"
+#endif
 #include <string.h>
 
 #ifndef STDLIB_H

@@ -11,7 +11,10 @@
 #include "debug.h"
 #include "kernel/kernel.h"
 #include "cbase/kassert.h"
+#ifndef CONFIG_H
+#define CONFIG_H
 #include "config.h"
+#endif
 #include <string.h>
 
 #ifdef HAVE_TGMATH_H
