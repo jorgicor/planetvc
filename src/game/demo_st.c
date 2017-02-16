@@ -30,6 +30,14 @@
 #endif
 
 enum {
+#if defined(PP_PHONE_MODE)
+	PHONE_ON = 1,
+#else
+	PHONE_ON = 0,
+#endif
+};
+
+enum {
 	NFRAME_KEYS = 256,
 	RANDOM = 1,
 	MAX_DEMOS = 256,
@@ -62,8 +70,13 @@ static void draw_centered(const char *s, int y)
 
 static void draw_hint(void)
 {
-	draw_centered("'ENTER' TO SKIP", TE_FMH - 2);
-	draw_centered("'ESC' TO EXIT", TE_FMH - 1);
+	if (PHONE_ON) {	
+		draw_centered("'A' TO SKIP", TE_FMH - 2);
+		draw_centered("'Y' TO EXIT", TE_FMH - 1);
+	} else {
+		draw_centered("'ENTER' TO SKIP", TE_FMH - 2);
+		draw_centered("'ESC' TO EXIT", TE_FMH - 1);
+	}
 }
 
 static void draw(void)

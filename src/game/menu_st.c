@@ -30,6 +30,14 @@
 #endif
 #include <string.h>
 
+enum {
+#ifdef PP_PHONE_MODE
+	PHONE_ON = 1,
+#else
+	PHONE_ON = 0,
+#endif
+};
+
 static struct wav *wav_play;
 
 #define TX_PLAY		"PLAY"
@@ -61,7 +69,11 @@ enum {
 enum {
 	MAIN_MENU_Y = 13,
 	OPTIONS_MENU_Y = 13,
+#if defined(PP_PHONE_MODE)
+	OP_MUSIC_INDEX = 0,
+#else
 	OP_MUSIC_INDEX = 1,
+#endif
 };
 
 static struct menu s_main_menu = {
@@ -77,7 +89,9 @@ static struct menu s_main_menu = {
 
 static struct menu s_options_menu_nodemo = {
 	.options = {
+#if !defined(PP_PHONE_MODE)
 		{ TX_REDEFINE, OP_REDEFINE },
+#endif
 		{ TX_MUSIC_OFF, OP_MUSIC },
 		{ TX_CREDITS, OP_CREDITS },
 		{ TX_BACK, OP_BACK },
@@ -87,7 +101,9 @@ static struct menu s_options_menu_nodemo = {
 
 static struct menu s_options_menu = {
 	.options = {
+#if !defined(PP_PHONE_MODE)
 		{ TX_REDEFINE, OP_REDEFINE },
+#endif
 		{ TX_MUSIC_OFF, OP_MUSIC },
 		{ TX_DEMO, OP_DEMO },
 		{ TX_CREDITS, OP_CREDITS },
@@ -249,10 +265,18 @@ static void draw_hint(void)
 	int x;
 	const char *str;
 
-	str = "USE i j OR 'SPACE'";
+	if (PHONE_ON) {
+		str = "USE i OR j";
+	} else {
+		str = "USE i j OR 'SPACE'";
+	}
 	x = (TE_FMW - utf8_strlen(_(str))) / 2;
 	draw_str(_(str), x, PRESS_KEY_Y - 1, 0);
-	str = "'ENTER' TO SELECT";
+	if (PHONE_ON) {
+		str = "'A' TO SELECT";
+	} else {
+		str = "'ENTER' TO SELECT";
+	}
 	x = (TE_FMW - utf8_strlen(_(str))) / 2;
 	draw_str(_(str), x, PRESS_KEY_Y, 0);
 }

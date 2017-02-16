@@ -25,6 +25,14 @@
 #include <string.h>
 #endif
 
+enum {
+#ifdef PP_PHONE_MODE
+	PHONE_ON = 1,
+#else
+	PHONE_ON = 0,
+#endif
+};
+
 static struct bmp *bmp_hud;
 
 static FRAME(hud_cosmo, bmp_hud, 0, 0, 16, 16);
@@ -54,8 +62,12 @@ static struct frame *digit_frames[] = {
 };
 
 static const char *tx_restart[] = {
+#if defined(PP_PHONE_MODE)
+	"PRESS 'B'",
+#else
 	"PRESS 'RESTART'",
 	"OR 'ENTER'"
+#endif
 };
 
 static const char *tx_training[] = {
@@ -310,7 +322,9 @@ static void hud_update(struct actor *pac)
 	}
 
 	if (s_total_nlifes > 0 && !cosmonaut_is_teleporting()) {
-		if (cosmonaut_is_dead() && is_first_pressed(LKEYA)) {
+		if (!PHONE_ON && cosmonaut_is_dead() &&
+			is_first_pressed(LKEYA))
+	       	{
 			/* To allow for the enter key when dead. */
 			mixer_play(wav_opmove);
 			s_restart_scheduled = 1;

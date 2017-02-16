@@ -60,6 +60,7 @@ make_project () {
 	cp -r "$PKGPATH"/android-project/* "$BUILDPATH"
 
 	cp -r "$PKGPATH"/data "$BUILDPATH"/assets
+	cp "$PKGPATH"/pkgfiles/android/* "$BUILDPATH"/assets/data
 
 	ln -s "$SDLPATH"/src "$BUILDPATH"/jni/SDL
 	ln -s "$SDLPATH"/include "$BUILDPATH"/jni/SDL
