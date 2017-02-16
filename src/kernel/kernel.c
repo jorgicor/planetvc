@@ -51,6 +51,14 @@ enum {
 	SDL_DATADIR_ON = 0,
 #endif
 
+#ifdef PP_PHONE_MODE
+	FINGERS_ON = 1,
+	CONTROLLERS_ON = 0,
+#else
+	FINGERS_ON = 0,
+	CONTROLLERS_ON = 1,
+#endif
+
 };
 
 #define TRACE_CONTROLLER	0
@@ -324,8 +332,19 @@ static void clean_key_states(void)
 {
 	int i;
 
-	for (i = 0; i < KERNEL_NKEYS; i++)
+	for (i = 0; i < KERNEL_NKEYS; i++) {
 		s_key_down[i] = 0;
+	}
+
+#if 0
+	if (FINGERS_ON) {
+		for (i = 0; i < KERNEL_NFINGERS; i++) {
+			if (s_fingers[i].valid) {
+				s_fingers[i].released = 1;
+			}
+		}
+	}
+#endif
 }
 
 static void handle_keydown(const SDL_KeyboardEvent *ev)
@@ -742,6 +761,9 @@ static void clean_released_fingers(void)
 {
 	int i;
 
+	if (!FINGERS_ON)
+		return;
+
 	for (i = 0; i < KERNEL_NFINGERS; i++) {
 		if (s_fingers[i].released) {
 			s_fingers[i].valid = 0;
@@ -755,23 +777,31 @@ static void handle_event(const SDL_Event *ev)
 	case SDL_QUIT: s_running = 0; break;
 	case SDL_KEYDOWN: handle_keydown(&ev->key); break;
 	case SDL_KEYUP: handle_keyup(&ev->key); break;
-#if !defined(PP_PHONE_MODE)
 	case SDL_CONTROLLERDEVICEADDED:
-		on_controller_added(&ev->cdevice);
+		if (CONTROLLERS_ON) {
+			on_controller_added(&ev->cdevice);
+		}
 	       	break;
 	case SDL_CONTROLLERDEVICEREMOVED:
-	       	on_controller_removed(&ev->cdevice);
+		if (CONTROLLERS_ON) {
+			on_controller_removed(&ev->cdevice);
+		}
 	       	break;
 	case SDL_CONTROLLERBUTTONDOWN:
-		on_controller_buttondown(&ev->cbutton);
+		if (CONTROLLERS_ON) {
+			on_controller_buttondown(&ev->cbutton);
+		}
 		break;
 	case SDL_CONTROLLERBUTTONUP:
-		on_controller_buttonup(&ev->cbutton);
+		if (CONTROLLERS_ON) {
+			on_controller_buttonup(&ev->cbutton);
+		}
 		break;
 	case SDL_CONTROLLERAXISMOTION:
-		on_controller_axis(&ev->caxis);
+		if (CONTROLLERS_ON) {
+			on_controller_axis(&ev->caxis);
+		}
 		break;
-#endif
 #if KERNEL_JOYSTICK_SUPPORT
 	case SDL_JOYDEVICEADDED:
 		on_joystick_added(&ev->jdevice);
@@ -792,17 +822,21 @@ static void handle_event(const SDL_Event *ev)
 		on_joystick_hat(&ev->jhat);
 		break;
 #endif
-#if defined(PP_PHONE_MODE)
 	case SDL_FINGERDOWN:
-		on_finger_down(&ev->tfinger);
+		if (FINGERS_ON) {
+			on_finger_down(&ev->tfinger);
+		}
 		break;
 	case SDL_FINGERMOTION:
-		on_finger_motion(&ev->tfinger);
+		if (FINGERS_ON) {
+			on_finger_motion(&ev->tfinger);
+		}
 		break;
 	case SDL_FINGERUP:
-		on_finger_up(&ev->tfinger);
+		if (FINGERS_ON) {
+			on_finger_up(&ev->tfinger);
+		}
 		break;
-#endif
 	}
 }
 
