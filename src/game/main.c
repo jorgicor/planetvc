@@ -94,7 +94,6 @@ int main(int argc, char *argv[])
 	strdraw_init();
 	msgbox_init();
 	balloon_init();
-	pad_init();
 	cosmonau_init();
 	oxigen_init();
 	wasp_init();
@@ -117,6 +116,7 @@ int main(int argc, char *argv[])
 	hiscore_init();
 	demosave_init();
 	arrow_init();
+	pad_init();
 
 	/* Main loop */
 

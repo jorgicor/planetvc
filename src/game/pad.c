@@ -5,6 +5,7 @@
 #include "pad.h"
 #include "tilengin.h"
 #include "bitmaps.h"
+#include "game.h"
 #include "gamelib/bmp.h"
 #include "kernel/kernel.h"
 #include "cbase/cbase.h"
@@ -21,13 +22,10 @@ enum {
 #else
 	PADH = 0,
 #endif
+	BUTTONS_PER_ROW = 4,
 	PAD_SCRH = PADH * TE_BTW,
-	BDELTA = 12,
-	DX = TE_SCRW / 8,
-	DY = PAD_SCRH / 4,
-	BUTTON_W = 25,
-	BUTTON_H = 25,
-	RADIUS2 = 20 * 20,
+	DX = TE_SCRW / 4,
+	DY = PAD_SCRH / 2,
 };
 
 static struct bmp *bmp_pad = NULL;
@@ -40,27 +38,15 @@ static struct xypos {
 	int y;
 	int ksc;
 } s_button_pos[] = {
-	{ DX, DY, KERNEL_KSC_PAD0_Y },
-	{ 3 * DX, DY, KERNEL_KSC_PAD0_X },
-	{ 5 * DX, DY, KERNEL_KSC_PAD0_DUP },
-	{ 7 * DX, DY, KERNEL_KSC_PAD0_A },
-
-	{ DX, 3 * DY, KERNEL_KSC_PAD0_DLEFT },
-	{ 3 * DX, 3 * DY, KERNEL_KSC_PAD0_DRIGHT },
-	{ 5 * DX, 3 * DY, KERNEL_KSC_PAD0_B },
-	{ 7 * DX, 3 * DY, KERNEL_KSC_PAD0_DDOWN },
-
-#if 0
+	{ 0, 0, KERNEL_KSC_PAD0_X },
+	{ DX, 0, KERNEL_KSC_PAD0_Y },
+	{ 2 * DX, 0, KERNEL_KSC_PAD0_B },
+	{ 3 * DX, 0, KERNEL_KSC_PAD0_A },
+	
+	{ 0, DY, KERNEL_KSC_PAD0_DLEFT },
+	{ DX, DY, KERNEL_KSC_PAD0_DRIGHT },
 	{ 2 * DX, DY, KERNEL_KSC_PAD0_DUP },
-	{ 2 * DX, 3 * DY, KERNEL_KSC_PAD0_DDOWN },
-	{ DX, 2 * DY, KERNEL_KSC_PAD0_DLEFT },
-	{ 3 * DX, 2 * DY, KERNEL_KSC_PAD0_DRIGHT },
-
-	{ 6 * DX, DY, KERNEL_KSC_PAD0_Y },
-	{ 6 * DX, 3 * DY, KERNEL_KSC_PAD0_A },
-	{ 5 * DX, 2 * DY, KERNEL_KSC_PAD0_X },
-	{ 7 * DX, 2 * DY, KERNEL_KSC_PAD0_B },
-#endif
+	{ 3 * DX, DY, KERNEL_KSC_PAD0_DDOWN },
 };
 
 enum {
@@ -69,12 +55,14 @@ enum {
 
 static signed char s_button_was_down[NBUTTONS];
 static signed char s_button_down[NBUTTONS];
+static unsigned char s_button_draw_count[NBUTTONS];
 
 static void draw_pad(void)
 {
 	int i;
 	const struct kernel_device *d;
 	struct kernel_canvas *kcanvas;
+	struct rect r;
 
 	d = kernel_get_device();
 	kcanvas = d->get_canvas();
@@ -87,9 +75,26 @@ static void draw_pad(void)
 
 	reset_clip(s_screen.w, s_screen.h);
 
+	r.w = DX;
+	r.h = DY;
 	for (i = 0; i < NBUTTONS; i++) {
-		draw_bmp(bmp_pad, s_button_pos[i].x - BDELTA,
-			 s_button_pos[i].y - BDELTA, &s_screen, NULL);
+		if (s_button_draw_count[i] == 0) {
+			r.x = s_button_pos[i].x; 
+			r.y = s_button_pos[i].y;
+			if (s_button_down[i]) {
+				r.y += DY * 2;
+			}
+			draw_bmp(bmp_pad, s_button_pos[i].x, s_button_pos[i].y,
+				 &s_screen, &r);
+		}
+		/* This will make the button draw inconditionally if a 
+		 * second passes...
+		 * As we are only drawing buttons when changed, I am not sure
+		 * if the surface where we draw can go away... We must suppose
+		 * that maybe it can go away and be recreated, thus having
+		 * garbage...
+		 */
+		s_button_draw_count[i] = (s_button_draw_count[i] + 1) % FPS;
 	}
 }
 
@@ -98,7 +103,7 @@ void update_pad(void)
 	const struct kernel_device *d;
 	const struct kernel_finger *kfinger;
 	float scale, dy;
-	int i, b, x, y, scrw, scrh, distx, disty;
+	int i, b, x, y, scrw, scrh;
 
 	if (!(PADH > 0 && bmp_pad != NULL)) {
 		return;
@@ -122,14 +127,15 @@ void update_pad(void)
 		y = ((kfinger->y * scrh) - dy) / scale;
 		// ktrace("finger %g %g %d %d", kfinger->x, kfinger->y, x, y);
 		for (b = 0; b < NBUTTONS; b++) {
-			if (x > s_button_pos[b].x - DX &&
+			if (x >= s_button_pos[b].x &&
 			    x < s_button_pos[b].x + DX &&
-			    y > s_button_pos[b].y - DY &&
+			    y >= s_button_pos[b].y &&
 			    y < s_button_pos[b].y + DY)
 		       	{
 				if (s_button_was_down[b]) {
 					s_button_down[b] = 1;
 				} else if(!s_button_down[b]) {
+					s_button_draw_count[b] = 0;
 					s_button_down[b] = 1;
 					d->insert_pad_event(1,
 						s_button_pos[b].ksc);
@@ -155,6 +161,7 @@ void update_pad(void)
 
 	for (b = 0; b < NBUTTONS; b++) {
 		if (s_button_was_down[b] && !s_button_down[b]) { 
+			s_button_draw_count[b] = 0;
 			d->insert_pad_event(0, s_button_pos[b].ksc);
 		}
 	}

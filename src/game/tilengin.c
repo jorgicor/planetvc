@@ -1331,7 +1331,7 @@ void te_begin_draw(void)
 
 	te_screen.pixels = (unsigned char *) kcanvas->pixels;
 	te_screen.w = kcanvas->w;
-	te_screen.h = kcanvas->h;
+	te_screen.h = TE_SCRH;
 	te_screen.pitch = kcanvas->pitch;
 
 	reset_clip(te_screen.w, te_screen.h);
