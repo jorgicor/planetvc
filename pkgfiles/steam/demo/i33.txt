@@ -3,8 +3,9 @@ clrscr ~
 textf 1 7 TRANSLATION~
 textf 1 10 m ANA ALVES (PT)~
 textf 1 12 m ANNA JAKUBIEC (FR, PL)~
-textf 1 14 m FABIO TRICARICO (IT)~
-textf 1 16 m JORGE GINER (LSF)~
+textf 1 14 m ELAINE SUCHARA GOMES (PT-BR)~
+textf 1 16 m FABIO TRICARICO (IT)~
+textf 1 18 m JORGE GINER (LSF)~
 wait ~
 clrscr ~
 textf 1 6 TOOLS~
