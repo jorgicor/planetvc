@@ -1,6 +1,7 @@
 #!/bin/sh
 
 APP="org.jorgicor.planetvc"
+APPNAME="The Planet of the Vicious Creatures"
 
 case $# in
 	1) SDLPATH="$1" ;;
@@ -50,6 +51,11 @@ BASEPATH=`pwd -P`
 BUILDPATH="$BASEPATH"/'android.build'
 
 make_project () {
+	local name
+	local sources
+	local APPARR
+	local ACTIVITY
+
 	if [ ! -f "$PKGPATH"/datapak/data.pak ]; then
 	    echo "Could not find $PKGPATH/datapak/data.pak"
 	    return
@@ -59,8 +65,8 @@ make_project () {
 	mkdir -p "$BUILDPATH"
 	cp -r "$PKGPATH"/android-project/* "$BUILDPATH"
 
-	cp -r "$PKGPATH"/data "$BUILDPATH"/assets
-	cp "$PKGPATH"/pkgfiles/android/* "$BUILDPATH"/assets/data
+	# cp -r "$PKGPATH"/data "$BUILDPATH"/assets
+	# cp "$PKGPATH"/pkgfiles/android/* "$BUILDPATH"/assets/data
 
 	ln -s "$SDLPATH"/src "$BUILDPATH"/jni/SDL
 	ln -s "$SDLPATH"/include "$BUILDPATH"/jni/SDL
@@ -106,6 +112,7 @@ make_project () {
 
 	sed -i "s|SDLActivity|$ACTIVITY|g" "$BUILDPATH"/AndroidManifest.xml
 	sed -i "s|SDLActivity|$APP|g" "$BUILDPATH"/build.xml
+	sed -i "s|SDL App|$APPNAME|g" "$BUILDPATH"/res/values/strings.xml
 
 	# Fill in a default Activity
 	echo "package $APP;" > "$ACTIVITY.java"
@@ -114,10 +121,43 @@ make_project () {
 
 	cd "$BASEPATH"
 
-	# Update project and build
+	# Update project
 	cd "$BUILDPATH"
 	"$ANDROID" update project --path "$BUILDPATH" --target android-12
 	cd "$BASEPATH"
+}
+
+copy_data () {
+	local fd
+
+	local datad="$PKGPATH"/data
+	local buildd="$BUILDPATH"/assets/data
+
+	if [ ! -d $BUILDPATH ]; then
+		echo "Can't find $BUILDPATH."
+		return
+	fi
+
+	rm -rf "$buildd"
+	mkdir -p "$buildd"
+
+	for fd in "$datad"/*.bmp; do
+		local f=`basename $fd`
+		local origsize=$(stat -c%s $fd)
+		local ncolors=$(identify -format %k $fd)
+		convert $fd -colors $ncolors BMP3:"$buildd"/$f
+		local newsize=$(stat -c%s "$buildd"/$f)
+		local percent=`echo "$newsize*100/$origsize" | bc`
+		if [ $newsize -lt $origsize ]; then
+			echo "File $f (ncolors $ncolors) will be $percent% of original"
+		else
+			cp $fd "$buildd"
+		fi
+	done
+	cp "$datad"/*.txt "$buildd"
+	cp "$datad"/*.xm "$buildd"
+	cp "$datad"/*.wav "$buildd"
+	cp "$PKGPATH"/pkgfiles/android/* "$buildd"
 }
 
 build () {
@@ -126,7 +166,7 @@ build () {
 	"$ANT" debug
 	cd "$BASEPATH"
 
-	APK="$BUILDPATH/bin/$APP-debug.apk"
+	local APK="$BUILDPATH/bin/$APP-debug.apk"
 
 	if [ -f "$APK" ]; then
 	    echo "Your APK is ready at $APK"
@@ -134,7 +174,7 @@ build () {
 	    echo "cd  $BUILDPATH"
 	    echo "ant debug install"
 	else
-		echo "There was an error building the APK"
+	    echo "There was an error building the APK"
 	fi
 }
 
@@ -143,7 +183,8 @@ show_menu () {
 	echo " M E N U "
 	echo "*********"
 	echo "1. Recreate project skeleton in ./android.build"
-	echo "2. Build"
+	echo "2. Copy assets from data/ and optimize BMPs into project"
+	echo "3. Build"
 	echo "0. Exit"
 }
 
@@ -153,7 +194,8 @@ read_option () {
 	read choice
 	case $choice in
 		1) make_project ;;
-		2) build ;;
+		2) copy_data ;;
+		3) build ;;
 		0) exit 0 ;;
 		*) echo "Wrong option" ;;
 	esac

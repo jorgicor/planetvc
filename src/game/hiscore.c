@@ -28,6 +28,14 @@
 #include <string.h>
 #endif
 
+enum {
+#ifdef PP_PHONE_MODE
+	PHONE_ON = 1,
+#else
+	PHONE_ON = 0,
+#endif
+};
+
 static struct hiscore {
 	char name[4];
 	int nvisited;
@@ -185,10 +193,19 @@ static void draw_hint(int y)
 	int x;
 	const char *str;
 
-	str = "USE i j OR 'SPACE'";
+	if (PHONE_ON) {
+		str = "USE i OR j";
+	} else {
+		str = "USE i j OR 'SPACE'";
+	}
 	x = (TE_FMW - utf8_strlen(_(str))) / 2;
 	draw_str(_(str), x, y, 0);
-	str = "'ENTER' TO SELECT";
+
+	if (PHONE_ON) {
+		str = "'A' TO SELECT";
+	} else {
+		str = "'ENTER' TO SELECT";
+	}
 	x = (TE_FMW - utf8_strlen(_(str))) / 2;
 	draw_str(_(str), x, y + 1, 0);
 }

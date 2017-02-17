@@ -1,0 +1,13 @@
+music menu.xm ~
+spawn stargate 9 7 -1 -1 -1 -1 1 ~
+clrscr ~
+text 1 7 PORTALS...\nFOUND BURIED ON EARTH.\nWHO MADE THEM? WE KNOW NOT.\n- PRESS 'B' -~
+wait ~
+clrscr ~
+text 1 7 NOW WE HUMBLE HUMANS USE THEM TO TRAVEL TO THE STARS...~
+wait ~
+clrscr ~
+text 1 7 BUT ONCE WE GO THROUGH THEM, WE HAVE TO FIND ANOTHER TO COME BACK.~
+wait ~
+scroll 0x32 ~
+.
