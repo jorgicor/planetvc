@@ -220,8 +220,25 @@ static const struct langstr_info s_langstr_map[] = {
 	{ "zulu", "zu" },
 };
 
-/* Let space for iso 639 3 digit codes. */
-static char s_lang[4] = "en";
+/* this table must be sorted to do binary search. */
+static const struct langstr_info s_regionstr_map[] = {
+	{ "brazil", "br" },
+};
+
+struct langregion {
+	const char *lang;
+	const char *region;	
+};
+
+/* If a language and region matches any of these elements, they will be
+ * joined to form a locale with the two, for example: "pt" and "br" -> "ptbr".
+ */
+static const struct langregion s_langregions[] = {
+	{ "pt", "br" },
+};
+
+/* Let space for 2 chars language and 2 chars region. */
+static char s_lang[5] = "en";
 
 static int langstr_cmp(const void *k, const void *elem)
 {
@@ -268,9 +285,47 @@ static char *Android_GetLocale(void)
 }
 #endif
 
+/* Tries to match region and if needed appends it to the current s_lang. */
+static void append_region(const char *region)
+{
+	int i;
+	struct langstr_info *pinfo;
+	const char *isocode;
+
+	pinfo = bsearch(region, s_regionstr_map, NELEMS(s_regionstr_map),
+		        sizeof(*pinfo), langstr_cmp);
+
+	if (pinfo == NULL) {
+		if (strlen(region) == 2) {
+			isocode = region;
+		} else {
+			return;
+		}
+	} else {
+		isocode = pinfo->isocode;
+	}
+
+	/* Try to find s_lang + region code in s_langregions.
+	 * If found, form s_lang with lang + region.
+	 */
+	for (i = 0; i < NELEMS(s_langregions); i++) { 
+		if (strcmp(s_langregions[i].lang, s_lang) == 0 &&
+		    strcmp(s_langregions[i].region, isocode) == 0)
+		{
+			if (kassert_fails(strlen(s_lang) + strlen(isocode) <
+					  NELEMS(s_lang)))
+			{
+				return;
+			}
+			strcat(s_lang, isocode);
+			break;
+		}
+	}
+}
+
 const char *guess_lang(void)
 {
-	char *loc, *p;
+	char *loc, *p, *region;
 	struct langstr_info *pinfo;
 
 #ifdef ANDROID
@@ -285,12 +340,44 @@ const char *guess_lang(void)
 		return s_lang;
 	}
 
+#if 0
+	free(loc);
+	loc = dupstr("English_United States.1234");
+#endif
+#if 0
+	free(loc);
+	loc = dupstr("Portuguese_Brazil.1234");
+#endif
+#if 0
+	free(loc);
+	loc = dupstr("pt_BR");
+#endif
+
 	ktrace("setlocale() is %s", loc);
 	for (p = loc; *p != '\0'; p++) { 
 		*p = tolower(*p);
 	}
 
-	/* Find first non letter. */
+	/* Find region first, if any */
+	region = p;	/* Point to '\0' by default */
+	for (p = loc; *p != '\0'; p++) { 
+		if (*p == '_') {
+			region = p + 1;
+			break;
+		}
+	}
+
+	/* Put \0 at the end of the region */
+	for (p = region; *p != '\0'; p++) {
+		if (*p != ' ' && !isalpha(*p)) {
+			*p = '\0';
+			break;
+		}
+	}
+
+	/* Now put '\0' at the end of the language name.
+	 * This discards any -xxx part.
+	 */
 	for (p = loc; *p != '\0'; p++) { 
 		if (!isalpha(*p)) {
 			*p = '\0';
@@ -299,14 +386,17 @@ const char *guess_lang(void)
 	}
 
 	/* try yo find it in our list */
-	ktrace("try to find lang %s", loc);
+	ktrace("try to find lang %s, region %s", loc, region);
 	pinfo = bsearch(loc, s_langstr_map, NELEMS(s_langstr_map),
 			sizeof(*pinfo), langstr_cmp);
 
+
 	if (pinfo != NULL) {
 		strcpy(s_lang, pinfo->isocode);
+		append_region(region);
 	} else if (strlen(loc) == 2) {
 		strcpy(s_lang, loc);
+		append_region(region);
 	}
 
 	free(loc);

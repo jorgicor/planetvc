@@ -8,6 +8,7 @@
 #include "gamelib/vfs.h"
 #include "kernel/kernel.h"
 #include "cbase/cbase.h"
+#include "cbase/kassert.h"
 #include <ctype.h>
 #include <stdlib.h>
 
@@ -40,7 +41,7 @@ struct lang_info {
 
 static struct lang_info s_langlist[NLANGS];
 static int s_nlangs;
-static char s_curlang[] = "en";
+static char s_curlang[5] = "en";
 
 /*
  * Maximum number of entries allowed.
@@ -160,8 +161,9 @@ static int get_lang_code_index(const char *code)
 	int i;
 
 	for (i = 0; i < s_nlangs; i++) {
-		if (strcmp(code, s_langlist[i].code) == 0)
+		if (strcmp(code, s_langlist[i].code) == 0) {
 			return i;
+		}
 	}
 
 	return -1;
@@ -190,7 +192,7 @@ int get_cur_lang_index(void)
 void load_lang(const char *lang_code)
 {
 	FILE *fp;
-	static char fname[16];
+	static char fname[32];
 	char key[READLIN_LINESZ];
 	char val[READLIN_LINESZ];
 	int i, keylen, vallen;
@@ -200,8 +202,12 @@ void load_lang(const char *lang_code)
 	snprintf(s_curlang, sizeof(s_curlang), "%s", lang_code);
 
 	snprintf(fname, sizeof(fname), "data/lang%s.txt", lang_code);
-	if ((fp = open_file(fname, NULL)) == NULL)
+	if ((fp = open_file(fname, NULL)) == NULL) {
+		if (strcmp(lang_code, "en") != 0) {
+			ktrace("language file does not exist: %s", fname);
+		}
 		return;
+	}
 
 	for (i = 1; i < NSYMS; i++) {
 		keylen = readlin(fp, key);

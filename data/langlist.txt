@@ -10,5 +10,7 @@ POLSKI
 pl
 PORTUGUÊS
 pt
+BRASILEIRO
+ptbr
 ~
 This file has to be saved in utf8.
