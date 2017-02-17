@@ -6,6 +6,11 @@
 #include <string.h>
 #include <locale.h>
 
+#if defined(ANDROID)
+#include <jni.h>
+#include <SDL.h>
+#endif
+
 struct langstr_info {
 	const char *langstr;
 	const char *isocode;
@@ -228,13 +233,53 @@ static int langstr_cmp(const void *k, const void *elem)
 	return strcmp(pk, pinfo->langstr);
 }
 
+#if defined(ANDROID)
+static char *Android_GetLocale(void)
+{
+	static char *locstr = NULL;
+
+	JNIEnv *env;
+	jobject theActivity;
+	jclass theClass;
+	jmethodID theMethod;
+	jstring retval;
+	const char *str;
+
+	if (locstr != NULL) {
+		free(locstr);
+		locstr = NULL;
+	}
+
+	env = (JNIEnv *) SDL_AndroidGetJNIEnv();
+	theActivity = (jobject) SDL_AndroidGetActivity();
+
+	theClass = (*env)->GetObjectClass(env, theActivity);
+	theMethod = (*env)->GetStaticMethodID(env, theClass, "getLocale",
+			"()Ljava/lang/String;");
+	retval = (*env)->CallStaticObjectMethod(env, theClass, theMethod);
+	str = (*env)->GetStringUTFChars(env, retval, NULL);
+	locstr = dupstr(str);
+	(*env)->ReleaseStringUTFChars(env, retval, str);
+
+	(*env)->DeleteLocalRef(env, theActivity);
+	(*env)->DeleteLocalRef(env, theClass);
+
+	return locstr;
+}
+#endif
+
 const char *guess_lang(void)
 {
 	char *loc, *p;
 	struct langstr_info *pinfo;
 
+#ifdef ANDROID
+	loc = dupstr(Android_GetLocale());
+#else
 	loc = dupstr(setlocale(LC_CTYPE, ""));
 	setlocale(LC_CTYPE, "C");
+#endif
+
 	if (loc == NULL) {
 		ktrace("setlocale() NULL");
 		return s_lang;

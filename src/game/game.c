@@ -325,13 +325,16 @@ static void exec_exits(char *args)
 static void update_wait_cmd(void)
 {
 	const struct kernel_device *d;
+	struct actor *pac;
 
 	d = kernel_get_device();
+	pac = get_actor(AC_COSMONAUT);
 	if (d->key_first_pressed(KERNEL_KSC_RETURN) ||
 		d->key_first_pressed(KERNEL_KSC_ESC) ||
 		is_first_pressed(LKEYB) ||
 		is_first_pressed(LKEYX) ||
-		is_first_pressed(LKEYY))
+		is_first_pressed(LKEYY) ||
+		(pac->update == NULL && is_first_pressed(LKEYA)))
 	{
 		mixer_play(wav_opmove);
 		s_code_fn = NULL;

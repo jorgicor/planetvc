@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.lang.reflect.Method;
+import java.util.Locale;
 
 import android.app.*;
 import android.content.*;
@@ -440,6 +441,13 @@ public class SDLActivity extends Activity {
                                                int naxes, int nhats, int nballs);
     public static native int nativeRemoveJoystick(int device_id);
     public static native String nativeGetHint(String name);
+
+    /**
+     * Called by game using JNI.
+     */
+    public static String getLocale() {
+	    return Locale.getDefault().toString();
+    }
 
     /**
      * This method is called by SDL using JNI.
