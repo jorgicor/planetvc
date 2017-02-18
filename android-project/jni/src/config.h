@@ -11,7 +11,7 @@
 #define PACKAGE_NAME "Planet of the Vicious Creatures"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "Planet of the Vicious Creatures 1.06"
+#define PACKAGE_STRING "Planet of the Vicious Creatures 1.09"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "planetvc"
@@ -20,20 +20,23 @@
 #define PACKAGE_URL "http://jorgicor.sdfeu.org/planetvc"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.06"
+#define PACKAGE_VERSION "1.09"
 
 /* Enable cheats */
-/* #undef PP_DEBUG_ON */
+/* #undef PP_DEBUG */
 
 /* Demo version */
-/* #undef PP_DEMO_ON */
+/* #undef PP_DEMO */
 
 /* Name of organization */
 #define PP_ORG_NAME "jorgicor"
 
+/* Phone mode with on screen controller */
+#define PP_PHONE_MODE 1
+
 /* Use SDL to get the data folder instead of using DATADIR */
-#define PP_SDL_DATADIR_ON 1
+#define PP_USE_SDL_DATADIR 1
 
 /* Version number of package */
-#define VERSION "1.06"
+#define VERSION "1.09"
 

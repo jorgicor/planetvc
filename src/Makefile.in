@@ -110,7 +110,7 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkgdatadir)" \
 	"$(DESTDIR)$(docdir)"
 PROGRAMS = $(bin_PROGRAMS)
-am__planetvc_SOURCES_DIST = game/resource.rc cbase/cbase.h \
+am__planetvc_SOURCES_DIST = game/resource.rc cfg/cfg.h cbase/cbase.h \
 	cbase/cbase.c cbase/kassert.h cbase/kassert.c kernel/kernel.h \
 	kernel/kernel.c kernel/kernel_snd.h kernel/kernel_snd.c \
 	kernel/kernel_snd_sdl.h kernel/kernel_snd_sdl.c \
@@ -119,12 +119,12 @@ am__planetvc_SOURCES_DIST = game/resource.rc cbase/cbase.h \
 	gamelib/bmp_draw.c gamelib/wav.h gamelib/wav_load.c \
 	gamelib/vfs.h gamelib/vfs.c gamelib/mixer.h gamelib/mixer.c \
 	gamelib/state.h gamelib/state.c gamelib/lang.h gamelib/lang.c \
-	game/debug.h game/cheats.c game/cheats.h game/confpath.h \
-	game/confpath.c game/log.c game/log.h game/data.c game/data.h \
-	game/bitmaps.c game/bitmaps.h game/sounds.c game/sounds.h \
-	game/tilengin.c game/tilengin.h game/path.c game/path.h \
-	game/main.c game/modplay.h game/modplay.c game/game.h \
-	game/game.c game/input.h game/input.c game/text.h game/text.c \
+	game/cheats.c game/cheats.h game/confpath.h game/confpath.c \
+	game/log.c game/log.h game/data.c game/data.h game/bitmaps.c \
+	game/bitmaps.h game/sounds.c game/sounds.h game/tilengin.c \
+	game/tilengin.h game/path.c game/path.h game/main.c \
+	game/modplay.h game/modplay.c game/game.h game/game.c \
+	game/input.h game/input.c game/text.h game/text.c \
 	game/strdraw.h game/strdraw.c game/load_st.h game/load_st.c \
 	game/gplay_st.h game/gplay_st.c game/menu_st.h game/menu_st.c \
 	game/fade_st.h game/fade_st.c game/over_st.h game/over_st.c \
@@ -460,6 +460,8 @@ planetvc_CFLAGS = $(SDL_CFLAGS) $(AM_CFLAGS)
 @HAVE_WINDRES_FALSE@RESOURCE = 
 @HAVE_WINDRES_TRUE@RESOURCE = game/resource.rc
 planetvc_SOURCES = $(RESOURCE) \
+			cfg/cfg.h \
+			\
 			cbase/cbase.h cbase/cbase.c \
 			cbase/kassert.h cbase/kassert.c \
 			\
@@ -476,7 +478,6 @@ planetvc_SOURCES = $(RESOURCE) \
 			gamelib/state.h gamelib/state.c \
 			gamelib/lang.h gamelib/lang.c \
 			\
-			game/debug.h \
 			game/cheats.c game/cheats.h \
 			game/confpath.h game/confpath.c \
 			game/log.c game/log.h \

@@ -9,9 +9,9 @@
 #include "bitmaps.h"
 #include "cosmonau.h"
 #include "sounds.h"
-#include "debug.h"
 #include "gamelib/mixer.h"
 #include "cbase/kassert.h"
+#include "cfg/cfg.h"
 #include <string.h>
 
 static struct bmp *bmp_fish = NULL;
@@ -203,7 +203,7 @@ static struct actor *spawn_fish_fp(int tx, int ty)
 
 void fish_init(void)
 {
-	if (DEMO_ON)
+	if (PP_DEMO)
 		return;
 	register_bitmap(&bmp_fish, "fish", 1, 0);
 	register_bitmap(&bmp_fishshot, "fishshot", 1, 0);

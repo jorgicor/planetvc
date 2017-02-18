@@ -9,9 +9,9 @@
 #include "bitmaps.h"
 #include "sounds.h"
 #include "cosmonau.h"
-#include "debug.h"
 #include "gamelib/mixer.h"
 #include "cbase/kassert.h"
+#include "cfg/cfg.h"
 
 static struct bmp *bmp_lavashot = NULL;
 static struct wav *wav_lavashot = NULL;
@@ -135,7 +135,7 @@ static struct actor *spawn_lavashot_fp(int tx, int ty)
 
 void lavashot_init(void)
 {
-	if (DEMO_ON)
+	if (PP_DEMO)
 		return;
 	register_bitmap(&bmp_lavashot, "lavashot", 1, 0);
 	register_spawn_fn("lavashot", spawn_lavashot_fp);

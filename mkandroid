@@ -90,6 +90,7 @@ make_project () {
 
 	sed -i "s|YourSourceHere.c|$sources|g" "$BUILDPATH"/jni/src/Android.mk
 
+	ln -s "$PKGPATH"/src/cfg "$BUILDPATH"/jni/src
 	ln -s "$PKGPATH"/src/cbase "$BUILDPATH"/jni/src
 	ln -s "$PKGPATH"/src/kernel "$BUILDPATH"/jni/src
 	ln -s "$PKGPATH"/src/gamelib "$BUILDPATH"/jni/src

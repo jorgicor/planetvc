@@ -17,6 +17,7 @@
 #include "gamelib/vfs.h"
 #include "kernel/kernel.h"
 #include "cbase/kassert.h"
+#include "cfg/cfg.h"
 
 #ifndef STDIO_H
 #define STDIO_H
@@ -27,14 +28,6 @@
 #define STRING_H
 #include <string.h>
 #endif
-
-enum {
-#ifdef PP_PHONE_MODE
-	PHONE_ON = 1,
-#else
-	PHONE_ON = 0,
-#endif
-};
 
 static struct hiscore {
 	char name[4];
@@ -193,21 +186,21 @@ static void draw_hint(int y)
 	int x;
 	const char *str;
 
-	if (PHONE_ON) {
+	if (PP_PHONE_MODE) {
 		str = "USE i OR j";
 	} else {
 		str = "USE i j OR 'SPACE'";
 	}
 	x = (TE_FMW - utf8_strlen(_(str))) / 2;
-	draw_str(_(str), x, y, 0);
+	draw_str(_(str), x, y, 1);
 
-	if (PHONE_ON) {
+	if (PP_PHONE_MODE) {
 		str = "'A' TO SELECT";
 	} else {
 		str = "'ENTER' TO SELECT";
 	}
 	x = (TE_FMW - utf8_strlen(_(str))) / 2;
-	draw_str(_(str), x, y + 1, 0);
+	draw_str(_(str), x, y + 1, 1);
 }
 
 static void hiscore_void(struct actor *pac)

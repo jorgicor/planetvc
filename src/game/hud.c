@@ -19,19 +19,12 @@
 #include "gamelib/mixer.h"
 #include "kernel/kernel.h"
 #include "cbase/kassert.h"
+#include "cfg/cfg.h"
 
 #ifndef STRING_H
 #define STRING_H
 #include <string.h>
 #endif
-
-enum {
-#ifdef PP_PHONE_MODE
-	PHONE_ON = 1,
-#else
-	PHONE_ON = 0,
-#endif
-};
 
 static struct bmp *bmp_hud;
 
@@ -62,7 +55,7 @@ static struct frame *digit_frames[] = {
 };
 
 static const char *tx_restart[] = {
-#if defined(PP_PHONE_MODE)
+#if PP_PHONE_MODE
 	"PRESS 'B'",
 #else
 	"PRESS 'RESTART'",
@@ -251,7 +244,7 @@ static void hud_restart_blink(struct actor *pac)
 		for (txi = 0; txi < NELEMS(tx_restart); txi++) {
 			x = (TE_FMW - utf8_strlen(_(tx_restart[txi]))) / 2;
 			draw_str(_(tx_restart[txi]), x, HUD_RESTART_Y + txi,
-				0);
+				1);
 		}
 	}
 }
@@ -322,7 +315,7 @@ static void hud_update(struct actor *pac)
 	}
 
 	if (s_total_nlifes > 0 && !cosmonaut_is_teleporting()) {
-		if (!PHONE_ON && cosmonaut_is_dead() &&
+		if (!PP_PHONE_MODE && cosmonaut_is_dead() &&
 			is_first_pressed(LKEYA))
 	       	{
 			/* To allow for the enter key when dead. */

@@ -5,11 +5,6 @@
 #ifndef TILENGIN_H
 #define TILENGIN_H
 
-#ifndef CONFIG_H
-#define CONFIG_H
-#include "config.h"
-#endif
-
 #ifndef BMP_H
 #include "gamelib/bmp.h"
 #endif

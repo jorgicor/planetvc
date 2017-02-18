@@ -55,10 +55,10 @@
 #undef PACKAGE_VERSION
 
 /* Enable cheats */
-#undef PP_DEBUG_ON
+#undef PP_DEBUG
 
 /* Demo version */
-#undef PP_DEMO_ON
+#undef PP_DEMO
 
 /* Name of organization */
 #undef PP_ORG_NAME
@@ -67,7 +67,7 @@
 #undef PP_PHONE_MODE
 
 /* Use SDL to get the data folder instead of using DATADIR */
-#undef PP_SDL_DATADIR_ON
+#undef PP_USE_SDL_DATADIR
 
 /* Define to 1 if you have the ANSI C header files. */
 #undef STDC_HEADERS

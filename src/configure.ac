@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_INIT([Planet of the Vicious Creatures],
-	[1.08],
+	[1.09],
 	[jorge.giner@hotmail.com],
 	planetvc,
 	[http://jorgicor.sdfeu.org/planetvc])
@@ -11,9 +11,9 @@ AC_CONFIG_MACRO_DIR([m4])
 
 AH_TEMPLATE([PP_ORG_NAME], [Name of organization])
 AC_DEFINE([PP_ORG_NAME],["jorgicor"])
-AH_TEMPLATE([PP_DEBUG_ON], [Enable cheats])
-AH_TEMPLATE([PP_DEMO_ON], [Demo version])
-AH_TEMPLATE([PP_SDL_DATADIR_ON],
+AH_TEMPLATE([PP_DEBUG], [Enable cheats])
+AH_TEMPLATE([PP_DEMO], [Demo version])
+AH_TEMPLATE([PP_USE_SDL_DATADIR],
 	    [Use SDL to get the data folder instead of using DATADIR])
 AH_TEMPLATE([PP_PHONE_MODE],
 	    [Phone mode with on screen controller])
@@ -75,13 +75,13 @@ AC_CHECK_HEADERS([tgmath.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 if test "${enable_debugmode}" = yes; then
-	AC_DEFINE([PP_DEBUG_ON])
+	AC_DEFINE([PP_DEBUG])
 fi
 if test "${enable_demoversion}" = yes; then
-	AC_DEFINE([PP_DEMO_ON])
+	AC_DEFINE([PP_DEMO])
 fi
 if test "${enable_sdl_datadir}" = yes; then
-	AC_DEFINE([PP_SDL_DATADIR_ON])
+	AC_DEFINE([PP_USE_SDL_DATADIR])
 fi
 AM_CONDITIONAL(USE_SDL_DATADIR, test "${enable_sdl_datadir}" = yes)
 if test "${enable_phone_mode}" = yes; then

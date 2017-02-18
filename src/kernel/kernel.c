@@ -24,10 +24,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "kernel.h"
 #include "kernel_snd.h"
 #include "cbase/kassert.h"
-#ifndef CONFIG_H
-#define CONFIG_H
-#include "config.h"
-#endif
+#include "cfg/cfg.h"
 #include <SDL.h>
 #include <stdarg.h>
 #include <stdlib.h>
@@ -45,13 +42,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 enum {
 
-#ifdef PP_SDL_DATADIR_ON
-	SDL_DATADIR_ON = 1,
-#else
-	SDL_DATADIR_ON = 0,
-#endif
-
-#ifdef PP_PHONE_MODE
+#if PP_PHONE_MODE
 	FINGERS_ON = 1,
 	CONTROLLERS_ON = 0,
 #else
@@ -1073,10 +1064,10 @@ static int run_win(const struct kernel_config *kcfg)
 
 static void init_data_paths(void)
 {
-	if (SDL_DATADIR_ON) {
+	if (PP_USE_SDL_DATADIR) {
 		s_data_path = SDL_GetBasePath();
 		if (s_data_path == NULL) {
-#			if defined(ANDROID)
+#			if PP_ANDROID
 				s_data_path = SDL_strdup("");
 #			else
 				s_data_path = SDL_strdup("./");

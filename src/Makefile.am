@@ -29,6 +29,8 @@ RESOURCE =
 endif
 
 planetvc_SOURCES =	$(RESOURCE) \
+			cfg/cfg.h \
+			\
 			cbase/cbase.h cbase/cbase.c \
 			cbase/kassert.h cbase/kassert.c \
 			\
@@ -45,7 +47,6 @@ planetvc_SOURCES =	$(RESOURCE) \
 			gamelib/state.h gamelib/state.c \
 			gamelib/lang.h gamelib/lang.c \
 			\
-			game/debug.h \
 			game/cheats.c game/cheats.h \
 			game/confpath.h game/confpath.c \
 			game/log.c game/log.h \

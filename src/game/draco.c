@@ -9,9 +9,9 @@
 #include "bitmaps.h"
 #include "sounds.h"
 #include "cosmonau.h"
-#include "debug.h"
 #include "gamelib/mixer.h"
 #include "cbase/kassert.h"
+#include "cfg/cfg.h"
 #include <string.h>
 
 static struct bmp *bmp_draco = NULL;
@@ -113,7 +113,7 @@ static void dracofire_end(struct actor *pac)
 		 * called, so this is not synchronized.
 		 * Don't enable in release version!!!
 		 */
-		if (DEBUG_ON) {
+		if (PP_DEBUG) {
 			kasserta(pac->t == 0);
 		}
 		pdraco = pac->PDRACO;

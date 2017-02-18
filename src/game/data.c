@@ -5,7 +5,7 @@
 #include "data.h"
 #include "tilengin.h"
 #include "bitmaps.h"
-#include "debug.h"
+#include "cfg/cfg.h"
 #include <stddef.h>
 
 /* To define a series of tile ids for an animation. */
@@ -194,7 +194,7 @@ void data_init(void)
 	register_bitmap(&bmp_blocks, "blocks", 0, 0);
 	register_bitmap(&bmp_tileset, "tileset", 1, 0xff00ff);
 	register_bitmap(&bmp_stargate, "stargate", 1, 0x8000);
-	if (DEMO_ON)
+	if (PP_DEMO)
 		return;
 	register_bitmap(&bmp_end, "end", 0, 0);
 }

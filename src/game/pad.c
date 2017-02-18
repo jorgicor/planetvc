@@ -10,14 +10,11 @@
 #include "kernel/kernel.h"
 #include "cbase/cbase.h"
 #include "cbase/kassert.h"
-#ifndef CONFIG_H
-#define CONFIG_H
-#include "config.h"
-#endif
+#include "cfg/cfg.h"
 #include <string.h>
 
 enum {
-#if defined(PP_PHONE_MODE)
+#if PP_PHONE_MODE
 	PADH = 7,
 #else
 	PADH = 0,

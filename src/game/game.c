@@ -10,7 +10,6 @@
 #include "oxigen.h"
 #include "stargate.h"
 #include "hud.h"
-#include "debug.h"
 #include "cheats.h"
 #include "input.h"
 #include "text.h"
@@ -26,10 +25,7 @@
 #include "gamelib/mixer.h"
 #include "kernel/kernel.h"
 #include "cbase/kassert.h"
-#ifndef CONFIG_H
-#define CONFIG_H
-#include "config.h"
-#endif
+#include "cfg/cfg.h"
 #include <ctype.h>
 #include <string.h>
 #include <stdarg.h>
@@ -366,14 +362,17 @@ static void exec_wait_hiscore(char *args)
 static void update_text_cmd(void)
 {
 	const struct kernel_device *d;
+	struct actor *pac;
 	const char *str;
 
 	d = kernel_get_device();
+	pac = get_actor(AC_COSMONAUT);
 	if (d->key_first_pressed(KERNEL_KSC_RETURN) ||
 		d->key_first_pressed(KERNEL_KSC_ESC) ||
 		is_first_pressed(LKEYB) ||
 		is_first_pressed(LKEYX) ||
-		is_first_pressed(LKEYY))
+		is_first_pressed(LKEYY) ||
+		(pac->update == NULL && is_first_pressed(LKEYA)))
 	{
 		mixer_play(wav_opmove);
 		str = _(s_code_text);
@@ -1243,7 +1242,7 @@ static struct kernel_config kcfg = {
 	.title = PACKAGE_NAME,
 	.canvas_width = TE_SCRW,
 	.canvas_height = TE_SCRH,
-	.fullscreen = !DEBUG_ON,
+	.fullscreen = !PP_DEBUG,
 	.maximized = 1,
 	.frames_per_second = FPS,
 	.on_frame = on_frame,

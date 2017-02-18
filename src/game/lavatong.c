@@ -9,9 +9,9 @@
 #include "bitmaps.h"
 #include "sounds.h"
 #include "cosmonau.h"
-#include "debug.h"
 #include "gamelib/mixer.h"
 #include "cbase/kassert.h"
+#include "cfg/cfg.h"
 
 static struct bmp *bmp_lavatong = NULL;
 static struct wav *wav_lavatong = NULL;
@@ -86,7 +86,7 @@ static void lavatongue_jump(struct actor *pac)
 	if (pac->t <= 0) {
 		/* Enable this assert to check that time is fully
 		 * synchronized. */
-		if (DEBUG_ON) {
+		if (PP_DEBUG) {
 			kasserta(pac->psp == NULL);
 		}
 		exec_next_action(pac);

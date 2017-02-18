@@ -14,13 +14,13 @@
 #include "prefs.h"
 #include "initfile.h"
 #include "hiscore.h"
-#include "debug.h"
 #include "gamelib/vfs.h"
 #include "gamelib/wav.h"
 #include "gamelib/mixer.h"
 #include "gamelib/lang.h"
 #include "kernel/kernel.h"
 #include "cbase/kassert.h"
+#include "cfg/cfg.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -89,7 +89,7 @@ static void on_data_loaded(void)
 	int loaded, save;
 
 	initfile_load();
-	if (DEMO_ON && !initfile_getvar("demo_version")) {
+	if (PP_DEMO && !initfile_getvar("demo_version")) {
 		ktrace("This demo version can only load a demo data.pak!");
 		exit(EXIT_FAILURE);
 	}

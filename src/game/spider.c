@@ -8,13 +8,9 @@
 #include "data.h"
 #include "bitmaps.h"
 #include "cosmonau.h"
-#include "debug.h"
 #include "kernel/kernel.h"
 #include "cbase/kassert.h"
-#ifndef CONFIG_H
-#define CONFIG_H
-#include "config.h"
-#endif
+#include "cfg/cfg.h"
 #include <string.h>
 
 #ifdef HAVE_TGMATH_H
@@ -199,7 +195,7 @@ static struct actor *spawn_spider_fp(int tx, int ty)
 
 void spider_init(void)
 {
-	if (DEMO_ON)
+	if (PP_DEMO)
 		return;
 	register_bitmap(&bmp_spider, "spider", 1, 128);
 	register_spawn_fn("spider", spawn_spider_fp);

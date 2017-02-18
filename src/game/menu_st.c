@@ -24,19 +24,8 @@
 #include "gamelib/mixer.h"
 #include "kernel/kernel.h"
 #include "cbase/kassert.h"
-#ifndef CONFIG_H
-#define CONFIG_H
-#include "config.h"
-#endif
+#include "cfg/cfg.h"
 #include <string.h>
-
-enum {
-#ifdef PP_PHONE_MODE
-	PHONE_ON = 1,
-#else
-	PHONE_ON = 0,
-#endif
-};
 
 static struct wav *wav_play;
 
@@ -69,7 +58,7 @@ enum {
 enum {
 	MAIN_MENU_Y = 13,
 	OPTIONS_MENU_Y = 13,
-#if defined(PP_PHONE_MODE)
+#if PP_PHONE_MODE
 	OP_MUSIC_INDEX = 0,
 #else
 	OP_MUSIC_INDEX = 1,
@@ -89,7 +78,7 @@ static struct menu s_main_menu = {
 
 static struct menu s_options_menu_nodemo = {
 	.options = {
-#if !defined(PP_PHONE_MODE)
+#if !PP_PHONE_MODE
 		{ TX_REDEFINE, OP_REDEFINE },
 #endif
 		{ TX_MUSIC_OFF, OP_MUSIC },
@@ -101,7 +90,7 @@ static struct menu s_options_menu_nodemo = {
 
 static struct menu s_options_menu = {
 	.options = {
-#if !defined(PP_PHONE_MODE)
+#if !PP_PHONE_MODE
 		{ TX_REDEFINE, OP_REDEFINE },
 #endif
 		{ TX_MUSIC_OFF, OP_MUSIC },
@@ -265,14 +254,14 @@ static void draw_hint(void)
 	int x;
 	const char *str;
 
-	if (PHONE_ON) {
+	if (PP_PHONE_MODE) {
 		str = "USE i OR j";
 	} else {
 		str = "USE i j OR 'SPACE'";
 	}
 	x = (TE_FMW - utf8_strlen(_(str))) / 2;
 	draw_str(_(str), x, PRESS_KEY_Y - 1, 0);
-	if (PHONE_ON) {
+	if (PP_PHONE_MODE) {
 		str = "'A' TO SELECT";
 	} else {
 		str = "'ENTER' TO SELECT";

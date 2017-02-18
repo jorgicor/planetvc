@@ -7,6 +7,7 @@
 #include "gamelib/vfs.h"
 #include "kernel/kernel.h"
 #include "cbase/kassert.h"
+#include "cfg/cfg.h"
 #include <string.h>
 #include <time.h>
 
@@ -52,7 +53,7 @@ void log_init(void)
 	char path[OPEN_FILE_MAX_PATH_LEN + 1];
 	char oldpath[OPEN_FILE_MAX_PATH_LEN + 1];
 
-	if (s_fp != NULL)
+	if (PP_ANDROID || s_fp != NULL)
 		return;
 
 	cpath = confpath_get();

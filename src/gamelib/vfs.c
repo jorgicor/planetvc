@@ -23,11 +23,12 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "vfs.h"
 #include "cbase/kassert.h"
+#include "cfg/cfg.h"
 #include <ctype.h>
 #include <string.h>
 #include <limits.h>
 
-#if defined(ANDROID)
+#if PP_ANDROID
 #	include <errno.h>
 #	include <jni.h>
 #	include <android/asset_manager.h>
@@ -106,13 +107,13 @@ struct zip_cdh {
 
 static const char *s_base_path = "";
 
-#if !defined(ANDROID)
+#if !PP_ANDROID
 
 #define platform_fopen fopen
 
-#endif	/* if !defined(ANDROID) */
+#endif	/* if !PP_ANDROID */
 
-#if defined(ANDROID)
+#if PP_ANDROID
 static AAssetManager *s_android_asset_manager;
 
 JNIEXPORT void JNICALL
@@ -164,7 +165,7 @@ static FILE *android_file_open(const char *fname, const char *mode)
 
 #define platform_fopen android_file_open
 
-#endif	/* if defined(ANDROID) */
+#endif	/* if PP_ANDROID */
 
 /**
  * Seeks the central directory in a .zip file.

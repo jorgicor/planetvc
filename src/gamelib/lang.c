@@ -1,12 +1,13 @@
 #include "lang.h"
 #include "cbase/cbase.h"
 #include "cbase/kassert.h"
+#include "cfg/cfg.h"
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
 
-#if defined(ANDROID)
+#if PP_ANDROID
 #include <jni.h>
 #include <SDL.h>
 #endif
@@ -250,7 +251,7 @@ static int langstr_cmp(const void *k, const void *elem)
 	return strcmp(pk, pinfo->langstr);
 }
 
-#if defined(ANDROID)
+#if PP_ANDROID
 static char *Android_GetLocale(void)
 {
 	static char *locstr = NULL;
@@ -328,7 +329,7 @@ const char *guess_lang(void)
 	char *loc, *p, *region;
 	struct langstr_info *pinfo;
 
-#ifdef ANDROID
+#if PP_ANDROID
 	loc = dupstr(Android_GetLocale());
 #else
 	loc = dupstr(setlocale(LC_CTYPE, ""));

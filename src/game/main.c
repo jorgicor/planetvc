@@ -2,10 +2,7 @@
  * Copyright 2016 Jorge Giner Cordero
  */
 
-#ifndef CONFIG_H
-#define CONFIG_H
-#include "config.h"
-#endif
+#include "cfg/cfg.h"
 
 #ifdef DEBUG
 #ifdef HAVE_MCHECK_H

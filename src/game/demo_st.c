@@ -18,6 +18,7 @@
 #include "gamelib/mixer.h"
 #include "kernel/kernel.h"
 #include "cbase/kassert.h"
+#include "cfg/cfg.h"
 
 #ifndef STDLIB_H
 #define STDLIB_H
@@ -28,14 +29,6 @@
 #define STDIO_H
 #include <stdio.h>
 #endif
-
-enum {
-#if defined(PP_PHONE_MODE)
-	PHONE_ON = 1,
-#else
-	PHONE_ON = 0,
-#endif
-};
 
 enum {
 	NFRAME_KEYS = 256,
@@ -59,23 +52,23 @@ static int s_demo_list[MAX_DEMOS];
 static void load_random_demo(void);
 
 /* s must be untranslated. */
-static void draw_centered(const char *s, int y)
+static void draw_centered(const char *s, int y, int font)
 {
 	int x;
 
 	s = _(s);
 	x = (TE_FMW - utf8_strlen(s)) / 2;
-	draw_str(s, x, y, 0);
+	draw_str(s, x, y, font);
 }
 
 static void draw_hint(void)
 {
-	if (PHONE_ON) {	
-		draw_centered("'A' TO SKIP", TE_FMH - 2);
-		draw_centered("'Y' TO EXIT", TE_FMH - 1);
+	if (PP_PHONE_MODE) {	
+		draw_centered("'A' TO SKIP", TE_FMH - 2, 1);
+		draw_centered("'Y' TO EXIT", TE_FMH - 1, 1);
 	} else {
-		draw_centered("'ENTER' TO SKIP", TE_FMH - 2);
-		draw_centered("'ESC' TO EXIT", TE_FMH - 1);
+		draw_centered("'ENTER' TO SKIP", TE_FMH - 2, 1);
+		draw_centered("'ESC' TO EXIT", TE_FMH - 1, 1);
 	}
 }
 
