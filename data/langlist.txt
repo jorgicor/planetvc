@@ -8,9 +8,9 @@ LSF (PEANO)
 il
 POLSKI
 pl
-PORTUGUÊS
+PORTUGUÊS PT
 pt
-BRASILEIRO
+PORTUGUÊS BR
 ptbr
 ~
 This file has to be saved in utf8.
