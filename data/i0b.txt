@@ -1,9 +1,9 @@
 exits 1 1 0 0 ~
 spawn platform 4 6 1 4 ~ 
 spawn platform 8 6 1 4 ~ 
-spawn drop 10 7 16 0 ~
+nspawn drop 10 7 16 0 ~
 spawn drop 8 7 8 0 ~
-spawn drop 6 7 4 0 ~
+nspawn drop 6 7 4 0 ~
 spawn drop 4 7 16 0 ~
 spawn oxigen 7 4 ~
 spawn oxigen 7 11 ~

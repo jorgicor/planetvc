@@ -1,6 +1,6 @@
 exits 1 1 0 0 ~
 spawn grasshopper 12 4 SLRSLRUULR ~
-spawn grasshopper 5 11 SUSRLSUUURL ~
+nspawn grasshopper 5 11 SUSRLSUUURL ~
 spawn grasshopper 8 11 LSRSULRSUUS ~
 spawn oxigen 7 8 ~
 spawn oxigen 3 2 ~

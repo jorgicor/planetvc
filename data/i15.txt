@@ -1,5 +1,5 @@
 exits 1 1 0 0 ~
-spawn drop 3 7 16 1 ~
+nspawn drop 3 7 16 1 ~
 new_path 8 7 ~
 add_path_point 10 7 ~
 add_path_point 8 7 ~

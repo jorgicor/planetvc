@@ -12,7 +12,7 @@ set_path 1 1 64 1 ~
 new_path 6 5 ~
 add_path_point 10 5 ~
 add_path_point 6 5 ~
-spawn fenix 8 5 rdir ~
+nspawn fenix 8 5 rdir ~
 set_path 2 0 112 1 ~
 new_path 4 2 ~
 add_path_point 10 2 ~

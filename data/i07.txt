@@ -15,7 +15,7 @@ spawn drop 6 2 16 0 ~
 spawn drop 8 2 8 0 ~
 spawn caterpillar 0 0 x ~
 set_path 1 0 128 1 ~
-spawn caterpillar 0 0 x ~
+nspawn caterpillar 0 0 x ~
 set_path 2 0 128 1 ~
 spawn oxigen 7 3 ~
 spawn oxigen 7 9 ~

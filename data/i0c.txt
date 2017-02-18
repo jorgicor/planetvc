@@ -24,7 +24,7 @@ add_path_point 6 6 ~
 new_path 11 5 ~
 add_path_point 12 5 ~
 add_path_point 11 5 ~
-spawn wasp 0 0 ldir ~
+nspawn wasp 0 0 ldir ~
 set_path 0 0 128 1 ~
 spawn wasp 0 0 ldir ~
 set_path 0 3 128 1 ~

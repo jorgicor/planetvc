@@ -13,7 +13,7 @@ spawn moth 0 0 ~
 set_path 0 0 128 1 ~
 spawn moth 0 0 ~
 set_path 0 1 64 1 ~
-spawn moth 0 0 ~
+nspawn moth 0 0 ~
 set_path 1 0 64 1 ~
 spawn moth 0 0 ~
 set_path 1 1 128 1 ~

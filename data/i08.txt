@@ -8,9 +8,9 @@ add_path_point 7 0 ~
 new_path 3 1 ~
 add_path_point 4 1 ~
 add_path_point 3 1 ~
-spawn wasp 0 0 ldir ~
+nspawn wasp 0 0 ldir ~
 set_path 0 0 128 1 ~
-spawn wasp 0 0 ldir ~
+nspawn wasp 0 0 ldir ~
 set_path 1 0 128 1 ~
 spawn wasp 0 0 ldir ~
 set_path 2 1 128 1 ~

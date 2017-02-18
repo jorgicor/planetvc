@@ -14,7 +14,7 @@ spawn moth 0 0 64 ~
 set_path 0 1 96 1 ~
 spawn wasp 7 11 ldir ~
 set_path 1 0 32 1 ~
-spawn wasp 9 9 ldir ~
+nspawn wasp 9 9 ldir ~
 set_path 2 0 32 1 ~
 spawn oxigen 7 5 ~
 spawn oxigen 7 10 ~

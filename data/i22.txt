@@ -1,7 +1,7 @@
 exits 1 1 0 0 ~
-spawn draco 2 7 rdir SB ~
+nspawn draco 2 7 rdir SB ~
 spawn draco 2 9 rdir AS ~
-spawn drop 10 4 8 0 ~
+nspawn drop 10 4 8 0 ~
 spawn oxigen 8 5 ~
 spawn cosmonaut 0 4 14 7 0 4 14 7 0 ~
 .

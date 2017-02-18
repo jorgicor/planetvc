@@ -2,7 +2,7 @@ exits 1 1 0 0 ~
 spawn fish 5 11 rdir 48 -850 16 ~
 spawn fish 9 11 ldir 28 -640 16 ~
 spawn drop 8 1 4 1 ~
-spawn drop 9 1 6 1 ~
+nspawn drop 9 1 6 1 ~
 spawn drop 10 1 8 1 ~
 spawn oxigen 8 9 ~
 spawn oxigen 12 3 ~

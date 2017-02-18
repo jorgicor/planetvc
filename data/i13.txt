@@ -12,7 +12,7 @@ set_path 1 0 112 1 ~
 new_path 11 8 ~
 add_path_point 3 8 ~
 add_path_point 11 8 ~
-spawn bat 0 0 ldir ~
+nspawn bat 0 0 ldir ~
 set_path 2 0 96 1 ~
 spawn drop 7 4 32 1 ~
 spawn oxigen 2 10 ~

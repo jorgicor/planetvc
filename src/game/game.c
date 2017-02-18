@@ -256,6 +256,15 @@ static void exec_spawn(char *args)
 	}
 }
 
+static void exec_nspawn(char *args)
+{
+	if (s_difficulty == DIFFICULTY_EASY) {
+		s_last_spawned_actor = NULL;
+	} else {
+		exec_spawn(args);
+	}
+}
+
 static void exec_set_path(char *args)
 {
 	int r, path_id, path_point, speed, loop;
@@ -611,6 +620,7 @@ void exec_init_map_code(void)
 		{ "new_path", exec_new_path, 0 },
 		{ "add_path_point", exec_add_path_point, 0 },
 		{ "spawn", exec_spawn, 0 },
+		{ "nspawn", exec_nspawn, 0 },
 		{ "set_path", exec_set_path, 0 },
 		{ "exits", exec_exits, 0 },
 		{ "wait", exec_wait, 0 },

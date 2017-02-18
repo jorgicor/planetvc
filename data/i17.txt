@@ -1,6 +1,6 @@
 exits 1 1 0 0 ~
 spawn drop 6 1 16 1 ~
-spawn drop 9 1 16 1 ~
+nspawn drop 9 1 16 1 ~
 spawn oxigen 4 5 ~
 spawn cosmonaut 0 7 14 7 0 7 14 7 0 ~
 .

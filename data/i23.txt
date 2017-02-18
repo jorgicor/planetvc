@@ -10,7 +10,7 @@ spawn fenix 6 5 rdir ~
 set_path 0 0 128 1 ~
 spawn fenix 6 5 rdir ~
 set_path 1 1 64 1 ~
-spawn draco 6 8 ldir AS ~
+nspawn draco 6 8 ldir AS ~
 spawn cosmonaut 0 7 14 8 0 7 14 8 0 ~
 .
 Wait for dragon to spit 2 fires, jump and jump.

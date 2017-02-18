@@ -9,8 +9,7 @@ new_path 6 6 ~
 add_path_point 3 6 ~
 add_path_point 8 6 ~
 add_path_point 6 6 ~
-spawn fenix 6 7 rdir ~
-x set_path 1 1 64 1 ~
+nspawn fenix 6 7 rdir ~
 set_path 1 0 112 1 ~
 new_path 6 8 ~
 add_path_point 8 8 ~

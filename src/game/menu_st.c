@@ -42,6 +42,9 @@ static struct wav *wav_play;
 #define TX_CREDITS	"CREDITS"
 #define TX_BACK		"BACK"
 
+#define TX_EASY		"EASY"
+#define TX_NORMAL	"NORMAL"
+
 enum {
 	OP_PLAY,
 	OP_OPTIONS,
@@ -53,11 +56,14 @@ enum {
 	OP_DEMO,
 	OP_CREDITS,
 	OP_BACK,
+	OP_EASY,
+	OP_NORMAL,
 };
 
 enum {
 	MAIN_MENU_Y = 13,
 	OPTIONS_MENU_Y = 13,
+	LEVEL_MENU_Y = 15,
 #if PP_PHONE_MODE
 	OP_MUSIC_INDEX = 0,
 #else
@@ -105,6 +111,15 @@ static const char *s_options_menu_add[] = {
 	TX_MUSIC_ON,
 	TX_MUSIC_OFF,
 	NULL
+};
+
+static struct menu s_level_menu = {
+	.options = {
+		{ TX_EASY, OP_EASY },
+		{ TX_NORMAL, OP_NORMAL },
+		{ TX_BACK, OP_BACK },
+		{ NULL, -2 },
+	},
 };
 
 enum {
@@ -387,6 +402,11 @@ static void toggle_music(void)
 	}
 }
 
+static void push_level_menu(int firstop)
+{
+	menu_push(&s_level_menu, LEVEL_MENU_Y, firstop, NULL);
+}
+
 static void update_main_menu(void)
 {
 	const struct kernel_device *d;
@@ -397,6 +417,16 @@ static void update_main_menu(void)
 	switch (r) {
 	case OP_PLAY:
 		clear_hint();
+		mixer_play(wav_opsel);
+		push_level_menu(-1);
+		break;
+	case OP_EASY:
+		s_difficulty = DIFFICULTY_EASY;
+	       	mixer_play(wav_play);
+	       	fade_to_state(&gplay_st);
+		break;
+	case OP_NORMAL:
+		s_difficulty = DIFFICULTY_NORMAL;
 	       	mixer_play(wav_play);
 	       	fade_to_state(&gplay_st);
 		break;
@@ -430,6 +460,7 @@ static void update_main_menu(void)
 	       	toggle_music();
 		break;
 	case OP_DEMO:
+		s_difficulty = DIFFICULTY_NORMAL;
 		s_last_menu_op = OP_DEMO;
 		s_last_menu = &s_options_menu;
 		clear_hint();
@@ -615,8 +646,9 @@ static void update(void)
 static void update_menu_actor(struct actor *pac)
 {
 	blink_demo();
-	if (s_state == STATE_MAIN_MENU)
+	if (s_state == STATE_MAIN_MENU) {
 		update_main_menu();
+	}
 }
 
 static void enter(const struct state *old_state)

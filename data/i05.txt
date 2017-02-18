@@ -27,7 +27,7 @@ set_path 4 0 96 1 ~
 new_path 1 0 ~
 add_path_point 4 0 ~
 add_path_point 1 0 ~
-spawn wasp 0 0 ldir ~
+nspawn wasp 0 0 ldir ~
 set_path 5 0 64 1 ~
 spawn lavatongue 8 10 SRLSRSSRSL ~
 spawn oxigen 11 1 ~

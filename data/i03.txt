@@ -10,7 +10,7 @@ add_path_point 6 4 ~
 add_path_point 4 4 ~
 spawn caterpillar 4 12 x ~
 set_path 0 0 64 1 ~
-spawn grasshopper 8 11 SSU ~
+nspawn grasshopper 8 11 SSU ~
 spawn wasp 7 3 ldir ~
 set_path 1 1 64 1 ~
 spawn wasp 4 4 rdir ~

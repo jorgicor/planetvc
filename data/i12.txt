@@ -7,9 +7,9 @@ set_path 0 0 128 1 ~
 new_path 3 1 ~
 add_path_point 6 1 ~
 add_path_point 3 1 ~
-spawn bat 0 0 rdir ~
+nspawn bat 0 0 rdir ~
 set_path 1 1 128 1 ~
-spawn spider 10 5 64 16 65 ~
+nspawn spider 10 5 64 16 65 ~
 spawn spider 8 4 96 16 75 ~
 spawn oxigen 7 2 ~
 spawn oxigen 10 8 ~
