@@ -1,3 +1,5 @@
+DEUTSCH
+de
 ESPAÑOL
 es
 FRANÇAIS
@@ -12,5 +14,7 @@ PORTUGUÊS PT
 pt
 PORTUGUÊS BR
 ptbr
+РУССКИЙ ЯЗЫК
+ru
 ~
 This file has to be saved in utf8.

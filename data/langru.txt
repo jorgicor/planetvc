@@ -1,0 +1,116 @@
+PLAY
+СТАРТ
+DEFINE KEYS
+КЛАВИШИ
+LANGUAGE
+ЯЗЫК
+HELP
+СПРАВКА
+QUIT
+ВЫХОД
+OPTIONS
+ОПЦИИ
+MUSIC OFF
+МУЗЫКА ВЫКЛ.
+MUSIC ON
+МУЗЫКА ВКЛ.
+BACK
+НАЗАД
+CREDITS
+АВТОРЫ
+GRAPHICS, MUSIC, PROGRAMMING
+ГРАФИКА, МУЗЫКА, ПРОГРАМ. КОД
+TRANSLATION
+ПЕРЕВОД
+VISIT
+МЫ В ИНТЕРНЕТЕ
+TOOLS
+ИНСТРУМЕНТЫ
+USE i j OR 'SPACE'
+ИСПОЛЬЗУЙ i j ИЛИ 'ПРОБЕЛ'
+'ENTER' TO SELECT
+'ENTER' - ВЫБРАТЬ
+IN
+В
+EXIT TO MENU?
+ВЫЙТИ В МЕНЮ?
+YES
+ДА
+NO
+НЕТ
+PRACTICE
+РЕЖИМ
+MODE
+ПРАКТИКИ
+PRESS 'RESTART'
+ЖМИ 'РЕСТАРТ'
+OR 'ENTER'
+ИЛИ 'ENTER'
+'ENTER' TO SKIP
+'ENTER' - ПРОПУСТИТЬ
+'ESC' TO EXIT
+'ESC' - ВЫХОД
+PRESS KEY FOR JUMP
+ЗАДАЙ КЛАВИШУ ДЛЯ 'ПРЫЖОК'
+PRESS KEY FOR CROUCH
+ЗАДАЙ КЛАВИШУ ДЛЯ 'ПРИСЕСТЬ'
+PRESS KEY FOR LEFT
+ЗАДАЙ КЛАВИШУ ДЛЯ 'ВЛЕВО'
+PRESS KEY FOR RIGHT
+ЗАДАЙ КЛАВИШУ ДЛЯ 'ВПРАВО'
+PRESS KEY FOR 'RESTART'
+ЗАДАЙ КЛАВИШУ ДЛЯ 'РЕСТАРТ'
+PRESS KEY FOR 'PRACTICE'
+ЗАДАЙ КЛАВИШУ ДЛЯ 'ПРАКТИКА'
+PORTALS...\nFOUND BURIED ON EARTH.\nWHO MADE THEM? WE KNOW NOT.\n- PRESS 'ENTER' -
+ПОРТАЛЫ...\nИХ ОБНАРУЖИЛИ НА ЗЕМЛЕ.\nКТО СОЗДАЛ ИХ? МЫ НЕ ЗНАЕМ.\n- ЖМИ 'ENTER' -
+NOW WE HUMBLE HUMANS USE THEM TO TRAVEL TO THE STARS...
+ОНИ ОТКРЫЛИ ЛЮДЯМ ПУТЬ К ЗВЕЗДАМ...
+BUT ONCE WE GO THROUGH THEM, WE HAVE TO FIND ANOTHER TO COME BACK.
+НО, ПРОЙДЯ ЧЕРЕЗ ОДИН ПОРТАЛ, НУЖНО НАЙТИ ДРУГОЙ, ЧТОБЫ ВЕРНУТЬСЯ.
+WE HAVE A NEW MISSION FOR YOU. GLIESE 581. TESTS INDICATE RELATIVE SAFETY.
+У НАС ДЛЯ ТЕБЯ ЗАДАНИЕ. ГЛИЗЕ 581. ТАМ ОТНОСИТЕЛЬНО БЕЗОПАСНО.
+USE YOUR DEFINED KEYS\n- DEFAULT k l i j -\nTO MOVE, JUMP OR CROUCH. TRY YOUR GAMEPAD AS WELL.
+ИСПОЛЬЗУЙ ДЖОЙСТИК ИЛИ ЗАДАННЫЕ КЛАВИШИ\n- ПО УМОЛЧ. k l i j -\nЧТОБЫ ДВИГАТЬСЯ, ПРЫГАТЬ И ПРИСЕДАТЬ.
+SPACE SUIT WILL BE REQUIRED. GRAVITY 0.15G. YOU WILL FIND OXIGEN BUBBLES IN THE ATMOSPHERE.
+ТЕБЕ ПОНАДОБИТСЯ СКАФАНДР. ГРАВИТАЦИЯ 0,15G. ПУЗЫРЬКИ КИСЛОРОДА НАЙДЕШЬ В АТМОСФЕРЕ.
+PRESS 'RESTART' KEY\n- DEFAULT 'SPACE' -\nTO RESTART A LEVEL.
+ЖМИ 'РЕСТАРТ'\n- ПО УМОЛЧ. 'ПРОБЕЛ' -\nЧТОБЫ НАЧАТЬ УРОВЕНЬ ЗАНОВО.
+PRESS 'PRACTICE' KEY\n- DEFAULT '0' -\nTO TOGGLE PRACTICE MODE ON AND OFF.
+ЖМИ 'ПРАКТИКА'\n- ПО УМОЛЧ '0' -\nЧТОБЫ ВКЛ. И ВЫКЛ. РЕЖИМ ПРАКТИКИ.
+WHILE IN PRACTICE MODE YOU CAN'T LOSE ANY LIFE, BUT YOU CAN'T PASS TO THE NEXT LEVEL.
+В РЕЖИМЕ ПРАКТИКИ ТЫ НЕ ПОТЕРЯЕШЬ ЖИЗНИ, НО И НЕ ПРОЙДЕШЬ НА СЛЕДУЮЩИЙ УРОВЕНЬ.
+BEWARE OF THE FAUNA. STAY ALIVE AND FIND A PORTAL TO COME BACK FOR FAME AND GLORY!
+ОСТЕРЕГАЙСЯ ФАУНЫ. ВЫЖИВИ И НАЙДИ ПОРТАЛ, ЧТОБЫ ВЕРНУТЬСЯ ДОМОЙ, ГДЕ ТЕБЯ ЖДЕТ СЛАВА!
+YOU DID IT!\nOH WHAT A HEROIC FEAT!\nTODAY IS A DAY OF JOY ON EARTH!\n- PRESS 'ENTER' -
+ТЫ ПОБЕДИЛ!\nТЫ СОВЕРШИЛ ПОДВИГ!\nДА ВОЗРАДУЕТСЯ СЕГОДНЯ ВСЯ ЗЕМЛЯ!\n- ЖМИ 'ENTER' -
+YOU HAVE SHOWN INCREDIBLE SKILLS AND UNPARALLELED INTELLIGENCE!
+ТЫ ПОКАЗАЛ УДИВИТЕЛЬНЫЕ СПОСОБНОСТИ И СМЕКАЛКУ!
+NOW WE HAVE A MAP OF THE PORTALS AND THEIR CONNECTIONS IN GLIESE 581, AND NOW WE KNOW THE WAY TO COME BACK.
+НАКОНЕЦ У НАС ЕСТЬ КАРТА ПОРТАЛОВ НА ЗЕМЛЕ И В СИСТЕМЕ ГЛИЗЕ 581. ТЕПЕРЬ НАМ ИЗВЕСТЕН ПУТЬ ДОМОЙ.
+IN ADDITION WE KNOW A LOT MORE ABOUT THE FAUNA AND THE PERILS ON THE PLANET...
+МЫ УЗНАЛИ МНОГО НОВОГО О ФАУНЕ И ОПАСНОСТЯХ ДАЛЕКОЙ ПЛАНЕТЫ...
+THE EARTH IS GRATEFUL TO YOU.\n\nTHANK YOU!
+ЗЕМЛЯ ВОСХВАЛЯЕТ.\n\nИ БЛАГОДАРИТ ТЕБЯ!
+NOW REST...\nBECAUSE SOON YOU WILL NEED TO FACE THE CHALLENGES OF NEW ADVENTURES!
+ОТДЫХАЙ, НАБИРАЙСЯ СИЛ...\nСКОРО ТЕБЯ ЖДУТ НОВЫЕ ПРИКЛЮЧЕНИЯ, ПОЛНЫЕ ТАЙН И ОПАСНОСТЕЙ!
+USE i OR j
+ИСПОЛЬЗУЙ i ИЛИ j
+'A' TO SELECT
+'A' - ВЫБРАТЬ
+'A' TO SKIP
+'A' - ПРОПУСТИТЬ
+'Y' TO EXIT
+'Y' - ВЫХОД
+PRESS 'B'
+ЖМИ 'B'
+PORTALS...\nFOUND BURIED ON EARTH.\nWHO MADE THEM? WE KNOW NOT.\n- PRESS 'B' -
+ПОРТАЛЫ...\nИХ ОБНАРУЖИЛИ НА ЗЕМЛЕ.\nКТО СОЗДАЛ ИХ? МЫ НЕ ЗНАЕМ.\n- ЖМИ 'B' -
+USE k, l, 'A', j TO MOVE, JUMP OR CROUCH.
+ИСПОЛЬЗУЙ k l i j ЧТОБЫ ДВИГАТЬСЯ, ПРЫГАТЬ И ПРИСЕДАТЬ.
+PRESS 'B' TO RESTART A LEVEL.
+ЖМИ 'B' ЧТОБЫ НАЧАТЬ УРОВЕНЬ ЗАНОВО.
+PRESS 'PRACTICE' KEY - 'X' - TO TOGGLE PRACTICE MODE ON AND OFF.
+ЖМИ 'ПРАКТИКА'\n- 'X' -\nЧТОБЫ ВКЛ. И ВЫКЛ. РЕЖИМ ПРАКТИКИ.
+~
+This file has to be saved in utf8.
