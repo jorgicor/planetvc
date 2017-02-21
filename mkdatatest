@@ -48,16 +48,28 @@ make_data_demo ()
 make_data_steam ()
 {
 	make_data
-	cp $pkgfilesdir/steam/i33.txt datatest
+	cp $pkgfilesdir/steam/*.txt datatest
 }
 
 make_data_steam_demo ()
 {
 	make_data_steam
 	demoize_data
-	cp $pkgfilesdir/steam/demo/i44.txt datatest
+	cp $pkgfilesdir/steam/demo/*.txt datatest
 }
 
+make_data_android ()
+{
+	make_data
+	cp $pkgfilesdir/android/*.txt datatest
+}
+
+make_data_android_demo ()
+{
+	make_data_android
+	demoize_data
+	cp $pkgfilesdir/android/demo/*.txt datatest
+}
 
 show_menu () {
 	echo "*********"

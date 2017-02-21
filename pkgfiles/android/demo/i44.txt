@@ -1,0 +1,13 @@
+music menu.xm ~
+exits 0 0 0 0 ~
+clrscr ~
+text 1 6 BUY THE FULL VERSION TO GET:~
+text 1 10 m A VERY NICE ENDING.~
+text 1 14 m 16 NEW LEVELS FOR A TOTAL OF 60 SITUATIONS.~
+text 1 20 m 2 NEW REGIONS: THE CAVERNS AND THE REGION OF VOLCANOES.~
+wait ~
+clrscr ~
+textfc 0 24 32 PLAY.GOOGLE.COM/STORE/APPS~
+textf 1 5 DO YOU WANT TO VISIT GOOGLE PLAY TO BUY THE FULL VERSION OF THE GAME?~
+spawn buymenu 0 15 https://play.google.com/store/apps~ 
+.
