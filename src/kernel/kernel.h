@@ -327,6 +327,9 @@ struct kernel_device {
 
 	/* Trace to console. */
 	void (*trace)(const char *msg);
+
+	/* Opens a url on the web browser */
+	void (*open_url)(const char *url);
 };
 
 #ifdef __cplusplus

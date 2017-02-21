@@ -1,11 +1,12 @@
 music menu.xm ~
 clrscr ~
-textf 1 7 TRANSLATION~
-textf 1 10 m ANA ALVES (PT)~
-textf 1 12 m ANNA JAKUBIEC (FR, PL)~
-textf 1 14 m ELAINE SUCHARA GOMES (PT-BR)~
-textf 1 16 m FABIO TRICARICO (IT)~
-textf 1 18 m JORGE GINER (LSF)~
+textf 1 5 TRANSLATION~
+textf 1 9 m ANA ALVES (PT)~
+textf 1 11 m ANNA JAKUBIEC (FR, PL)~
+textf 1 13 m ELAINE SUCHARA GOMES (PT-BR)~
+textf 1 15 m FABIO TRICARICO (IT)~
+textf 1 17 m STAR SERVICIOS LINGÜÍSTICOS (DE, RU)~
+textf 1 21 m JORGE GINER (LSF)~
 wait ~
 clrscr ~
 textf 1 6 TOOLS~
@@ -21,6 +22,12 @@ clrscr ~
 textf 1 10 GRAPHICS, MUSIC, PROGRAMMING~
 textf 1 14 m JORGE GINER CORDERO~
 textf 1 16 m HTTP://JORGICOR.SDFEU.ORG~
+wait ~
+clrscr ~
+textf 1 6 VISIT~
+textf 1 10 'THE PLANET OF THE VICIOUS~
+textf 1 12 CREATURES'~
+textf 1 16 m STORE.STEAMPOWERED.COM/APP/530290~
 wait ~
 scroll 0x30 ~
 .

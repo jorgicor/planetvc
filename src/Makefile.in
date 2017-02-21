@@ -127,23 +127,24 @@ am__planetvc_SOURCES_DIST = game/resource.rc cfg/cfg.h cbase/cbase.h \
 	game/input.h game/input.c game/text.h game/text.c \
 	game/strdraw.h game/strdraw.c game/load_st.h game/load_st.c \
 	game/gplay_st.h game/gplay_st.c game/menu_st.h game/menu_st.c \
-	game/fade_st.h game/fade_st.c game/over_st.h game/over_st.c \
-	game/end_st.h game/end_st.c game/win_st.h game/win_st.c \
-	game/demo_st.h game/demo_st.c game/cosmonau.h game/cosmonau.c \
-	game/oxigen.h game/oxigen.c game/wasp.h game/wasp.c \
-	game/caterpil.h game/caterpil.c game/balloon.h game/balloon.c \
-	game/spider.h game/spider.c game/platform.h game/platform.c \
-	game/drop.h game/drop.c game/moth.h game/moth.c \
-	game/grasshop.h game/grasshop.c game/lavatong.h \
-	game/lavatong.c game/stargate.h game/stargate.c game/bat.h \
-	game/bat.c game/fish.h game/fish.c game/fenix.h game/fenix.c \
-	game/draco.h game/draco.c game/lavashot.h game/lavashot.c \
-	game/hud.h game/hud.c game/gameover.h game/gameover.c \
-	game/hiscore.h game/hiscore.c game/msgbox.h game/msgbox.c \
-	game/menu.h game/menu.c game/fade.h game/fade.c game/prefs.h \
-	game/prefs.c game/initfile.h game/initfile.c game/readlin.h \
-	game/readlin.c game/demosave.h game/demosave.c game/arrow.h \
-	game/arrow.c game/pad.h game/pad.c libxmp-lite/common.h \
+	game/buy_st.h game/buy_st.c game/fade_st.h game/fade_st.c \
+	game/over_st.h game/over_st.c game/end_st.h game/end_st.c \
+	game/win_st.h game/win_st.c game/demo_st.h game/demo_st.c \
+	game/cosmonau.h game/cosmonau.c game/oxigen.h game/oxigen.c \
+	game/wasp.h game/wasp.c game/caterpil.h game/caterpil.c \
+	game/balloon.h game/balloon.c game/spider.h game/spider.c \
+	game/platform.h game/platform.c game/drop.h game/drop.c \
+	game/moth.h game/moth.c game/grasshop.h game/grasshop.c \
+	game/lavatong.h game/lavatong.c game/stargate.h \
+	game/stargate.c game/bat.h game/bat.c game/fish.h game/fish.c \
+	game/fenix.h game/fenix.c game/draco.h game/draco.c \
+	game/lavashot.h game/lavashot.c game/hud.h game/hud.c \
+	game/gameover.h game/gameover.c game/hiscore.h game/hiscore.c \
+	game/msgbox.h game/msgbox.c game/menu.h game/menu.c \
+	game/fade.h game/fade.c game/prefs.h game/prefs.c \
+	game/initfile.h game/initfile.c game/readlin.h game/readlin.c \
+	game/demosave.h game/demosave.c game/arrow.h game/arrow.c \
+	game/pad.h game/pad.c libxmp-lite/common.h \
 	libxmp-lite/control.c libxmp-lite/dataio.c \
 	libxmp-lite/effects.c libxmp-lite/effects.h \
 	libxmp-lite/envelope.c libxmp-lite/envelope.h \
@@ -186,7 +187,7 @@ am_planetvc_OBJECTS = $(am__objects_1) cbase/planetvc-cbase.$(OBJEXT) \
 	game/planetvc-text.$(OBJEXT) game/planetvc-strdraw.$(OBJEXT) \
 	game/planetvc-load_st.$(OBJEXT) \
 	game/planetvc-gplay_st.$(OBJEXT) \
-	game/planetvc-menu_st.$(OBJEXT) \
+	game/planetvc-menu_st.$(OBJEXT) game/planetvc-buy_st.$(OBJEXT) \
 	game/planetvc-fade_st.$(OBJEXT) \
 	game/planetvc-over_st.$(OBJEXT) game/planetvc-end_st.$(OBJEXT) \
 	game/planetvc-win_st.$(OBJEXT) game/planetvc-demo_st.$(OBJEXT) \
@@ -495,6 +496,7 @@ planetvc_SOURCES = $(RESOURCE) \
 			game/load_st.h game/load_st.c \
 			game/gplay_st.h game/gplay_st.c \
 			game/menu_st.h game/menu_st.c \
+			game/buy_st.h game/buy_st.c \
 			game/fade_st.h game/fade_st.c \
 			game/over_st.h game/over_st.c \
 			game/end_st.h game/end_st.c \
@@ -749,6 +751,8 @@ game/planetvc-gplay_st.$(OBJEXT): game/$(am__dirstamp) \
 	game/$(DEPDIR)/$(am__dirstamp)
 game/planetvc-menu_st.$(OBJEXT): game/$(am__dirstamp) \
 	game/$(DEPDIR)/$(am__dirstamp)
+game/planetvc-buy_st.$(OBJEXT): game/$(am__dirstamp) \
+	game/$(DEPDIR)/$(am__dirstamp)
 game/planetvc-fade_st.$(OBJEXT): game/$(am__dirstamp) \
 	game/$(DEPDIR)/$(am__dirstamp)
 game/planetvc-over_st.$(OBJEXT): game/$(am__dirstamp) \
@@ -899,6 +903,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-balloon.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-bat.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-bitmaps.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-buy_st.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-caterpil.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-cheats.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-confpath.Po@am__quote@
@@ -1419,6 +1424,20 @@ game/planetvc-menu_st.obj: game/menu_st.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='game/menu_st.c' object='game/planetvc-menu_st.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -c -o game/planetvc-menu_st.obj `if test -f 'game/menu_st.c'; then $(CYGPATH_W) 'game/menu_st.c'; else $(CYGPATH_W) '$(srcdir)/game/menu_st.c'; fi`
+
+game/planetvc-buy_st.o: game/buy_st.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -MT game/planetvc-buy_st.o -MD -MP -MF game/$(DEPDIR)/planetvc-buy_st.Tpo -c -o game/planetvc-buy_st.o `test -f 'game/buy_st.c' || echo '$(srcdir)/'`game/buy_st.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) game/$(DEPDIR)/planetvc-buy_st.Tpo game/$(DEPDIR)/planetvc-buy_st.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='game/buy_st.c' object='game/planetvc-buy_st.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -c -o game/planetvc-buy_st.o `test -f 'game/buy_st.c' || echo '$(srcdir)/'`game/buy_st.c
+
+game/planetvc-buy_st.obj: game/buy_st.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -MT game/planetvc-buy_st.obj -MD -MP -MF game/$(DEPDIR)/planetvc-buy_st.Tpo -c -o game/planetvc-buy_st.obj `if test -f 'game/buy_st.c'; then $(CYGPATH_W) 'game/buy_st.c'; else $(CYGPATH_W) '$(srcdir)/game/buy_st.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) game/$(DEPDIR)/planetvc-buy_st.Tpo game/$(DEPDIR)/planetvc-buy_st.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='game/buy_st.c' object='game/planetvc-buy_st.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -c -o game/planetvc-buy_st.obj `if test -f 'game/buy_st.c'; then $(CYGPATH_W) 'game/buy_st.c'; else $(CYGPATH_W) '$(srcdir)/game/buy_st.c'; fi`
 
 game/planetvc-fade_st.o: game/fade_st.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -MT game/planetvc-fade_st.o -MD -MP -MF game/$(DEPDIR)/planetvc-fade_st.Tpo -c -o game/planetvc-fade_st.o `test -f 'game/fade_st.c' || echo '$(srcdir)/'`game/fade_st.c

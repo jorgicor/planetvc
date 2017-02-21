@@ -21,6 +21,7 @@ static struct initvar {
 } s_initvars[] = {
 	{ "active_portal", 8 },
 	{ "arrow", 1 },
+	{ "buy_map", 0x44 },
 	{ "credits_map", 0x33 },
 	{ "demo", 1 },
 	{ "demo_version", 0 },

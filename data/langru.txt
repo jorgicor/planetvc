@@ -91,7 +91,7 @@ NOW WE HAVE A MAP OF THE PORTALS AND THEIR CONNECTIONS IN GLIESE 581, AND NOW WE
 IN ADDITION WE KNOW A LOT MORE ABOUT THE FAUNA AND THE PERILS ON THE PLANET...
 МЫ УЗНАЛИ МНОГО НОВОГО О ФАУНЕ И ОПАСНОСТЯХ ДАЛЕКОЙ ПЛАНЕТЫ...
 THE EARTH IS GRATEFUL TO YOU.\n\nTHANK YOU!
-ЗЕМЛЯ ВОСХВАЛЯЕТ.\n\nИ БЛАГОДАРИТ ТЕБЯ!
+ЗЕМЛЯ ВОСХВАЛЯЕТ\nИ БЛАГОДАРИТ ТЕБЯ!
 NOW REST...\nBECAUSE SOON YOU WILL NEED TO FACE THE CHALLENGES OF NEW ADVENTURES!
 ОТДЫХАЙ, НАБИРАЙСЯ СИЛ...\nСКОРО ТЕБЯ ЖДУТ НОВЫЕ ПРИКЛЮЧЕНИЯ, ПОЛНЫЕ ТАЙН И ОПАСНОСТЕЙ!
 USE i OR j

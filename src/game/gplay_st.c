@@ -122,10 +122,14 @@ static void update_playing(void)
 		if (is_gameover_scheduled()) {
 			fade_to_state(&over_st);
 		} else if (is_win_scheduled()) {
-			if (initfile_getvar("demo_version"))
+			fade_to_state(&end_st);
+#if 0
+			if (initfile_getvar("demo_version")) {
 				fade_to_state(&win_st);
-			else
+			} else {
 				fade_to_state(&end_st);
+			}
+#endif
 		}
 	}
 }

@@ -64,6 +64,7 @@ planetvc_SOURCES =	$(RESOURCE) \
 			game/load_st.h game/load_st.c \
 			game/gplay_st.h game/gplay_st.c \
 			game/menu_st.h game/menu_st.c \
+			game/buy_st.h game/buy_st.c \
 			game/fade_st.h game/fade_st.c \
 			game/over_st.h game/over_st.c \
 			game/end_st.h game/end_st.c \

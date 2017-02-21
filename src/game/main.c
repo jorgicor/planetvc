@@ -33,6 +33,7 @@
 #include "lavashot.h"
 #include "hud.h"
 #include "menu_st.h"
+#include "buy_st.h"
 #include "gameover.h"
 #include "hiscore.h"
 #include "arrow.h"
@@ -109,6 +110,7 @@ int main(int argc, char *argv[])
 	lavashot_init();
 	hud_init();
 	menu_st_init();
+	buy_st_init();
 	gameover_init();
 	hiscore_init();
 	demosave_init();

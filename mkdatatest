@@ -1,0 +1,99 @@
+#!/bin/sh
+
+make_data () {
+	rm -rf datatest 
+	mkdir datatest
+	cp $datadir/*.txt datatest
+	cp $datadir/*.bmp datatest
+	cp $datadir/*.wav datatest
+	cp $datadir/*.xm datatest
+	ln -s datatest data
+}
+
+demoize_data () {
+	cp "$pkgfilesdir"/demo/init.txt datatest
+	cp "$pkgfilesdir"/demo/i18.txt datatest
+	cp "$pkgfilesdir"/demo/r18.txt datatest
+	cp "$pkgfilesdir"/demo/i43.txt datatest
+	cp "$pkgfilesdir"/demo/i44.txt datatest
+	cp "$pkgfilesdir"/demo/r44.txt datatest
+
+	cd datatest
+	rm r1[0-2].txt i1[0-2].txt \
+		r1[4-7].txt i1[4-7].txt \
+		r20.txt i20.txt \
+		r2[2-8].txt i2[2-8].txt
+	rm demo_1[4-7].txt demo_19.txt demo_20.txt \
+		demo_2[2-9].txt \
+		demo_3?.txt demo_4?.txt
+	rm r4[1-2].txt i4[1-2].txt
+	rm bg10.txt bg18.txt
+	rm bg20.txt bg28.txt
+	rm bg42.txt
+	mv demo_18.txt demo_14.txt
+	mv demo_21.txt demo_15.txt
+	rm lavashot.bmp lavashot.wav
+	rm spider.bmp
+	rm fish.bmp fishshot.bmp fishshot.wav
+	rm end.bmp win.xm cavern.xm lava.xm
+	cd ..
+}
+
+make_data_demo ()
+{
+	make_data
+	demoize_data
+}
+
+make_data_steam ()
+{
+	make_data
+	cp $pkgfilesdir/steam/i33.txt datatest
+}
+
+make_data_steam_demo ()
+{
+	make_data_steam
+	demoize_data
+	cp $pkgfilesdir/steam/demo/i44.txt datatest
+}
+
+
+show_menu () {
+	echo "*********"
+	echo " M E N U "
+	echo "*********"
+	echo "1. Make data"
+	echo "2. Make data demo"
+	echo "3. Make data steam"
+	echo "4. Make data steam demo"
+	echo "5. Make data android"
+	echo "6. Make data android demo"
+	echo "0. Exit"
+}
+
+read_option () {
+	local choice
+	echo -n "Select option: "
+	read choice
+	case $choice in
+		1) make_data ;;
+		2) make_data_demo ;;
+		3) make_data_steam ;;
+		4) make_data_steam_demo ;;
+		5) make_data_android ;;
+		6) make_data_android_demo ;;
+		0) exit 0 ;;
+		*) echo "Wrong option" ;;
+	esac
+}
+
+pkgdir=$(cd `dirname "$0"`; pwd -P)
+datadir="$pkgdir"/data
+pkgfilesdir="$pkgdir"/pkgfiles
+
+while true
+do
+	show_menu
+	read_option
+done

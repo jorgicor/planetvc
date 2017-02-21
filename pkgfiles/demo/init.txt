@@ -8,6 +8,7 @@ credits_map 0x33
 over_map 0x40
 end_map 0x18
 win_map 0x43
+buy_map 0x44
 demo 1
 ndemos 16
 nmaps_to_win 60

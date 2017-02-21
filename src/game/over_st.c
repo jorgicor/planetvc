@@ -10,6 +10,7 @@
 #include "cheats.h"
 #include "modplay.h"
 #include "initfile.h"
+#include "buy_st.h"
 #include "kernel/kernel.h"
 
 static void draw(void)
@@ -40,12 +41,16 @@ static void enter(const struct state *old_state)
 
 static void end(void)
 {
-	fade_to_state(&menu_st);
+	if (initfile_getvar("demo_version")) {
+		fade_to_state(&buy_st);
+	} else {
+		fade_to_state(&menu_st);
+	}
 }
 
 static void leave(const struct state *new_state)
 {
-	modplay_stop();
+	// modplay_stop();
 }
 
 const struct state over_st = {

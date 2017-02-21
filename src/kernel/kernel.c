@@ -1243,6 +1243,26 @@ static const struct kernel_finger *get_finger(int i)
 	return &s_fingers[i];
 }
 
+#if defined(WINDOWS)
+static void open_url(const char *url)
+{
+}
+#elif defined(ANDROID)
+static void open_url(const char *url)
+{
+}
+#else
+static void open_url(const char *url)
+{
+	char cmd[256];
+
+	SDL_MinimizeWindow(s_win);
+	snprintf(cmd, sizeof(cmd), "xdg-open %s", url);
+	ktrace(cmd);
+	system(cmd);
+}
+#endif
+
 static const struct kernel_device s_device = {
 	.run = run,
 	.stop = stop,
@@ -1258,6 +1278,7 @@ static const struct kernel_device s_device = {
 	.get_window_size = get_window_size,
 	.insert_pad_event = insert_pad_event,
 	.get_finger = get_finger,
+	.open_url = open_url,
 };
 
 const struct kernel_device *kernel_get_device(void)
