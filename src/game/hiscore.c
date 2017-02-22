@@ -29,10 +29,12 @@
 #include <string.h>
 #endif
 
-static struct hiscore {
+struct hiscore {
 	char name[4];
 	int nvisited;
-} s_hiscores[] = {
+};
+
+static struct hiscore s_hiscores[] = {
 #if 1
 	{ "ADC", 58 },
 	{ "SBC", 42 }, 
@@ -49,6 +51,31 @@ static struct hiscore {
 	{ "XOR", 60 }, 
 #endif
 };
+
+static struct hiscore s_hiscores_easy[] = {
+	{ "ADC", 58 },
+	{ "SBC", 42 }, 
+	{ "NOP", 33 }, 
+	{ "JMP", 24 }, 
+	{ "RST", 16 },
+	{ "XOR", 2 }, 
+};
+
+enum {
+	NSCORES = NELEMS(s_hiscores)
+};
+
+static struct hiscore *s_hiscores_by[] = {
+	s_hiscores,
+	s_hiscores_easy,
+};
+
+static const char *s_difficulty_name[] = {
+       	"DIFFICULT MODE",
+        "EASY MODE"
+};
+
+static struct hiscore *s_hiscores_tab = s_hiscores;
 
 static const char s_letters[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 enum {
@@ -86,7 +113,17 @@ static char *mkpath(char path[])
 	return path;
 }
 
-void hiscore_save(void)
+static void save_scores(FILE *fp, int difficulty)
+{
+	int i;
+
+	for (i = 0; i < NSCORES; i++) {
+		fprintf(fp, "%s %d\n", s_hiscores_by[difficulty][i].name,
+			s_hiscores_by[difficulty][i].nvisited);
+	}
+}
+
+static void hiscore_save(void)
 {
 	int i;
 	FILE *fp;
@@ -98,19 +135,37 @@ void hiscore_save(void)
 	if ((fp = fopen(path, "w")) == NULL)
 		return;
 
-	for (i = 0; i < NELEMS(s_hiscores); i++) {
-		fprintf(fp, "%s %d\n", s_hiscores[i].name,
-			s_hiscores[i].nvisited);
+	for (i = 0; i < NDIFFICULTY_LEVELS; i++) {
+		save_scores(fp, i);
 	}
 
 	fclose(fp);
 }
 
-void hiscore_load(void)
+static int load_scores(FILE *fp, int difficulty)
 {
 	int i, r;
+	struct hiscore bscores[NSCORES];
+
+	for (i = 0; i < NSCORES; i++) {
+		r = fscanf(fp, " %3s %d ", bscores[i].name,
+			&bscores[i].nvisited);
+		if (r != 2) {
+			return -1;
+		}
+	}
+
+	for (i = 0; i < NSCORES; i++) {
+		s_hiscores_by[difficulty][i] = bscores[i];
+	}
+
+	return 0;
+}
+
+void hiscore_load(void)
+{
+	int i;
 	FILE *fp;
-	struct hiscore bscores[NELEMS(s_hiscores)];
 	char path[OPEN_FILE_MAX_PATH_LEN + 1];
 
 	if (mkpath(path) == NULL)
@@ -119,15 +174,10 @@ void hiscore_load(void)
 	if ((fp = fopen(path, "r")) == NULL)
 		return;
 
-	for (i = 0; i < NELEMS(s_hiscores); i++) {
-		r = fscanf(fp, " %3s %d ", bscores[i].name,
-			&bscores[i].nvisited);
-		if (r != 2)
+	for (i = 0; i < NDIFFICULTY_LEVELS; i++) {
+		if (load_scores(fp, i) == -1) {
 			goto end;
-	}
-
-	for (i = 0; i < NELEMS(s_hiscores); i++) {
-		s_hiscores[i] = bscores[i];
+		}
 	}
 
 end:	fclose(fp);
@@ -142,17 +192,18 @@ static int get_hiscore_pos(int nvisited)
 	int all_atmax;
 
 	all_atmax = 1;
-	for (i = 0; i < NELEMS(s_hiscores); i++) {
-		if (s_hiscores[i].nvisited != s_hiscore_nmaps)
+	for (i = 0; i < NSCORES; i++) {
+		if (s_hiscores_tab[i].nvisited != s_hiscore_nmaps)
 			all_atmax = 0;
-		if (nvisited >= s_hiscores[i].nvisited)
+		if (nvisited >= s_hiscores_tab[i].nvisited)
 			return i;
 	}
 
 	/* If all the scores are the maximum, allow to put a hiscore
 	 * at least in the last entry... */
-	if (all_atmax)
-		return NELEMS(s_hiscores) - 1;
+	if (all_atmax) {
+		return NSCORES - 1;
+	}
 
 	return -1;
 }
@@ -162,7 +213,7 @@ static void draw_hiscore(int i, int y, int total)
 	char str[TE_FMW + 1];
 
 	snprintf(str, sizeof(str), "%d. %s     %2d/%d", i + 1,
-		 s_hiscores[i].name, s_hiscores[i].nvisited, total);
+		 s_hiscores_tab[i].name, s_hiscores_tab[i].nvisited, total);
 	draw_str(str, (TE_FMW - strlen(str)) / 2, y, 0);
 }
 
@@ -170,7 +221,7 @@ static void draw_hiscores(int y)
 {
 	int i;
 
-	for (i = 0; i < NELEMS(s_hiscores); i++) {
+	for (i = 0; i < NSCORES; i++) {
 		draw_hiscore(i, y, s_hiscore_nmaps);
 		y += 2;
 	}
@@ -179,6 +230,16 @@ static void draw_hiscores(int y)
 static void clear_hint(int y)
 {
 	te_fill_fg(0, y, TE_FMW, 2, 0, chri(' '));
+}
+
+static void draw_mode(int y, int difficulty)
+{
+	int x;
+	const char *str;
+
+	str = s_difficulty_name[difficulty];
+	x = (TE_FMW - utf8_strlen(_(str))) / 2;
+	draw_str(_(str), x, y, 1);
 }
 
 static void draw_hint(int y)
@@ -209,7 +270,7 @@ static void hiscore_void(struct actor *pac)
 
 static void redraw_char_pos(struct actor *pac)
 {
-	s_hiscores[s_enter_hspos].name[s_enter_chr_pos] =
+	s_hiscores_tab[s_enter_hspos].name[s_enter_chr_pos] =
 		s_letters[s_enter_chr_num];
 	draw_hiscore(s_enter_hspos, s_hiscore_y + s_enter_hspos * 2,
 		     s_hiscore_nmaps);
@@ -219,7 +280,7 @@ static void redraw_char_pos(struct actor *pac)
 
 static void clear_char_pos(void)
 {
-	s_hiscores[s_enter_hspos].name[s_enter_chr_pos] = ' ';
+	s_hiscores_tab[s_enter_hspos].name[s_enter_chr_pos] = ' ';
 	draw_hiscore(s_enter_hspos, s_hiscore_y + s_enter_hspos * 2,
 		     s_hiscore_nmaps);
 }
@@ -269,12 +330,12 @@ static void set_hiscore_enter(struct actor *pac, int pos, int nvisited)
 {
 	int i;
 
-	for (i = NELEMS(s_hiscores) - 1; i > pos; i--) {
-		s_hiscores[i] = s_hiscores[i - 1];
+	for (i = NSCORES - 1; i > pos; i--) {
+		s_hiscores_tab[i] = s_hiscores_tab[i - 1];
 	}
 		
-	strcpy(s_hiscores[pos].name, "AAA");
-	s_hiscores[pos].nvisited = nvisited;
+	strcpy(s_hiscores_tab[pos].name, "AAA");
+	s_hiscores_tab[pos].nvisited = nvisited;
 	s_enter_hspos = pos;
 	s_enter_chr_pos = 0;
 	s_enter_chr_num = 0;
@@ -314,6 +375,8 @@ struct actor *spawn_hiscore(int x, int y)
 	if (!is_free_actor(pac))
 		return NULL;
 
+	draw_mode(6, s_difficulty);
+	s_hiscores_tab = s_hiscores_by[s_difficulty];
 	s_hiscore_y = y;
 	s_hiscore_nmaps = initfile_getvar("nmaps_to_win");
 	n = get_nvisited_maps();
@@ -321,13 +384,15 @@ struct actor *spawn_hiscore(int x, int y)
 		/* We passed the game, n should be one more. */
 		n++;
 	}
-	if (n > s_hiscore_nmaps)
+	if (n > s_hiscore_nmaps) {
 		n = s_hiscore_nmaps;
+	}
 	pos = get_hiscore_pos(n);
-	if (pos >= 0)
+	if (pos >= 0) {
 		set_hiscore_enter(pac, pos, n);
-	else
+	} else {
 		set_hiscore_void(pac);
+	}
 
 	return pac;
 }
@@ -339,5 +404,9 @@ struct actor *spawn_hiscore_fp(int x, int y)
 
 void hiscore_init(void)
 {
+	kasserta(NSCORES == NELEMS(s_hiscores));
+	kasserta(NSCORES == NELEMS(s_hiscores_easy));
+	kasserta(NDIFFICULTY_LEVELS == NELEMS(s_hiscores_by));
+	kasserta(NDIFFICULTY_LEVELS == NELEMS(s_difficulty_name));
 	register_spawn_fn("hiscore", spawn_hiscore_fp);
 }

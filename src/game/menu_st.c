@@ -43,7 +43,7 @@ static struct wav *wav_play;
 #define TX_BACK		"BACK"
 
 #define TX_EASY		"EASY"
-#define TX_NORMAL	"NORMAL"
+#define TX_NORMAL	"DIFFICULT"
 
 enum {
 	OP_PLAY,
