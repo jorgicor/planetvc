@@ -192,6 +192,9 @@ static int translate_sdl_scancode(SDL_Scancode scancode)
 	case SDL_SCANCODE_SPACE: kc = KERNEL_KSC_SPACE; break;
 	case SDL_SCANCODE_RETURN: kc = KERNEL_KSC_RETURN; break;
 	case SDL_SCANCODE_BACKSPACE: kc = KERNEL_KSC_BACKSPACE; break;
+	/* Map android back button to ESC */
+	case SDL_SCANCODE_AC_BACK: kc = KERNEL_KSC_ESC; break;
+	/**/
 	case SDL_SCANCODE_ESCAPE: kc = KERNEL_KSC_ESC; break;
 	default: kc = -1;
 	}
