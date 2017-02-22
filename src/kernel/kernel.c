@@ -30,6 +30,16 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <stdlib.h>
 #include <string.h>
 
+#if defined(_WIN32)
+	/* Needed only for openUrl() */
+	#include <windows.h>
+#endif
+
+#if PP_ANDROID
+	/* Needed only for openUrl() */
+	#include <jni.h>
+#endif
+
 #define GAMECONTROLLERDB_TXT "gamecontrollerdb.txt"
 
 #if !defined(PP_DATADIR)
@@ -1245,8 +1255,6 @@ static const struct kernel_finger *get_finger(int i)
 
 #if PP_ANDROID
 
-#include <jni.h>
-
 static void open_url(const char *url)
 {
 	JNIEnv *env;
@@ -1274,10 +1282,9 @@ static void open_url(const char *url)
 
 #elif defined(_WIN32)
 
-#include <shellapi.h>
-
 static void open_url(const char *url)
 {
+	SDL_MinimizeWindow(s_win);
 	ShellExecute(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
 }
 
