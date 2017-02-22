@@ -1,22 +1,22 @@
 #!/bin/sh
 
 case $# in
-	2) BUILDTYPE="$1" ; SDLPATH="$2" ;;
-	*) echo "Usage ./mkandroid full|demo path_to_sdl_sources" ; exit 1 ;;
+	4) BUILDTYPE="$1" ; VERSIONCODE=$2 ; VERSIONNAME=$3 ; SDLPATH="$4" ;;
+	*) echo "Usage ./mkandroid full|demo versionCode versionName path_to_sdl_sources" ; exit 1 ;;
 esac
 
 case "$BUILDTYPE" in
     full)
 	APP="org.jorgicor.planetvc"
-	APPNAME="The Planet of the Vicious Creatures"
+	APPNAME="Planet of Vicious Creatures"
 	DEMOPP=""
         ;; 
     demo)
 	APP="org.jorgicor.planetvcd"
-	APPNAME="The Planet of the Vicious Creatures Demo"
+	APPNAME="Demo Planet Vicious Creatures"
 	DEMOPP="-DPP_DEMO=1"
         ;;
-    *) echo "Usage ./mkandroid full|demo path_to_sdl_sources" ; exit 1 ;;
+    *) echo "Usage ./mkandroid full|demo versionCode versionName path_to_sdl_sources" ; exit 1 ;;
 esac
 
 if [ ! -d $SDLPATH ]; then
@@ -77,6 +77,8 @@ make_project () {
 	cp -r "$SDLPATH"/Android.mk "$BUILDPATH"/jni/SDL
 
 	sed -i "s|org\.libsdl\.app|$APP|g" "$BUILDPATH"/AndroidManifest.xml
+	sed -i "s|VERSIONCODE|$VERSIONCODE|g" "$BUILDPATH"/AndroidManifest.xml
+	sed -i "s|VERSIONNAME|$VERSIONNAME|g" "$BUILDPATH"/AndroidManifest.xml
 
 	# Make sources list
 	cd "$PKGPATH"/src
@@ -202,22 +204,41 @@ copy_data () {
 	fi
 }
 
+# $1 debug or release
 build () {
+	local buildtype=$1
+
 	cd "$BUILDPATH"
 	"$NDKBUILD" -j $NCPUS $NDKARGS
-	"$ANT" debug
+	"$ANT" $buildtype
 	cd "$BASEPATH"
 
-	local APK="$BUILDPATH/bin/$APP-debug.apk"
+	local APK="$BUILDPATH/bin/$APP-$buildtype.apk"
 
 	if [ -f "$APK" ]; then
 	    echo "Your APK is ready at $APK"
 	    echo "To install to your device: "
 	    echo "cd  $BUILDPATH"
-	    echo "ant debug install"
+	    echo "ant $buildtype install"
 	else
 	    echo "There was an error building the APK"
 	fi
+}
+
+build_debug () {
+	build debug
+}
+
+build_release () {
+	local keystorep
+	read -p "Enter the release keystore path (without ending /)? " keystorep
+	local keystore="$keystorep"/keystore.jks
+	if [ ! -f "$keystore" ]; then
+		echo "Keystore file $keystore does not exist. Aborting."
+		return
+	fi
+	cp "$keystore" "$BUILDPATH"/keystore/. 
+	build release
 }
 
 show_menu () {
@@ -226,7 +247,8 @@ show_menu () {
 	echo "*********"
 	echo "1. Recreate project skeleton in $BUILDPATH"
 	echo "2. Copy assets from data/ and optimize BMPs into project"
-	echo "3. Build"
+	echo "3. Build debug"
+	echo "4. Build release"
 	echo "0. Exit"
 }
 
@@ -237,7 +259,8 @@ read_option () {
 	case $choice in
 		1) make_project ;;
 		2) copy_data ;;
-		3) build ;;
+		3) build_debug ;;
+		4) build_release ;;
 		0) exit 0 ;;
 		*) echo "Wrong option" ;;
 	esac
