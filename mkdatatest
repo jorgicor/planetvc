@@ -45,15 +45,9 @@ make_data_demo ()
 	demoize_data
 }
 
-make_data_steam ()
-{
-	make_data
-	cp $pkgfilesdir/steam/*.txt datatest
-}
-
 make_data_steam_demo ()
 {
-	make_data_steam
+	make_data
 	demoize_data
 	cp $pkgfilesdir/steam/demo/*.txt datatest
 }
@@ -77,10 +71,9 @@ show_menu () {
 	echo "*********"
 	echo "1. Make data"
 	echo "2. Make data demo"
-	echo "3. Make data steam"
-	echo "4. Make data steam demo"
-	echo "5. Make data android"
-	echo "6. Make data android demo"
+	echo "3. Make data steam demo"
+	echo "4. Make data android"
+	echo "5. Make data android demo"
 	echo "0. Exit"
 }
 
@@ -91,10 +84,9 @@ read_option () {
 	case $choice in
 		1) make_data ;;
 		2) make_data_demo ;;
-		3) make_data_steam ;;
-		4) make_data_steam_demo ;;
-		5) make_data_android ;;
-		6) make_data_android_demo ;;
+		3) make_data_steam_demo ;;
+		4) make_data_android ;;
+		5) make_data_android_demo ;;
 		0) exit 0 ;;
 		*) echo "Wrong option" ;;
 	esac

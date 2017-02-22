@@ -24,22 +24,18 @@ pkg_full_data () {
 	zip -FS -Zstore -j "$basedir"/data.pak "$databuilddir"/*
 }
 
-patch_full_data_for_steam () {
-	cp "$pkgfilesdir"/steam/i33.txt "$databuilddir"
-}
-
-pkg_steam_full_data () {
-	zip -FS -Zstore -j "$basedir"/steamdata.pak "$databuilddir"/*
-}
-
 # patches the data dir with demo data
 demoize_data_dir () {
 	cp "$pkgfilesdir"/demo/init.txt "$databuilddir"
+	cp "$pkgfilesdir"/demo/i18.txt "$databuilddir"
+	cp "$pkgfilesdir"/demo/r18.txt "$databuilddir"
 	cp "$pkgfilesdir"/demo/i43.txt "$databuilddir"
+	cp "$pkgfilesdir"/demo/i44.txt "$databuilddir"
+	cp "$pkgfilesdir"/demo/r44.txt "$databuilddir"
 
 	cd "$databuilddir"
 	rm r1[0-2].txt i1[0-2].txt \
-		r1[4-8].txt i1[4-8].txt \
+		r1[4-7].txt i1[4-7].txt \
 		r20.txt i20.txt \
 		r2[2-8].txt i2[2-8].txt
 	rm demo_1[4-7].txt demo_19.txt demo_20.txt \
@@ -64,6 +60,10 @@ pkg_demo_data () {
 		"$basedirrel"/demodata-cloak.pak
 }
 
+demoize_steam_data_dir () {
+	cp $pkgfilesdir/steam/demo/*.txt "$databuilddir"
+}
+
 pkg_steam_demo_data () {
 	zip -FS -Zstore -j "$basedir"/steamdemodata.pak "$databuilddir"/*
 	"$pakcloakbuilddir"/pakcloak "$basedirrel"/steamdemodata.pak \
@@ -85,7 +85,7 @@ check_tree () {
 	mkdir -p "$linuxdir"/bin/x86_64
 	mkdir -p "$windir"
 	mkdir -p "$windemodir"
-	mkdir -p "$winsteamdir"
+	# mkdir -p "$winsteamdir"
 	mkdir -p "$winsteamdemodir"
 }
 
@@ -133,10 +133,6 @@ copy_files () {
 	sed $sedmask "$pkgfilesdir"/demo/ccncnd4.txt > "$windemodir"/ccncnd4.txt
 	cp "$windir"/README.txt "$windemodir"/.
 
-	# Windows Steam full version files
-	cp -r "$windir"/* "$winsteamdir" 
-	cp "$basedir"/steamdata.pak "$winsteamdir"/data.pak
-
 	# Windows Steam demo files
 	cp -r "$windemodir"/* "$winsteamdemodir" 
 	cp "$basedir"/steamdemodata-cloak.pak "$winsteamdemodir"/data.pak
@@ -151,12 +147,7 @@ make_data () {
 	pkg_full_data
 	demoize_data_dir
 	pkg_demo_data
-	rm -rf "$databuilddir"
-	mkdir -p "$databuilddir"
-	make_data_dir
-	patch_full_data_for_steam
-	pkg_steam_full_data
-	demoize_data_dir
+	demoize_steam_data_dir
 	pkg_steam_demo_data
 	rm -rf "$databuilddir"
 	copy_files
@@ -181,8 +172,7 @@ make_programs () {
 
 		"$srcdir"/configure $planetvc_addops && make && \
 		       	$stripcmd planetvc$ext && \
-			cp planetvc$ext "$windir"/. && \
-			cp planetvc$ext "$winsteamdir"/.
+			cp planetvc$ext "$windir"/.
 
 		echo "Making demo $os $archbits bits"
 
@@ -303,7 +293,7 @@ bundledir="$basedir"/bundle
 linuxdir="$bundledir"/$prog-linux-$ver
 windir="$bundledir"/$prog-win-$ver
 windemodir="$bundledir"/$prog-demo-win-$ver
-winsteamdir="$bundledir"/$prog-win-steam-$ver
+# winsteamdir="$bundledir"/$prog-win-steam-$ver
 winsteamdemodir="$bundledir"/$prog-demo-win-steam-$ver
 addops=
 ext=
