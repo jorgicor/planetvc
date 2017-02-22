@@ -1243,15 +1243,46 @@ static const struct kernel_finger *get_finger(int i)
 	return &s_fingers[i];
 }
 
-#if defined(WINDOWS)
+#if PP_ANDROID
+
+#include <jni.h>
+
 static void open_url(const char *url)
 {
+	JNIEnv *env;
+	jobject theActivity;
+	jclass theClass;
+	jmethodID theMethod;
+	jstring str;
+
+
+	env = (JNIEnv *) SDL_AndroidGetJNIEnv();
+	theActivity = (jobject) SDL_AndroidGetActivity();
+
+	theClass = (*env)->GetObjectClass(env, theActivity);
+	theMethod = (*env)->GetStaticMethodID(env, theClass, "openUrl",
+			"(Ljava/lang/String;)V");
+	str = (*env)->NewStringUTF(env, url);
+	if (str != NULL) {
+		(*env)->CallStaticVoidMethod(env, theClass, theMethod, str);
+		(*env)->DeleteLocalRef(env, str);
+	}
+
+	(*env)->DeleteLocalRef(env, theActivity);
+	(*env)->DeleteLocalRef(env, theClass);
 }
-#elif defined(ANDROID)
+
+#elif defined(_WIN32)
+
+#include <shellapi.h>
+
 static void open_url(const char *url)
 {
+	ShellExecute(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
 }
+
 #else
+
 static void open_url(const char *url)
 {
 	char cmd[256];
@@ -1261,6 +1292,7 @@ static void open_url(const char *url)
 	ktrace(cmd);
 	system(cmd);
 }
+
 #endif
 
 static const struct kernel_device s_device = {

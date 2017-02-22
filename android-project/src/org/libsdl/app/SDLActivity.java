@@ -31,6 +31,7 @@ import android.media.*;
 import android.hardware.*;
 import android.content.pm.ActivityInfo;
 import android.content.res.AssetManager;
+import android.net.Uri;
 
 /**
     SDL Activity
@@ -447,6 +448,21 @@ public class SDLActivity extends Activity {
      */
     public static String getLocale() {
 	    return Locale.getDefault().toString();
+    }
+
+    /**
+     * Called by game using JNI.
+     */
+    public static void openUrl(String url) {
+	    if (mSingleton == null) {
+		    return;
+	    }
+	    Uri webpage = Uri.parse(url);
+	    Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+	    if (intent.resolveActivity(mSingleton.getPackageManager()) != null)
+	    {
+		    mSingleton.startActivity(intent);
+	    }
     }
 
     /**

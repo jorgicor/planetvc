@@ -276,8 +276,10 @@ static char *Android_GetLocale(void)
 			"()Ljava/lang/String;");
 	retval = (*env)->CallStaticObjectMethod(env, theClass, theMethod);
 	str = (*env)->GetStringUTFChars(env, retval, NULL);
-	locstr = dupstr(str);
-	(*env)->ReleaseStringUTFChars(env, retval, str);
+	if (str != NULL) {
+		locstr = dupstr(str);
+		(*env)->ReleaseStringUTFChars(env, retval, str);
+	}
 
 	(*env)->DeleteLocalRef(env, theActivity);
 	(*env)->DeleteLocalRef(env, theClass);

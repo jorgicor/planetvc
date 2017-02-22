@@ -1,11 +1,22 @@
 #!/bin/sh
 
-APP="org.jorgicor.planetvc"
-APPNAME="The Planet of the Vicious Creatures"
-
 case $# in
-	1) SDLPATH="$1" ;;
-	*) echo "Usage ./mkandroid path_to_sdl_sources" ; exit 1 ;;
+	2) BUILDTYPE="$1" ; SDLPATH="$2" ;;
+	*) echo "Usage ./mkandroid full|demo path_to_sdl_sources" ; exit 1 ;;
+esac
+
+case "$BUILDTYPE" in
+    full)
+	APP="org.jorgicor.planetvc"
+	APPNAME="The Planet of the Vicious Creatures"
+	DEMOPP=""
+        ;; 
+    demo)
+	APP="org.jorgicor.planetvcd"
+	APPNAME="The Planet of the Vicious Creatures Demo"
+	DEMOPP="-DPP_DEMO=1"
+        ;;
+    *) echo "Usage ./mkandroid full|demo path_to_sdl_sources" ; exit 1 ;;
 esac
 
 if [ ! -d $SDLPATH ]; then
@@ -32,6 +43,7 @@ if [ -z "$ANT" ];then
 fi
 
 PKGPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+PKGFILESDIR="$PKGPATH"/pkgfiles
 
 NCPUS="1"
 case "$OSTYPE" in
@@ -48,7 +60,7 @@ esac
 
 SDLPATH="$( cd "$SDLPATH" ; pwd -P )"
 BASEPATH=`pwd -P`
-BUILDPATH="$BASEPATH"/'android.build'
+BUILDPATH="$BASEPATH"/'android.build.'"$BUILDTYPE"
 
 make_project () {
 	local name
@@ -56,17 +68,9 @@ make_project () {
 	local APPARR
 	local ACTIVITY
 
-	if [ ! -f "$PKGPATH"/datapak/data.pak ]; then
-	    echo "Could not find $PKGPATH/datapak/data.pak"
-	    return
-	fi
-
 	rm -rf "$BUILDPATH"
 	mkdir -p "$BUILDPATH"
 	cp -r "$PKGPATH"/android-project/* "$BUILDPATH"
-
-	# cp -r "$PKGPATH"/data "$BUILDPATH"/assets
-	# cp "$PKGPATH"/pkgfiles/android/* "$BUILDPATH"/assets/data
 
 	ln -s "$SDLPATH"/src "$BUILDPATH"/jni/SDL
 	ln -s "$SDLPATH"/include "$BUILDPATH"/jni/SDL
@@ -89,6 +93,7 @@ make_project () {
 	done < "$BUILDPATH"/sources.list
 
 	sed -i "s|YourSourceHere.c|$sources|g" "$BUILDPATH"/jni/src/Android.mk
+	sed -i "s|FullOrDemo|$DEMOPP|g" "$BUILDPATH"/jni/src/Android.mk
 
 	ln -s "$PKGPATH"/src/cfg "$BUILDPATH"/jni/src
 	ln -s "$PKGPATH"/src/cbase "$BUILDPATH"/jni/src
@@ -128,9 +133,40 @@ make_project () {
 	cd "$BASEPATH"
 }
 
+demoize_data () {
+	local buildd="$BUILDPATH"/assets/data
+
+	cp "$PKGFILESDIR"/demo/init.txt "$buildd"
+	cp "$PKGFILESDIR"/demo/i18.txt "$buildd"
+	cp "$PKGFILESDIR"/demo/r18.txt "$buildd"
+	cp "$PKGFILESDIR"/demo/i43.txt "$buildd"
+	cp "$PKGFILESDIR"/demo/i44.txt "$buildd"
+	cp "$PKGFILESDIR"/demo/r44.txt "$buildd"
+
+	local here=`pwd`
+	cd "$buildd"
+	rm r1[0-2].txt i1[0-2].txt \
+		r1[4-7].txt i1[4-7].txt \
+		r20.txt i20.txt \
+		r2[2-8].txt i2[2-8].txt
+	rm demo_1[4-7].txt demo_19.txt demo_20.txt \
+		demo_2[2-9].txt \
+		demo_3?.txt demo_4?.txt
+	rm r4[1-2].txt i4[1-2].txt
+	rm bg10.txt bg18.txt
+	rm bg20.txt bg28.txt
+	rm bg42.txt
+	mv demo_18.txt demo_14.txt
+	mv demo_21.txt demo_15.txt
+	rm lavashot.bmp lavashot.wav
+	rm spider.bmp
+	rm fish.bmp fishshot.bmp fishshot.wav
+	rm end.bmp win.xm cavern.xm lava.xm
+	cd "$here"
+}
+
 copy_data () {
 	local fd
-
 	local datad="$PKGPATH"/data
 	local buildd="$BUILDPATH"/assets/data
 
@@ -158,7 +194,12 @@ copy_data () {
 	cp "$datad"/*.txt "$buildd"
 	cp "$datad"/*.xm "$buildd"
 	cp "$datad"/*.wav "$buildd"
-	cp "$PKGPATH"/pkgfiles/android/* "$buildd"
+	cp "$PKGFILESDIR"/android/*.txt "$buildd"
+
+	if [ "$BUILDTYPE" = "demo" ]; then
+		demoize_data
+		cp "$PKGFILESDIR"/android/demo/*.txt "$buildd"
+	fi
 }
 
 build () {
@@ -183,7 +224,7 @@ show_menu () {
 	echo "*********"
 	echo " M E N U "
 	echo "*********"
-	echo "1. Recreate project skeleton in ./android.build"
+	echo "1. Recreate project skeleton in $BUILDPATH"
 	echo "2. Copy assets from data/ and optimize BMPs into project"
 	echo "3. Build"
 	echo "0. Exit"
