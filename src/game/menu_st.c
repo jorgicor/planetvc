@@ -36,14 +36,20 @@ static struct wav *wav_play;
 #define TX_EXIT		"QUIT"
 
 #define TX_REDEFINE	"DEFINE KEYS"
-#define TX_MUSIC_ON	"MUSIC ON"
-#define TX_MUSIC_OFF	"MUSIC OFF"
+#define TX_SOUND	"SONIDO"
 #define TX_DEMO		"DEMO"
 #define TX_CREDITS	"CREDITS"
 #define TX_BACK		"BACK"
 
 #define TX_EASY		"EASY"
 #define TX_NORMAL	"DIFFICULT"
+
+#define TX_ON		"ON"
+#define TX_OFF		"OFF"
+#define TX_VOLUME	"VOLUME"
+#define TX_MUSIC_ON	"MUSIC: ON"
+#define TX_MUSIC_OFF	"MUSIC: OFF"
+#define TX_VOLUME_100	"VOLUME: 100"
 
 enum {
 	OP_PLAY,
@@ -58,17 +64,17 @@ enum {
 	OP_BACK,
 	OP_EASY,
 	OP_NORMAL,
+	OP_SOUND,
+	OP_VOLUME,
 };
 
 enum {
 	MAIN_MENU_Y = 13,
 	OPTIONS_MENU_Y = 13,
 	LEVEL_MENU_Y = 15,
-#if PP_PHONE_MODE
+	SOUND_MENU_Y = 15,
 	OP_MUSIC_INDEX = 0,
-#else
-	OP_MUSIC_INDEX = 1,
-#endif
+	OP_VOLUME_INDEX = 1,
 };
 
 static struct menu s_main_menu = {
@@ -87,7 +93,7 @@ static struct menu s_options_menu_nodemo = {
 #if !PP_PHONE_MODE
 		{ TX_REDEFINE, OP_REDEFINE },
 #endif
-		{ TX_MUSIC_OFF, OP_MUSIC },
+		{ TX_SOUND, OP_SOUND },
 		{ TX_CREDITS, OP_CREDITS },
 		{ TX_BACK, OP_BACK },
 		{ NULL, -2 },
@@ -99,7 +105,7 @@ static struct menu s_options_menu = {
 #if !PP_PHONE_MODE
 		{ TX_REDEFINE, OP_REDEFINE },
 #endif
-		{ TX_MUSIC_OFF, OP_MUSIC },
+		{ TX_SOUND, OP_SOUND },
 		{ TX_DEMO, OP_DEMO },
 		{ TX_CREDITS, OP_CREDITS },
 		{ TX_BACK, OP_BACK },
@@ -107,9 +113,21 @@ static struct menu s_options_menu = {
 	},
 };
 
-static const char *s_options_menu_add[] = {
+static char s_volume_str[32] = TX_VOLUME;
+
+static struct menu s_sound_menu = {
+	.options = {
+		{ TX_MUSIC_ON, OP_MUSIC },
+		{ s_volume_str, OP_VOLUME },
+		{ TX_BACK, OP_BACK },
+		{ NULL, -2 },
+	},
+};
+
+static const char *s_sound_menu_add[] = {
 	TX_MUSIC_ON,
 	TX_MUSIC_OFF,
+	TX_VOLUME_100,
 	NULL
 };
 
@@ -126,6 +144,7 @@ enum {
 	STATE_MAIN_MENU,
 	STATE_REDEFINE,
 	STATE_LANG,
+	STATE_VOLUME,
 };
 
 static int s_state;
@@ -220,6 +239,7 @@ static char s_menu_bottom[NELEMS(s_menu_top_a)];
 
 static void set_redefine_state(void);
 static void set_lang_state(void);
+static void set_volume_state(void);
 
 /* Loads the defined keys from preferences and redefines them. */
 void load_defined_keys(void)
@@ -372,17 +392,27 @@ static void draw(void)
 static void set_menu_music(void)
 {
 	if (is_music_enabled()) {
-		s_options_menu.options[OP_MUSIC_INDEX].str = TX_MUSIC_OFF;
+		s_sound_menu.options[OP_MUSIC_INDEX].str = TX_MUSIC_ON;
 	} else {
-		s_options_menu.options[OP_MUSIC_INDEX].str = TX_MUSIC_ON;
+		s_sound_menu.options[OP_MUSIC_INDEX].str = TX_MUSIC_OFF;
 	}
+}
+
+static void set_menu_volume(void)
+{
+	snprintf(s_volume_str, sizeof(s_volume_str), "%s: %d", _(TX_VOLUME),
+		 mixer_get_volume());
+}
+
+static void push_sound_menu(void)
+{
+	set_menu_volume();
+	menu_push(&s_sound_menu, SOUND_MENU_Y, -1, s_sound_menu_add);
 }
 
 static void push_options_menu(int firstop)
 {
-	set_menu_music();
-	menu_push(&s_options_menu, OPTIONS_MENU_Y, firstop,
-		  s_options_menu_add);
+	menu_push(&s_options_menu, OPTIONS_MENU_Y, firstop, NULL);
 }
 
 static void toggle_music(void)
@@ -455,9 +485,9 @@ static void update_main_menu(void)
 		mixer_play(wav_opsel);
 	       	set_redefine_state();
 		break;
-	case OP_MUSIC:
+	case OP_SOUND:
 		mixer_play(wav_opsel);
-	       	toggle_music();
+		push_sound_menu();
 		break;
 	case OP_DEMO:
 		s_difficulty = DIFFICULTY_NORMAL;
@@ -480,6 +510,14 @@ static void update_main_menu(void)
 	case OP_BACK:
 		mixer_play(wav_opsel);
 		menu_pop();
+		break;
+	case OP_MUSIC:
+		mixer_play(wav_opsel);
+	       	toggle_music();
+		break;
+	case OP_VOLUME:
+		mixer_play(wav_opsel);
+	       	set_volume_state();
 		break;
 	case -2: 
 		mixer_play(wav_opmove);
@@ -613,9 +651,8 @@ static void update_lang(void)
 		set_preference("lang", get_lang_code(i));
 		save_prefs();
 
-		i = menu_get_cur_op_i();
 		menu_pop();
-		menu_push(&s_main_menu, MAIN_MENU_Y, i, NULL);
+		menu_push(&s_main_menu, MAIN_MENU_Y, OP_LANG, NULL);
 		draw_top_bottom();
 
 		s_state = STATE_MAIN_MENU;
@@ -631,6 +668,69 @@ static void set_lang_state(void)
 	s_state = STATE_LANG;
 }
 
+static void draw_cur_volume(void)
+{
+	int y, x;
+	int len;
+	char str[4];
+
+	snprintf(str, sizeof(str), "%d", mixer_get_volume());
+	len = utf8_strlen(str);
+	y = menu_get_cur_op_y();
+	x = menu_get_x();
+	te_fill_fg(0, y, TE_FMW, 1, 0, chri(' '));
+	draw_str(str, x, y, 0);
+	te_set_fg_xy(x - 2, y, 0, chri(CHR_ARROW_L)); 
+	te_set_fg_xy(x + len + 1, y, 0, chri(CHR_ARROW_R)); 
+}
+
+static void update_volume(void)
+{
+	int vol;
+
+	vol = mixer_get_volume();
+	if (is_first_pressed(LKLEFT) || is_first_pressed(LKUP)) {
+		mixer_play(wav_opmove);
+		if (vol == 0) {
+			mixer_set_volume(100);
+		} else {
+			mixer_set_volume(vol - 10);
+		}
+		draw_cur_volume();
+	} else if (is_first_pressed(LKRIGHT) || is_first_pressed(LKDOWN) ||
+		kernel_get_device()->key_first_pressed(KERNEL_KSC_SPACE))
+       	{
+		mixer_play(wav_opmove);
+		if (vol == 100) {
+			mixer_set_volume(0);
+		} else {
+			mixer_set_volume(vol + 10);
+		}
+		draw_cur_volume();
+	} else if (is_first_pressed(LKEYA)) {
+		mixer_play(wav_opsel);
+
+		// set_preference("volume", s_volume);
+		// save_prefs();
+		
+		menu_pop();
+		set_menu_volume();
+		menu_push(&s_sound_menu, SOUND_MENU_Y, OP_VOLUME,
+			  s_sound_menu_add);
+
+		s_state = STATE_MAIN_MENU;
+	}
+}
+
+/* Volume selection */
+static void set_volume_state(void)
+{
+	menu_enable(0);
+	draw_cur_volume();
+	kernel_get_device()->clear_first_pressed_keys();
+	s_state = STATE_VOLUME;
+}
+
 static void update(void)
 {
 	exec_update_fns();
@@ -640,6 +740,7 @@ static void update(void)
 	switch (s_state) {
 	case STATE_REDEFINE: update_redefine(); break;
 	case STATE_LANG: update_lang(); break;
+	case STATE_VOLUME: update_volume(); break;
 	}
 }
 

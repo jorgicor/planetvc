@@ -123,6 +123,8 @@ struct channel {
 	int n;
 };
 
+static int s_volume = 100;
+
 static struct channel_queue s_nodes[MIXER_NCHANNELS * MIXER_NQUEUE];
 static struct channel_queue *s_free_node; 
 
@@ -595,6 +597,21 @@ next:	if (ch->first == NULL || nsamples == 0)
 	}
 }
 
+void mixer_set_volume(int vol)
+{
+	if (vol < 0) {
+		vol = 0;
+	} else if (vol > 100) {
+		vol = 100;
+	}
+	s_volume = vol;
+}
+
+int mixer_get_volume(void)
+{
+	return s_volume;
+}
+
 /**
  * Mixes and advances 'nsamples' from all channels, and generates the mixed
  * data in 'ptr' always in format 44100 samples per second, 16 bit, stereo.
@@ -602,12 +619,26 @@ next:	if (ch->first == NULL || nsamples == 0)
 void mixer_generate(short *ptr, int nsamples, int fill_silence)
 {
 	int i;
+	float fvol;
+	short *pend;
 
-	if (fill_silence) {
+	if (s_volume > 0 && fill_silence) {
 		memset(ptr, 0, nsamples * 4);
 	}
 	for (i = 0; i < MIXER_NCHANNELS; i++) {
 		channel_generate(&s_channels[i], ptr, nsamples);
+	}
+
+	/* Apply volume */
+	if (s_volume == 0) {
+		memset(ptr, 0, nsamples * 4);
+	} else if (s_volume < 100) {
+		fvol = s_volume / 100.f;
+		pend = ptr + nsamples * 2;
+		while (ptr != pend) {
+			*ptr *= fvol; 
+			ptr++;
+		}
 	}
 }
 

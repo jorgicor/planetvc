@@ -43,6 +43,8 @@ int mixer_is_playing(int channel);
 void mixer_stop(int channel);
 void mixer_stop_all(void);
 void mixer_generate(short *ptr, int nsamples, int fill_silence);
+void mixer_set_volume(int vol);
+int mixer_get_volume(void);
 
 void mixer_init(void);
 void mixer_done(void);
