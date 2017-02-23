@@ -76,6 +76,8 @@ void draw_bmp_kct(const struct bmp *src, int dx, int dy, struct bmp *dst,
 	          const struct rect *src_rect, int use_key_color,
 		  int transform);
 
+void bmp_draw_init(void);
+
 #ifdef __cplusplus
 }
 #endif

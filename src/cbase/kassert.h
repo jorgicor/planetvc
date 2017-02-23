@@ -52,4 +52,6 @@ void ktracev(const char *fmt, va_list alist);
 #define kasserta(cond) \
 	kasserta_imp(cond, #cond, __FILE__, __LINE__, __func__)
 
+void kassert_init(void);
+
 #endif

@@ -105,7 +105,7 @@ struct zip_cdh {
 };
 #pragma pack()
 
-static const char *s_base_path = "";
+static const char *s_base_path;
 
 #if !PP_ANDROID
 
@@ -500,4 +500,13 @@ FILE* open_file(const char *fname, unsigned int *fsize)
 void vfs_set_base_path(const char *path)
 {
 	s_base_path = path;
+}
+
+void vfs_init(void)
+{
+	vfs_set_base_path("");
+
+#if PP_ANDROID
+	// s_android_asset_manager = NULL;
+#endif
 }

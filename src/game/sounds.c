@@ -19,8 +19,8 @@ enum {
 	NSOUNDS = 64
 };
 
-static int s_load_index = 0;
-static int s_free_index = 0;
+static int s_load_index;
+static int s_free_index;
 
 /* pdup is NULL or points to a previous entry with the same 'name'. */
 struct wav_file {
@@ -119,4 +119,5 @@ void sounds_done(void)
 	}
 
 	s_free_index = 0;
+	s_load_index = 0;
 }

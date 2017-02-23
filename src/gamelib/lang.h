@@ -27,4 +27,6 @@ const char *get_lang_equivalence(const char *src);
 /* Removes all equivalences. */
 void reset_lang_equivalences(void);
 
+void lang_init(void);
+
 #endif

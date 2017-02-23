@@ -8,4 +8,6 @@
 int initfile_getvar(const char *name);
 void initfile_load(void);
 
+void initfile_init(void);
+
 #endif

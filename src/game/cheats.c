@@ -117,3 +117,10 @@ void spawn_cheats(void)
 	s_key_i = 0;
 	pac->update = cheats_update;
 }
+
+void cheats_init(void)
+{
+	s_cheats_debug_mode = 0;
+	s_cheats_demosave_mode = 0;
+	s_cheats_translator_mode = 0;
+}

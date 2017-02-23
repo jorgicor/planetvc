@@ -353,6 +353,9 @@ int is_lang_code_listed(const char *code)
 
 void text_init(void)
 {
+	s_nlangs = 0;
+	kasserta(sizeof(s_curlang) >= 3);
+	strcpy(s_curlang, "en");
 	add_lang("ENGLISH", "en");
 }
 

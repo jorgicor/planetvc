@@ -43,6 +43,8 @@ void vfs_set_base_path(const char *path);
 
 FILE *open_file(const char *fname, unsigned int *fsize);
 
+void vfs_init(void);
+
 #ifdef __cplusplus
 }
 #endif

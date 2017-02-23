@@ -34,7 +34,7 @@ struct hiscore {
 	int nvisited;
 };
 
-static struct hiscore s_hiscores[] = {
+static const struct hiscore s_hiscores_const[] = {
 #if 1
 	{ "ADC", 58 },
 	{ "SBC", 42 }, 
@@ -52,7 +52,7 @@ static struct hiscore s_hiscores[] = {
 #endif
 };
 
-static struct hiscore s_hiscores_easy[] = {
+static const struct hiscore s_hiscores_easy_const[] = {
 	{ "ADC", 58 },
 	{ "SBC", 42 }, 
 	{ "NOP", 33 }, 
@@ -60,6 +60,9 @@ static struct hiscore s_hiscores_easy[] = {
 	{ "RST", 16 },
 	{ "XOR", 2 }, 
 };
+
+static struct hiscore s_hiscores[NELEMS(s_hiscores_const)];
+static struct hiscore s_hiscores_easy[NELEMS(s_hiscores_easy_const)];
 
 enum {
 	NSCORES = NELEMS(s_hiscores)
@@ -408,5 +411,11 @@ void hiscore_init(void)
 	kasserta(NSCORES == NELEMS(s_hiscores_easy));
 	kasserta(NDIFFICULTY_LEVELS == NELEMS(s_hiscores_by));
 	kasserta(NDIFFICULTY_LEVELS == NELEMS(s_difficulty_name));
+
+	/* Init mutable hiscores */
+	memcpy(s_hiscores, s_hiscores_const, sizeof(s_hiscores));
+	memcpy(s_hiscores_easy, s_hiscores_easy_const,
+	       sizeof(s_hiscores_easy));
+
 	register_spawn_fn("hiscore", spawn_hiscore_fp);
 }

@@ -152,6 +152,7 @@ static void enter(const struct state *old_state)
 	vfs_set_base_path(kernel_get_device()->get_data_path());
 	ktrace("data path is %s", kernel_get_device()->get_data_path());
 	te_set_half_speed_mode(IS_FULL_FPS);
+	s_state = 0;
 }
 
 const struct state load_st = {

@@ -15,10 +15,12 @@
 #include <string.h>
 
 /* Must be alphabetically sorted. */
-static struct initvar {
+struct initvar {
 	const char *name;
 	int val;
-} s_initvars[] = {
+};
+
+static const struct initvar s_initvars_const[] = {
 	{ "active_portal", 8 },
 	{ "arrow", 1 },
 	{ "buy_map", 0x44 },
@@ -36,6 +38,8 @@ static struct initvar {
 	{ "translators_portal", 2 },
 	{ "win_map", 0x43 },
 };
+
+static struct initvar s_initvars[NELEMS(s_initvars_const)];
 
 static int compar(const void *pk, const void *pe)
 {
@@ -86,4 +90,9 @@ void initfile_load(void)
 
 	fclose(fp);
 	return;
+}
+
+void initfile_init(void)
+{
+	memcpy(s_initvars, s_initvars_const, sizeof(s_initvars));
 }

@@ -239,7 +239,7 @@ static const struct langregion s_langregions[] = {
 };
 
 /* Let space for 2 chars language and 2 chars region. */
-static char s_lang[5] = "en";
+static char s_lang[5];
 
 static int langstr_cmp(const void *k, const void *elem)
 {
@@ -413,7 +413,7 @@ static struct lang_equiv {
 	const char *dst;
 } s_lang_equivs[LANG_NEQUIVS];
 
-static int s_lang_equiv_index = 0;
+static int s_lang_equiv_index;
 
 void add_lang_equivalence(const char *src, const char *dst)
 {
@@ -445,3 +445,9 @@ void reset_lang_equivalences(void)
 	s_lang_equiv_index = 0;
 }
 
+void lang_init(void)
+{
+	kasserta(sizeof(s_lang) >= 3);
+	strcpy(s_lang, "en");
+	s_lang_equiv_index = 0;
+}

@@ -185,6 +185,7 @@ int is_music_enabled(void)
 
 void prefs_init(void)
 {
+	memset(s_prefs, 0, sizeof(s_prefs));
 	set_preference("default", "1");
 	set_preference("lang", "en");
 	set_preference("music", "1");

@@ -39,7 +39,7 @@ import android.net.Uri;
 public class SDLActivity extends Activity {
     private static final String TAG = "SDL";
 
-    private AssetManager mAssetManager;
+    private static AssetManager mAssetManager;
     private static native void loadAssetManager(AssetManager mgr);
 
     // Keep track of the paused state
@@ -117,6 +117,7 @@ public class SDLActivity extends Activity {
         mIsPaused = false;
         mIsSurfaceReady = false;
         mHasFocus = true;
+	mAssetManager = null;
     }
 
     // Setup

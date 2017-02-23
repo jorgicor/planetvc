@@ -25,7 +25,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "cbase/kassert.h"
 #include <stddef.h>
 
-const struct state *g_state = NULL;
+const struct state *g_state;
 
 /*
  * This changes states immediately, so be careful with the code you have
@@ -77,4 +77,9 @@ void end_state(void)
 {
 	if (g_state != NULL && g_state->end != NULL)
 		g_state->end();
+}
+
+void state_init(void)
+{
+	g_state = NULL;
 }

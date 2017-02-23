@@ -99,3 +99,10 @@ void kasserta_imp(int cond, const char *condstr, const char *fname,
 		abort();
 	}
 }
+
+void kassert_init(void)
+{
+	s_fp = NULL;
+	s_pf = NULL;
+}
+

@@ -26,10 +26,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "cbase/kassert.h"
 #include <string.h>
 
-static struct rect s_clip = { 0, 0, 0, 0 };
+static struct rect s_clip;
 
-static unsigned int s_draw_color = 0;
-static unsigned char s_draw_pal_color = 0;
+static unsigned int s_draw_color;
+static unsigned char s_draw_pal_color;
 
 /*
  * Intersects 'ra' and 'rb' into 'dst'. 'ra' or 'rb' can be 'dst'.
@@ -844,4 +844,11 @@ void draw_line(struct bmp *dst, int x0, int y0, int x1, int y1)
 	} else {
 		draw_line8(dst, x0, y0, d1x, d1y, d2x, d2y, m, x1, n);
 	}
+}
+
+void bmp_draw_init(void)
+{
+	s_draw_color = 0;
+	s_draw_pal_color = 0;
+	reset_clip(0, 0);
 }

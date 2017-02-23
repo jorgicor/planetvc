@@ -322,6 +322,7 @@ int stargate_check_teleport(struct actor *pac, struct actor *pcosmo, int oldx)
 
 void stargate_init(void)
 {
+	s_init_plasma = 1;
 	register_bitmap(&bmp_stargate, "stargate", 1, 0x8000);
 	register_spawn_fn("stargate", spawn_stargate_fp);
 	register_update_fn(update_plasma);

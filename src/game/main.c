@@ -14,6 +14,8 @@
 #include "bitmaps.h"
 #include "sounds.h"
 #include "data.h"
+#include "cheats.h"
+#include "initfile.h"
 #include "balloon.h"
 #include "cosmonau.h"
 #include "oxigen.h"
@@ -46,7 +48,11 @@
 #include "demosave.h"
 #include "confpath.h"
 #include "log.h"
+#include "gamelib/bmp.h"
+#include "gamelib/lang.h"
 #include "gamelib/mixer.h"
+#include "gamelib/state.h"
+#include "gamelib/vfs.h"
 #include "kernel/kernel.h"
 #include "cbase/kassert.h"
 #include <SDL.h>
@@ -81,7 +87,16 @@ int main(int argc, char *argv[])
 	srand(time(0));
 
 	/* Log to console always. */
+	kassert_init();
 	kassert_set_log_fun(kernel_get_device()->trace);
+
+	bmp_draw_init();
+	lang_init();
+	state_init();
+	vfs_init();
+	game_init();
+	cheats_init();
+	initfile_init();
 
 	confpath_init();
 	log_init();
@@ -126,7 +141,6 @@ int main(int argc, char *argv[])
 	 */
 
 	modplay_done();
-	mixer_done();
 	bitmaps_done();
 	sounds_done();
 	log_done();

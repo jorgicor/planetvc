@@ -123,7 +123,7 @@ struct channel {
 	int n;
 };
 
-static int s_volume = 100;
+static int s_volume;
 
 static struct channel_queue s_nodes[MIXER_NCHANNELS * MIXER_NQUEUE];
 static struct channel_queue *s_free_node; 
@@ -646,26 +646,13 @@ void mixer_generate(short *ptr, int nsamples, int fill_silence)
  */
 void mixer_init(void)
 {
-	static int once = 0;
-
 	int i;
 
-	if (once) {
-		mixer_done();
-		return;
-	}
-
-	once = 1;
+	s_volume = 100;
 	for (i = 1; i < NELEMS(s_nodes); i++) {
 		s_nodes[i - 1].next = &s_nodes[i];
 	}
 	s_nodes[NELEMS(s_nodes) - 1].next = NULL;
 	s_free_node = &s_nodes[0];
 	memset(s_channels, 0, sizeof(s_channels));
-}
-
-/* Releases all resources used by the mixer module. */
-void mixer_done(void)
-{
-	mixer_free_channels();
 }

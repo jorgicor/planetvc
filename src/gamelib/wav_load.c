@@ -89,7 +89,7 @@ typedef struct _GUID {
     unsigned char  Data4[ 8 ];
 } GUID;
 
-static GUID KSDATAFORMAT_SUBTYPE_PCM = {
+static const GUID KSDATAFORMAT_SUBTYPE_PCM = {
 	0x00110000,
 	0x0000,
 	0x1000,

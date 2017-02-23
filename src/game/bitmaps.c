@@ -19,8 +19,8 @@ enum {
 	NBITMAPS = 64
 };
 
-static int s_load_index = 0;
-static int s_free_index = 0;
+static int s_load_index;
+static int s_free_index;
 
 struct bmp_file {
 	struct bmp_file *pdup;
@@ -129,4 +129,5 @@ void bitmaps_done(void)
 	}
 
 	s_free_index = 0;
+	s_load_index = 0;
 }

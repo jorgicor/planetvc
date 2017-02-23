@@ -38,4 +38,6 @@ void switch_to_state(const struct state *new_state);
 void update_state(void);
 void end_state(void);
 
+void state_init(void);
+
 #endif

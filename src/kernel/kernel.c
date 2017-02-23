@@ -74,15 +74,15 @@ enum {
 static int key_down(int key_scan_code);
 static int key_first_pressed(int key_scan_code);
 
-static int s_running = 0;
-static SDL_Surface *s_backbuf = NULL;
-static SDL_Texture *s_backtex = NULL;
-static SDL_Renderer *s_renderer = NULL;
-static SDL_Window *s_win = NULL;
+static int s_running;
+static SDL_Surface *s_backbuf;
+static SDL_Texture *s_backtex;
+static SDL_Renderer *s_renderer;
+static SDL_Window *s_win;
 static struct kernel_canvas s_kcanvas;
-static void *s_data = NULL;
-static char *s_data_path = NULL;
-static char *s_prog_data_path = NULL;
+static void *s_data;
+static char *s_data_path;
+static char *s_prog_data_path;
 static int s_fullscreen;
 
 static void (*on_frame)(void *data);
@@ -103,12 +103,13 @@ static struct pad s_pads[KERNEL_NPADS];
 
 static struct kernel_finger s_fingers[KERNEL_NFINGERS];
 
-static SDL_LogOutputFunction s_sdl_log_func = NULL;
+static SDL_LogOutputFunction s_sdl_log_func;
 
 static SDL_LogOutputFunction get_sdl_log_func(void)
 {
-	if (s_sdl_log_func == NULL)
+	if (s_sdl_log_func == NULL) {
 		SDL_LogGetOutputFunction(&s_sdl_log_func, NULL);
+	}
 	return s_sdl_log_func;
 }
 
@@ -118,6 +119,14 @@ static void set_sdl_log_func(SDL_LogOutputFunction pf)
 	get_sdl_log_func();
 	/* Set ours */
 	SDL_LogSetOutputFunction(pf, NULL);
+}
+	
+static void restore_sdl_log_func(void)
+{
+	if (s_sdl_log_func != NULL) {
+		SDL_LogSetOutputFunction(s_sdl_log_func, NULL);
+		s_sdl_log_func = NULL;
+	}
 }
 
 /* This function is called by the SDL to log.
@@ -326,19 +335,12 @@ static int translate_sdl_joystick_button(SDL_JoystickID joyid,
 
 static void clean_first_pressed_keys(void)
 {
-	int i;
-
-	for (i = 0; i < KERNEL_NKEYS; i++)
-		s_key_first_pressed[i] = 0;
+	memset(s_key_first_pressed, 0, sizeof(s_key_first_pressed));
 }
 
 static void clean_key_states(void)
 {
-	int i;
-
-	for (i = 0; i < KERNEL_NKEYS; i++) {
-		s_key_down[i] = 0;
-	}
+	memset(s_key_down, 0, sizeof(s_key_down));
 
 #if 0
 	if (FINGERS_ON) {
@@ -775,6 +777,11 @@ static void clean_released_fingers(void)
 	}
 }
 
+static void clean_fingers(void)
+{
+	memset(s_fingers, 0, sizeof(s_fingers));
+}
+
 static void handle_event(const SDL_Event *ev)
 {
 	switch (ev->type) {
@@ -944,6 +951,8 @@ static int run_loop(const struct kernel_config *kcfg)
 	open_controllers();
 	open_joysticks();
 	clean_key_states();
+	clean_first_pressed_keys();
+	clean_fingers();
 
 	s_running = 1;
 	frame_ms = 1000.0 / kcfg->frames_per_second;
@@ -980,6 +989,7 @@ static int run_loop(const struct kernel_config *kcfg)
 	close_controllers();
 	close_joysticks();
 	kernel_snd_release();
+	memset(&s_kcanvas, 0, sizeof(s_kcanvas));
 	return KERNEL_E_OK;
 }
 
@@ -1127,9 +1137,11 @@ static int run_init_paths(const struct kernel_config *kcfg)
 	}
 	if (s_data_path != NULL) {
 		SDL_free(s_data_path);
+		s_data_path = NULL;
 	}
 	if (s_prog_data_path != NULL) {
 		SDL_free(s_prog_data_path);
+		s_prog_data_path = NULL;
 	}
 	return ret;
 }
@@ -1162,6 +1174,7 @@ static int run(const struct kernel_config *kcfg, void *data)
 		SDL_Quit();
 	}
 
+	restore_sdl_log_func();
 	return ret;
 }
 

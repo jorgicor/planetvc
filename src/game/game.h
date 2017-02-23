@@ -216,4 +216,6 @@ void scroll_to_map(int mapid);
 void exec_init_map_code(void);
 int dectime(int t);
 
+void game_init(void);
+
 #endif

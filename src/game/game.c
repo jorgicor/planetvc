@@ -1266,7 +1266,16 @@ int game_run(void)
 	const struct kernel_device *d;
 
 	d = kernel_get_device();
-	kcfg.canvas_height += pad_scrh();
+	kcfg.canvas_height = TE_SCRH + pad_scrh();
 	ret = d->run(&kcfg, NULL);
 	return ret;
+}
+
+void game_init(void)
+{
+	s_step_mode = 0;
+	s_free_spawnfn_index = 0;
+	s_free_mapinitfn_index = 0;
+	s_free_updatefn_index = 0;
+	free_actors();
 }
