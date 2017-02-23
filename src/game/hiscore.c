@@ -52,17 +52,8 @@ static const struct hiscore s_hiscores_const[] = {
 #endif
 };
 
-static const struct hiscore s_hiscores_easy_const[] = {
-	{ "ADC", 58 },
-	{ "SBC", 42 }, 
-	{ "NOP", 33 }, 
-	{ "JMP", 24 }, 
-	{ "RST", 16 },
-	{ "XOR", 2 }, 
-};
-
 static struct hiscore s_hiscores[NELEMS(s_hiscores_const)];
-static struct hiscore s_hiscores_easy[NELEMS(s_hiscores_easy_const)];
+static struct hiscore s_hiscores_easy[NELEMS(s_hiscores_const)];
 
 enum {
 	NSCORES = NELEMS(s_hiscores)
@@ -414,8 +405,7 @@ void hiscore_init(void)
 
 	/* Init mutable hiscores */
 	memcpy(s_hiscores, s_hiscores_const, sizeof(s_hiscores));
-	memcpy(s_hiscores_easy, s_hiscores_easy_const,
-	       sizeof(s_hiscores_easy));
+	memcpy(s_hiscores_easy, s_hiscores_const, sizeof(s_hiscores_easy));
 
 	register_spawn_fn("hiscore", spawn_hiscore_fp);
 }

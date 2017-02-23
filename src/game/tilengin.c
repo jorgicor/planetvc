@@ -1364,3 +1364,24 @@ void te_end_draw(void)
 {
 	s_screen_valid = 0;
 }
+
+void tilengin_init(void)
+{
+	te_bg_touched = 0;
+	te_draw_bboxes = 0;
+	te_free_sprites();
+	s_bg_blockset = NULL;
+	reset_bg_map();
+	reset_tileid_map();
+	memset(s_tileanim_players, 0, sizeof(s_tileanim_players));
+	clear_bbg();
+	s_bg_tileset_bmp = NULL;
+	s_screen_valid = 0;
+	memset(s_tile_flags, 0, sizeof(s_tile_flags));
+	s_half_speed_mode = 0;
+	reset_top_map();
+	s_init_fg_map = 1;
+	memset(s_fg_tileset_bmps, 0, sizeof(s_fg_tileset_bmps));
+	s_enabled_anims = 1;
+	te_free_shapes();
+}

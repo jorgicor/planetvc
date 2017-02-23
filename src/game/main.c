@@ -16,6 +16,8 @@
 #include "data.h"
 #include "cheats.h"
 #include "initfile.h"
+#include "input.h"
+#include "menu.h"
 #include "balloon.h"
 #include "cosmonau.h"
 #include "oxigen.h"
@@ -48,6 +50,7 @@
 #include "demosave.h"
 #include "confpath.h"
 #include "log.h"
+#include "tilengin.h"
 #include "gamelib/bmp.h"
 #include "gamelib/lang.h"
 #include "gamelib/mixer.h"
@@ -97,6 +100,9 @@ int main(int argc, char *argv[])
 	game_init();
 	cheats_init();
 	initfile_init();
+	input_init();
+	menu_init();
+	tilengin_init();
 
 	confpath_init();
 	log_init();
@@ -143,6 +149,7 @@ int main(int argc, char *argv[])
 	modplay_done();
 	bitmaps_done();
 	sounds_done();
+	text_done();
 	log_done();
 
 	return EXIT_SUCCESS;

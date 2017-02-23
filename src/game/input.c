@@ -6,9 +6,10 @@
 #include "kernel/kernel.h"
 #include "cbase/cbase.h"
 #include "cbase/kassert.h"
+#include <string.h>
 
 /* Maps virtual keys to kernel scancodes. */
-static int s_keys[GAME_NKEYS] = {
+static const int s_keys_const[GAME_NKEYS] = {
 	-1,
 	KERNEL_KSC_DOWN,
 	KERNEL_KSC_LEFT,
@@ -27,8 +28,10 @@ static int s_keys[GAME_NKEYS] = {
 	KERNEL_KSC_ESC
 };
 
+static int s_keys[NELEMS(s_keys_const)];
+
 /* Maps joystick 0 scancodes to virtual keys. */
-static struct pad_vkeys {
+static const struct pad_vkeys {
 	int key;
 	int lkey;
 } s_buttons[KERNEL_NPAD_BUTTONS] = {
@@ -172,4 +175,9 @@ int is_first_pressed(int game_key)
 	}
 
 	return down;
+}
+
+void input_init(void)
+{
+	memcpy(s_keys, s_keys_const, sizeof(s_keys));
 }

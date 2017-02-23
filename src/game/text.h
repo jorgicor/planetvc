@@ -18,5 +18,6 @@ const char *translate(const char *key);
 #define _(str)	translate(str)
 
 void text_init(void);
+void text_done(void);
 
 #endif

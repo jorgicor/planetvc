@@ -153,6 +153,8 @@ enum {
 	PRESS_KEY_Y = TE_FMH - 4,
 };
 
+static int s_hint_drawn;
+
 static int s_redefine_keyi;
 
 struct redefine_info {
@@ -161,7 +163,7 @@ struct redefine_info {
 	int game_key;
 };
 
-static struct redefine_info s_redefine_info[] = {
+static const struct redefine_info s_redefine_info[] = {
 	{ "PRESS KEY FOR JUMP", "keya", KEYA },
 	{ "PRESS KEY FOR CROUCH", "kdown", KDOWN },
 	{ "PRESS KEY FOR LEFT", "kleft", KLEFT },
@@ -307,10 +309,9 @@ static void draw_hint(void)
 
 static void draw_hint_first_time(void)
 {
-	static int hint_drawn = 0;
 
-	if (!hint_drawn) {
-		hint_drawn = 1;
+	if (!s_hint_drawn) {
+		s_hint_drawn = 1;
 		draw_hint();
 	}
 }
@@ -843,6 +844,7 @@ void menu_st_init(void)
 {
 	int i;
 
+	s_hint_drawn = 0;
 	register_spawn_fn("menu", spawn_menu_fp);
 	register_sound(&wav_play, "opplay");
 

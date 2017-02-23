@@ -18,4 +18,6 @@ int is_first_pressed(int game_key);
 void redefine_key(int game_key, int ksc);
 int get_game_key_value(int game_key);
 
+void input_init(void);
+
 #endif

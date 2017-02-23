@@ -30,7 +30,7 @@ static struct bmp *bmp_pad = NULL;
 /* The portion where we draw */
 static struct bmp s_screen; 
 
-static struct xypos {
+static const struct xypos {
 	int x;
 	int y;
 	int ksc;
@@ -173,6 +173,9 @@ int pad_scrh(void)
 
 void pad_init(void)
 {
+	memset(s_button_was_down, 0, sizeof(s_button_was_down));
+	memset(s_button_down, 0, sizeof(s_button_down));
+	memset(s_button_draw_count, 0, sizeof(s_button_draw_count));
 	if (PADH > 0) {
 		register_bitmap(&bmp_pad, "pad", 0, 0);
 	}

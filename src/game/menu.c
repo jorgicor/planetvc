@@ -306,3 +306,8 @@ int menu_stack_count(void)
 {
 	return s_free_index;
 }
+
+void menu_init(void)
+{
+	menu_reset_stack();
+}

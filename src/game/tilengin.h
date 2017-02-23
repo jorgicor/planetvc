@@ -268,4 +268,6 @@ void te_end_draw(void);
 #define te_bgi(tx, ty)	((ty) * TE_BMW + (tx))
 #define te_fgi(tx, ty)	((ty) * TE_FMW + (tx))
 
+void tilengin_init(void);
+
 #endif

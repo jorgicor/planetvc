@@ -24,6 +24,8 @@ void confpath_init(void)
 {
 	char *cpath;
 	
+	s_path[0] = '\0';
+
 	cpath = kernel_get_device()->get_config_path(PP_ORG_NAME, PACKAGE);
 	if (cpath == NULL)
 		return;

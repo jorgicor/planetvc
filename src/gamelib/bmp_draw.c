@@ -27,7 +27,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <string.h>
 
 static struct rect s_clip;
-
 static unsigned int s_draw_color;
 static unsigned char s_draw_pal_color;
 

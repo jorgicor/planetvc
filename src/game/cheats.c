@@ -9,7 +9,7 @@
 #include "initfile.h"
 #include "kernel/kernel.h"
 
-static int s_keys[] = {
+static const int s_keys[] = {
 	KERNEL_KSC_A,
 	KERNEL_KSC_B,
 	KERNEL_KSC_U,

@@ -21,6 +21,7 @@
 #include "cbase/cbase.h"
 #include "cbase/kassert.h"
 #include "kernel/kernel.h"
+#include <string.h>
 
 static struct bmp *bmp_cosmonau = NULL;
 static struct bmp *bmp_diewater = NULL;
@@ -1057,6 +1058,14 @@ static void on_map_init(int mapid)
 
 void cosmonau_init(void)
 {
+	memset(s_start_tx, 0, sizeof(s_start_tx));;
+	memset(s_start_ty, 0, sizeof(s_start_ty));;
+	s_default_start = 0;
+	s_cosmonaut_should_die = 0;
+	s_psgate = NULL;
+	s_dielava_chan = -1;
+	s_arrow_dirpos = 0;
+
 	register_bitmap(&bmp_cosmonau, "cosmonau", 1, 0x8080);
 	register_bitmap(&bmp_diewater, "diewater", 1, 0);
 	register_spawn_fn("cosmonaut", spawn_cosmonaut_fp);

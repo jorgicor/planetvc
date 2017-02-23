@@ -447,7 +447,7 @@ void reset_lang_equivalences(void)
 
 void lang_init(void)
 {
-	kasserta(sizeof(s_lang) >= 3);
+	kasserta(sizeof(s_lang) >= sizeof("en"));
 	strcpy(s_lang, "en");
-	s_lang_equiv_index = 0;
+	reset_lang_equivalences();
 }

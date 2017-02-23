@@ -611,7 +611,7 @@ static void exec_music(char *args)
  */
 void exec_init_map_code(void)
 {
-	static struct init_map_info {
+	static const struct init_map_info {
 		const char *str;
 		void (*fn)(char *args);
 		int halt;
@@ -1274,6 +1274,15 @@ int game_run(void)
 void game_init(void)
 {
 	s_step_mode = 0;
+	s_last_spawned_actor = NULL;
+	s_last_created_path = 0;
+	s_map_id = -1;
+	s_scheduled_map_exit = -1;
+	s_exit_side_backup = -1;
+	s_teleport_mapid = -1;
+	s_teleport_gateid = -1;
+	s_teleport_next_active_gateid = -1;
+	s_win_scheduled = 0;
 	s_free_spawnfn_index = 0;
 	s_free_mapinitfn_index = 0;
 	s_free_updatefn_index = 0;

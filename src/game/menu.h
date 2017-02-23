@@ -34,4 +34,6 @@ void menu_pop(void);
 void menu_reset_stack(void);
 int menu_stack_count(void);
 
+void menu_init(void);
+
 #endif
