@@ -188,4 +188,5 @@ void prefs_init(void)
 	set_preference("default", "1");
 	set_preference("lang", "en");
 	set_preference("music", "1");
+	set_preference("volume", "100");
 }

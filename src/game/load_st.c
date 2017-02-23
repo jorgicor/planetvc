@@ -129,6 +129,7 @@ static void on_data_loaded(void)
 
 	load_defined_keys();
 	hiscore_load();
+	mixer_set_volume(atoi(get_preference("volume")));
 
 	te_set_fg_tileset_bmp(0, bmp_font0);
 	te_set_fg_tileset_bmp(1, bmp_font1);

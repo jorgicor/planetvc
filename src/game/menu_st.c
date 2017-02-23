@@ -710,8 +710,8 @@ static void update_volume(void)
 	} else if (is_first_pressed(LKEYA)) {
 		mixer_play(wav_opsel);
 
-		// set_preference("volume", s_volume);
-		// save_prefs();
+		set_preference_int("volume", mixer_get_volume());
+		save_prefs();
 		
 		menu_pop();
 		set_menu_volume();
