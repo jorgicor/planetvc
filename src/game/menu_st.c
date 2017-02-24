@@ -70,7 +70,12 @@ enum {
 
 enum {
 	MAIN_MENU_Y = 13,
+#if PP_PHONE
+	/* Because we don't have the 'redefine' option */
+	OPTIONS_MENU_Y = 15,
+#else
 	OPTIONS_MENU_Y = 13,
+#endif
 	LEVEL_MENU_Y = 15,
 	SOUND_MENU_Y = 15,
 	OP_MUSIC_INDEX = 0,
