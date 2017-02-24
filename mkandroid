@@ -10,11 +10,13 @@ case "$BUILDTYPE" in
 	APP="org.jorgicor.planetvc"
 	APPNAME="Planet of Vicious Creatures"
 	DEMOPP=""
+	ICONSUFFIX=""
         ;; 
     demo)
 	APP="org.jorgicor.planetvcd"
 	APPNAME="Demo Planet Vicious Creatures"
 	DEMOPP="-DPP_DEMO=1"
+	ICONSUFFIX="d"
         ;;
     *) echo "Usage ./mkandroid full|demo versionCode versionName path_to_sdl_sources" ; exit 1 ;;
 esac
@@ -167,6 +169,20 @@ demoize_data () {
 	cd "$here"
 }
 
+copy_icons () {
+	local icond="$PKGPATH"/pkgfiles/android/icons
+	local resd="$BUILDPATH"/res
+
+	cp "$icond"/icon144$ICONSUFFIX.png \
+		"$resd"/drawable-xxhdpi/ic_launcher.png
+	cp "$icond"/icon96$ICONSUFFIX.png \
+		"$resd"/drawable-xhdpi/ic_launcher.png
+	cp "$icond"/icon72$ICONSUFFIX.png \
+		"$resd"/drawable-hdpi/ic_launcher.png
+	cp "$icond"/icon48$ICONSUFFIX.png \
+		"$resd"/drawable-mdpi/ic_launcher.png
+}
+
 copy_data () {
 	local fd
 	local datad="$PKGPATH"/data
@@ -202,6 +218,8 @@ copy_data () {
 		demoize_data
 		cp "$PKGFILESDIR"/android/demo/*.txt "$buildd"
 	fi
+
+	copy_icons
 }
 
 # $1 debug or release
