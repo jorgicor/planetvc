@@ -39,7 +39,7 @@ enum {
 	CODE_SCROLL_DELAY = 4,
 };
 
-/* DIFFICULTY_NORMAL, EASY, etc. */
+/* DIFFICULTY_EXPERT, BEGINNER, etc. */
 int s_difficulty;
 
 /* If we go step by step. */
@@ -258,7 +258,7 @@ static void exec_spawn(char *args)
 
 static void exec_nspawn(char *args)
 {
-	if (s_difficulty == DIFFICULTY_EASY) {
+	if (s_difficulty == DIFFICULTY_BEGINNER) {
 		s_last_spawned_actor = NULL;
 	} else {
 		exec_spawn(args);

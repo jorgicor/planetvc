@@ -41,8 +41,8 @@ static struct wav *wav_play;
 #define TX_CREDITS	"CREDITS"
 #define TX_BACK		"BACK"
 
-#define TX_EASY		"EASY"
-#define TX_NORMAL	"DIFFICULT"
+#define TX_BEGINNER	"BEGINNER"
+#define TX_EXPERT	"EXPERT"
 
 #define TX_ON		"ON"
 #define TX_OFF		"OFF"
@@ -62,8 +62,8 @@ enum {
 	OP_DEMO,
 	OP_CREDITS,
 	OP_BACK,
-	OP_EASY,
-	OP_NORMAL,
+	OP_BEGINNER,
+	OP_EXPERT,
 	OP_SOUND,
 	OP_VOLUME,
 };
@@ -133,8 +133,8 @@ static const char *s_sound_menu_add[] = {
 
 static struct menu s_level_menu = {
 	.options = {
-		{ TX_EASY, OP_EASY },
-		{ TX_NORMAL, OP_NORMAL },
+		{ TX_BEGINNER, OP_BEGINNER },
+		{ TX_EXPERT, OP_EXPERT },
 		{ TX_BACK, OP_BACK },
 		{ NULL, -2 },
 	},
@@ -451,13 +451,13 @@ static void update_main_menu(void)
 		mixer_play(wav_opsel);
 		push_level_menu(-1);
 		break;
-	case OP_EASY:
-		s_difficulty = DIFFICULTY_EASY;
+	case OP_BEGINNER:
+		s_difficulty = DIFFICULTY_BEGINNER;
 	       	mixer_play(wav_play);
 	       	fade_to_state(&gplay_st);
 		break;
-	case OP_NORMAL:
-		s_difficulty = DIFFICULTY_NORMAL;
+	case OP_EXPERT:
+		s_difficulty = DIFFICULTY_EXPERT;
 	       	mixer_play(wav_play);
 	       	fade_to_state(&gplay_st);
 		break;
@@ -491,7 +491,7 @@ static void update_main_menu(void)
 		push_sound_menu();
 		break;
 	case OP_DEMO:
-		s_difficulty = DIFFICULTY_NORMAL;
+		s_difficulty = DIFFICULTY_EXPERT;
 		s_last_menu_op = OP_DEMO;
 		s_last_menu = &s_options_menu;
 		clear_hint();

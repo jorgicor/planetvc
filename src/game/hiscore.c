@@ -53,7 +53,7 @@ static const struct hiscore s_hiscores_const[] = {
 };
 
 static struct hiscore s_hiscores[NELEMS(s_hiscores_const)];
-static struct hiscore s_hiscores_easy[NELEMS(s_hiscores_const)];
+static struct hiscore s_hiscores_beginner[NELEMS(s_hiscores_const)];
 
 enum {
 	NSCORES = NELEMS(s_hiscores)
@@ -61,12 +61,12 @@ enum {
 
 static struct hiscore *s_hiscores_by[] = {
 	s_hiscores,
-	s_hiscores_easy,
+	s_hiscores_beginner,
 };
 
 static const char *s_difficulty_name[] = {
-       	"DIFFICULT MODE",
-        "EASY MODE"
+       	"EXPERT",
+        "BEGINNER"
 };
 
 static struct hiscore *s_hiscores_tab = s_hiscores;
@@ -231,9 +231,9 @@ static void draw_mode(int y, int difficulty)
 	int x;
 	const char *str;
 
-	str = s_difficulty_name[difficulty];
-	x = (TE_FMW - utf8_strlen(_(str))) / 2;
-	draw_str(_(str), x, y, 1);
+	str = _(s_difficulty_name[difficulty]);
+	x = (TE_FMW - utf8_strlen(str)) / 2;
+	draw_str(str, x, y, 1);
 }
 
 static void draw_hint(int y)
@@ -399,13 +399,14 @@ struct actor *spawn_hiscore_fp(int x, int y)
 void hiscore_init(void)
 {
 	kasserta(NSCORES == NELEMS(s_hiscores));
-	kasserta(NSCORES == NELEMS(s_hiscores_easy));
+	kasserta(NSCORES == NELEMS(s_hiscores_beginner));
 	kasserta(NDIFFICULTY_LEVELS == NELEMS(s_hiscores_by));
 	kasserta(NDIFFICULTY_LEVELS == NELEMS(s_difficulty_name));
 
 	/* Init mutable hiscores */
 	memcpy(s_hiscores, s_hiscores_const, sizeof(s_hiscores));
-	memcpy(s_hiscores_easy, s_hiscores_const, sizeof(s_hiscores_easy));
+	memcpy(s_hiscores_beginner, s_hiscores_const,
+	       sizeof(s_hiscores_beginner));
 
 	register_spawn_fn("hiscore", spawn_hiscore_fp);
 }
