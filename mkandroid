@@ -14,7 +14,7 @@ case "$BUILDTYPE" in
         ;; 
     demo)
 	APP="org.jorgicor.planetvcd"
-	APPNAME="Demo Planet Vicious Creatures"
+	APPNAME="DEMO Planet Vicious Creatures"
 	DEMOPP="-DPP_DEMO=1"
 	ICONSUFFIX="d"
         ;;
