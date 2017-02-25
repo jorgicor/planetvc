@@ -106,12 +106,13 @@ static void plasma_init(void)
 	}
 
 	/* copy mask */
-	si = fr_plasma_mask.r.y * bmp_stargate->w + fr_plasma_mask.r.x;
-	dx = fr_plasma_mask.r.x + MASK_OFFS;
-	srcbytes = bmp_stargate->w * bmp_stargate->h;
+	si = fr_plasma_mask.r.y * bmp_stargate->pitch + fr_plasma_mask.r.x;
+	dx = bmp_stargate->pitch - PLASMAW;
+	srcbytes = bmp_stargate->pitch * bmp_stargate->h;
 	i = 0;
 	for (y = 0; y < PLASMAW; y++) {
-		kasserta(si < srcbytes && si + PLASMAW <= srcbytes);
+		kasserta(i < NELEMS(s_plasma_pixels) &&
+			 si < srcbytes && si + PLASMAW <= srcbytes);
 		for (x = 0; x < PLASMAW; x++) {
 			if (bmp_stargate->pixels[si] == 0) {
 				s_plasma_pixels[i] = PALSZ;

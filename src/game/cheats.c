@@ -6,8 +6,11 @@
 #include "tilengin.h"
 #include "strdraw.h"
 #include "game.h"
+#include "data.h"
 #include "initfile.h"
+#include "prefs.h"
 #include "kernel/kernel.h"
+#include "cfg/cfg.h"
 
 static const int s_keys[] = {
 	KERNEL_KSC_A,
@@ -27,6 +30,19 @@ int s_cheats_translator_mode;
 
 static int s_key_i;
 static int s_wait_code;
+
+static const int s_keys_sg[] = {
+	KERNEL_KSC_S,
+	KERNEL_KSC_T,
+	KERNEL_KSC_A,
+	KERNEL_KSC_R,
+	KERNEL_KSC_G,
+	KERNEL_KSC_A,
+	KERNEL_KSC_T,
+	KERNEL_KSC_E,
+};
+
+static int s_key_sg_i;
 
 static int any_key_first_pressed(void)
 {
@@ -52,7 +68,7 @@ static void draw_cheats(void)
 		te_set_fg_xy(TE_FMW - 1, 0, 0, chri('3'));
 }
 
-static void cheats_update(struct actor *pac)
+static void check_cheats(void)
 {
 	const struct kernel_device *kd;
 	int reset;
@@ -84,7 +100,7 @@ static void cheats_update(struct actor *pac)
 			}
 		} else if (kd->key_first_pressed(KERNEL_KSC_3)) {
 			reset = 1;
-			if (!initfile_getvar("demo_version")) {
+			if (PP_DEBUG && !initfile_getvar("demo_version")) {
 				s_cheats_demosave_mode = 1;
 			}
 		} else if (any_key_first_pressed()) {
@@ -105,6 +121,45 @@ static void cheats_update(struct actor *pac)
 	}
 }
 
+static void check_stargate(void)
+{
+	const struct kernel_device *kd;
+	int reset;
+
+	kd = kernel_get_device();
+	reset = 0;
+
+	/* Always reset if we press the first character, that must not
+	 * repeat in the word.
+	 */
+	if (kd->key_first_pressed(s_keys_sg[0])) {
+		s_key_sg_i = 1;
+		return;
+	}
+
+	if (kd->key_first_pressed(s_keys_sg[s_key_sg_i])) {
+		s_key_sg_i++;
+		if (s_key_sg_i == NELEMS(s_keys_sg)) {
+			reset = 1;
+			set_preference_int("stargate", 1);
+			save_prefs();
+			apply_stargate_symbols();
+		}
+	} else if (s_key_sg_i > 0 && any_key_first_pressed()) {
+		reset = 1;
+	}
+
+	if (reset) {
+		s_key_sg_i = 0;
+	}
+}
+
+static void cheats_update(struct actor *pac)
+{
+	check_cheats();
+	check_stargate();
+}
+
 void spawn_cheats(void)
 {
 	struct actor *pac;
@@ -115,6 +170,7 @@ void spawn_cheats(void)
 
 	s_wait_code = 0;
 	s_key_i = 0;
+	s_key_sg_i = 0;
 	pac->update = cheats_update;
 }
 

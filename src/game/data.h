@@ -60,6 +60,8 @@ extern struct blockset main_blockset;
 extern struct tileanim tileam_lava;
 extern struct tileanim tileam_water;
 
+void apply_stargate_symbols(void);
+
 void data_init(void);
 
 #endif

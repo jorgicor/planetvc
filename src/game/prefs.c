@@ -17,7 +17,7 @@
 #endif
 
 enum {
-	NPREFS = 16,
+	NPREFS = 32,
 	NCHARS = 31,
 };
 
@@ -190,4 +190,5 @@ void prefs_init(void)
 	set_preference("lang", "en");
 	set_preference("music", "1");
 	set_preference("volume", "100");
+	set_preference("stargate", "0");
 }

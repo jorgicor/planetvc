@@ -131,6 +131,10 @@ static void on_data_loaded(void)
 	hiscore_load();
 	mixer_set_volume(atoi(get_preference("volume")));
 
+	if (strcmp(get_preference("stargate"), "1") == 0) {
+		apply_stargate_symbols();
+	}
+
 	te_set_fg_tileset_bmp(0, bmp_font0);
 	te_set_fg_tileset_bmp(1, bmp_font1);
 	te_set_bg_blockset(&main_blockset);

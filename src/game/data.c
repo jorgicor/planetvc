@@ -5,8 +5,10 @@
 #include "data.h"
 #include "tilengin.h"
 #include "bitmaps.h"
+#include "cbase/kassert.h"
 #include "cfg/cfg.h"
 #include <stddef.h>
+#include <string.h>
 
 /* To define a series of tile ids for an animation. */
 #define BEGIN_TILEANIM(name) unsigned char tileids_##name[] = {
@@ -178,6 +180,7 @@ DEFTILEANIM(water)
 static FRAME(planet, bmp_blocks, 0, 0, 48, 48)
 static FRAME(star1, bmp_blocks, 48, 0, 16, 16)
 static FRAME(stargate, bmp_stargate, 0, 0, 96, 96)
+static FRAME(stargate_symbols, bmp_stargate, 192, 0, 96, 96)
 static FRAME(endscr, bmp_end, 0, 0, 256, 224)
 
 static struct block s_blocks[] = {
@@ -188,6 +191,77 @@ static struct block s_blocks[] = {
 };
 
 BLOCKSET(main, s_blocks)
+
+static void apply_stargate_to_stargate(void)
+{
+	int y, pitch;
+	unsigned char *p, *q;
+
+	if (kassert_fails(bmp_stargate->w >=
+			  fr_stargate_symbols.r.x + fr_stargate_symbols.r.w))
+       	{
+		return;
+	}
+
+	q = bmp_stargate->pixels;
+	p = bmp_stargate->pixels + fr_stargate_symbols.r.x;
+	pitch = bmp_stargate->pitch;
+	for (y = 0; y < fr_stargate_symbols.r.h; y++) {
+		memcpy(q, p, fr_stargate_symbols.r.w);
+		p += pitch;
+		q += pitch;
+	}
+}
+
+static void apply_stargate_to_tileset(void)
+{
+	int x, y, pitchp, pitchq;
+	unsigned char *p, *q;
+
+	enum {
+		X = 160,
+		Y = 48,
+		COLORI = 11,
+	};
+
+	if (kassert_fails(bmp_stargate->w >=
+			  fr_stargate_symbols.r.x + fr_stargate_symbols.r.w))
+       	{
+		return;
+	}
+
+	if (kassert_fails(bmp_tileset->w >= X + fr_stargate_symbols.r.w))
+       	{
+		return;
+	}
+
+	if (kassert_fails(bmp_tileset->h >= Y + fr_stargate_symbols.r.h))
+       	{
+		return;
+	}
+
+	p = bmp_stargate->pixels;
+	q = bmp_tileset->pixels + bmp_tileset->pitch * Y + X;
+	pitchp = bmp_stargate->pitch - fr_stargate_symbols.r.w;
+	pitchq = bmp_tileset->pitch - fr_stargate_symbols.r.w;
+	for (y = 0; y < fr_stargate_symbols.r.h; y++) {
+		for (x = 0; x < fr_stargate_symbols.r.w; x++) {
+			if (*p != COLORI) {
+				*q = *p;
+			}
+			p++;
+			q++;
+		}
+		p += pitchp;
+		q += pitchq;
+	}
+}
+
+void apply_stargate_symbols(void)
+{
+	apply_stargate_to_stargate();
+	apply_stargate_to_tileset();
+}
 
 void data_init(void)
 {
