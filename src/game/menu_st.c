@@ -343,9 +343,11 @@ static void draw_bottom(void)
 static void draw_demo(void)
 {
 	int x;
+	const char *str;
 
-	x = (TE_FMW - strlen("DEMO VERSION!")) / 2;
-	draw_str("DEMO VERSION!", x, TE_FMH - 2, 0);
+	str = _("DEMO VERSION");
+	x = (TE_FMW - strlen(str)) / 2;
+	draw_str(str, x, TE_FMH - 2, 0);
 }
 
 static void clear_demo(void)
