@@ -36,7 +36,7 @@ static struct wav *wav_play;
 #define TX_EXIT		"QUIT"
 
 #define TX_REDEFINE	"DEFINE KEYS"
-#define TX_SOUND	"SONIDO"
+#define TX_SOUND	"SOUND"
 #define TX_DEMO		"DEMO"
 #define TX_CREDITS	"CREDITS"
 #define TX_BACK		"BACK"
@@ -70,12 +70,7 @@ enum {
 
 enum {
 	MAIN_MENU_Y = 13,
-#if PP_PHONE
-	/* Because we don't have the 'redefine' option */
-	OPTIONS_MENU_Y = 15,
-#else
 	OPTIONS_MENU_Y = 13,
-#endif
 	LEVEL_MENU_Y = 15,
 	SOUND_MENU_Y = 15,
 	OP_MUSIC_INDEX = 0,
@@ -410,10 +405,11 @@ static void set_menu_volume(void)
 		 mixer_get_volume());
 }
 
-static void push_sound_menu(void)
+static void push_sound_menu(int op)
 {
+	set_menu_music();
 	set_menu_volume();
-	menu_push(&s_sound_menu, SOUND_MENU_Y, -1, s_sound_menu_add);
+	menu_push(&s_sound_menu, SOUND_MENU_Y, op, s_sound_menu_add);
 }
 
 static void push_options_menu(int firstop)
@@ -493,7 +489,7 @@ static void update_main_menu(void)
 		break;
 	case OP_SOUND:
 		mixer_play(wav_opsel);
-		push_sound_menu();
+		push_sound_menu(-1);
 		break;
 	case OP_DEMO:
 		s_difficulty = DIFFICULTY_EXPERT;
@@ -720,9 +716,7 @@ static void update_volume(void)
 		save_prefs();
 		
 		menu_pop();
-		set_menu_volume();
-		menu_push(&s_sound_menu, SOUND_MENU_Y, OP_VOLUME,
-			  s_sound_menu_add);
+		push_sound_menu(OP_VOLUME);
 
 		s_state = STATE_MAIN_MENU;
 	}
