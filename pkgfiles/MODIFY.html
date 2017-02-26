@@ -14,7 +14,7 @@
 </head>
 <body>
 <h1 style="text-align:center">Modifying &lsquo;The Planet of the Vicious Creatures&rsquo;</h1>
-<p style="text-align:center">28 August 2016</p>
+<p style="text-align:center">26 February 2017</p>
 <p style="text-align:center">Jorge Giner</p>
 <hr style="clear: left">
 <ul>
@@ -33,7 +33,8 @@
   <li><a href="#The%20init%20file">The init file</a>
   <ul>
    <li><a href="#exits%20command">exits command</a></li>
-   <li><a href="#spawn%20command">spawn command</a>
+   <li><a href="#spawn%20command">spawn command</a></li>
+   <li><a href="#nspawn%20command">nspawn command</a>
    <ul>
     <li><a href="#bat">bat</a></li>
     <li><a href="#caterpillar">caterpillar</a></li>
@@ -83,7 +84,7 @@
 
 <h1 id="License">License</h1>
 
-<pre><code>Copyright © 2016 Jorge Giner
+<pre><code>Copyright © 2016, 2017 Jorge Giner
 
 Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright
@@ -366,7 +367,14 @@ and bottom, that is, the last two, must be always 0.</p>
 <pre><code>spawn &lt;what&gt; &lt;x tile pos&gt; &lt;y tile pos&gt; [arguments]
 </code></pre>
 
-<p>The <em>spanw</em> command is used to populate the room with enemies or other objects. We always specify the id of the object to spawn and its initial position. Then, each object can take different arguments.</p>
+<p>The <em>spawn</em> command is used to populate the room with enemies or other objects. We always specify the id of the object to spawn and its initial position. Then, each object can take different arguments.</p>
+
+<h3 id="nspawn%20command">nspawn command</h3>
+
+<pre><code>nspawn &lt;what&gt; &lt;x tile pos&gt; &lt;y tile pos&gt; [arguments]
+</code></pre>
+
+<p>The <em>nspawn</em> command is exactly the same as the <em>spawn</em> command, but when the game is in beginner mode, it is ignored, that is, nothing is spawned. It only acts in expert mode.</p>
 
 <h4 id="bat">bat</h4>
 

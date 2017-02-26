@@ -1,11 +1,11 @@
 % Modifying 'The Planet of the Vicious Creatures'
 % Jorge Giner
-% 28 August 2016
+% 26 February 2017
 
 # License
 
 ~~~
-Copyright © 2016 Jorge Giner
+Copyright © 2016, 2017 Jorge Giner
 
 Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright
@@ -277,7 +277,13 @@ and bottom, that is, the last two, must be always 0.
 
     spawn <what> <x tile pos> <y tile pos> [arguments]
 
-The *spanw* command is used to populate the room with enemies or other objects. We always specify the id of the object to spawn and its initial position. Then, each object can take different arguments.
+The *spawn* command is used to populate the room with enemies or other objects. We always specify the id of the object to spawn and its initial position. Then, each object can take different arguments.
+
+### nspawn command
+
+    nspawn <what> <x tile pos> <y tile pos> [arguments]
+
+The *nspawn* command is exactly the same as the *spawn* command, but when the game is in beginner mode, it is ignored, that is, nothing is spawned. It only acts in expert mode.
 
 #### bat
 
