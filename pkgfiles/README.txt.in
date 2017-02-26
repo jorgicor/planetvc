@@ -2,7 +2,7 @@
                      The Planet of the Vicious Creatures
 
                                     v@PACKAGE_VERSION@
-                        Copyright (c) 2016 Jorge Giner
+		     Copyright (c) 2016, 2017 Jorge Giner
 
         1.  Introduction
         2.  How to play
@@ -122,16 +122,16 @@ game, you will be able to put your initials in the score table of the game!
 5. Languages
 ------------
 
-The game comes in English, Spanish, French, Portuguese, Italian, Polish and
-Latino sine flexio. You can change the language in the main menu.
+The game comes in English, Spanish, French, Portuguese, Brazilian Portuguese,
+Italian, Polish, German, Russian and Latino sine flexio. You can change the
+language on the main menu.
 
 If you would like the game in your language, you can traslate it if you want
 and I will add the translation to the game. I can send you the text file.
-There are aprox. 20 sentences and 20 loose words. I will put you in the
-credits. The only restriction is that at this moment I can only support new
-translations for languages that use the characters already in the game, plus
-German characters and Russian (Cyrillic) characters. For other languages,
-please let me know first.
+I will put you in the credits. The only restriction is that at this moment I
+can only support new translations for languages that use the characters
+already in the game, plus German characters and Russian (Cyrillic) characters.
+For other languages, please let me know first.
 
 -----------------------
 6. Windows full version
@@ -175,9 +175,9 @@ The demo version only features the first 16 levels of the game. When you reach
 the last level you will return to the main menu.
 
 The full version of the game features 18 additional levels in two different
-environments: a cavern environment and a lava environment. In the demo
-version, if you go to OPTIONS - DEMO, you can see the 16 levels of the demo
-plus one level of each of the two additional environments.
+regions: the caverns and the lava region. In the demo version, if you go to
+OPTIONS - DEMO, you can see the 16 levels of the demo plus one level of each
+of the two additional regions.
 
 --------------------
 8. GNU/Linux Version
@@ -313,9 +313,9 @@ it online too at http://jorgicor.sdfeu.org/planetvc/modify.html .
 
 Ana Catarina Ribeiro Dias Alves, for the Portuguese translation.
 Anna Jakubiec, for the French and Polish translations.
-Elaine Suchara Gomes, for the Brazillian Portuguese translation.
+Elaine Suchara Gomes, for the Brazilian Portuguese translation.
 Fabio Tricarico for the Italian translation.
-Jorge Giner Cordero, for graphics, music and coding, and translation to LSF.
+Star Servicios Ligüísticos for German, Russian and additional translations.
 
 THANKS TO ALL THE TRANSLATORS FOR THE HARD WORK!
 

@@ -1,3 +1,19 @@
+2017-03-01
+
+	* Version 1.09
+
+	* Added BEGINNER mode and a hi-score table for this mode.
+
+	* Added Brazilian Portuguese, German and Russian translations.
+
+	* Added volume option to the menu.
+
+	* Changed the demo to show what you get with the full version.
+
+	* Support for Android.
+
+	* Removed the 'Stargate' symbols from portals.
+
 2016-12-30
 
 	* Version 1.08

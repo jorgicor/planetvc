@@ -2,7 +2,7 @@
 
                         * Full version for GNU/Linux *
 
-                        Copyright (c) 2016 Jorge Giner
+		     Copyright (c) 2016, 2017 Jorge Giner
 
 This GNU/Linux version of the Software is distributed under the Creative
 Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License.

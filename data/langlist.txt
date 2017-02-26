@@ -14,7 +14,7 @@ PORTUGUÊS PT
 pt
 PORTUGUÊS BR
 ptbr
-РУССКИЙ ЯЗЫК
+РУССКИЙ
 ru
 ~
 This file has to be saved in utf8.

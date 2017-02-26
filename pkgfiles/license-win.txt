@@ -2,7 +2,7 @@
 
                          * Full version for Windows *
 
-                        Copyright (c) 2016 Jorge Giner
+		     Copyright (c) 2016, 2017 Jorge Giner
 
 -------
 LICENSE

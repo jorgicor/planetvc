@@ -2,7 +2,7 @@
 
                          * Demo version for Windows *
 
-                        Copyright (c) 2016 Jorge Giner
+		     Copyright (c) 2016, 2017 Jorge Giner
 
 This Demo version of the Software is distributed under the Creative Commons
 Attribution-NonCommercial-NoDerivatives 4.0 International Public License. The
