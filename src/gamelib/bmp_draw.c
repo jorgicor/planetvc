@@ -282,10 +282,7 @@ static void blit_bmp8_32kc(const unsigned char *src, unsigned int *dst,
 	while (rows--) {
 		tmp = columns;
 		while (tmp--) {
-			if (kassert(*src < src_palsz))
-				color = src_pal[*src];
-			else
-				color = key_color;
+			color = src_pal[*src];
 			if (color != key_color)
 				*dst = color;
 			dst++;
@@ -311,10 +308,7 @@ static void blit_bmp8_32kc_h(const unsigned char *src, unsigned int *dst,
 		tmp = columns;
 		while (tmp--) {
 			dst--;
-			if (kassert(*src < src_palsz))
-				color = src_pal[*src];
-			else
-				color = key_color;
+			color = src_pal[*src];
 			if (color != key_color)
 				*dst = color;
 			src++;
@@ -339,10 +333,7 @@ static void blit_bmp8_32kc_v(const unsigned char *src, unsigned int *dst,
 	while (rows--) {
 		tmp = columns;
 		while (tmp--) {
-			if (kassert(*src < src_palsz))
-				color = src_pal[*src];
-			else
-				color = key_color;
+			color = src_pal[*src];
 			if (color != key_color)
 				*dst = color;
 			src++;
@@ -368,10 +359,7 @@ static void blit_bmp8_32kc_hv(const unsigned char *src, unsigned int *dst,
 		tmp = columns;
 		while (tmp--) {
 			dst--;
-			if (kassert(*src < src_palsz))
-				color = src_pal[*src];
-			else
-				color = key_color;
+			color = src_pal[*src];
 			if (color != key_color)
 				*dst = color;
 			src++;
@@ -390,8 +378,7 @@ static void blit_bmp8_32(const unsigned char *src, unsigned int *dst, int rows,
 	while (rows--) {
 		tmp = columns;
 		while (tmp--) {
-			if (kassert(*src < src_palsz))
-				*dst = src_pal[*src];
+			*dst = src_pal[*src];
 			dst++;
 			src++;
 		}
@@ -413,8 +400,7 @@ static void blit_bmp8_32_h(const unsigned char *src, unsigned int *dst,
 		tmp = columns;
 		while (tmp--) {
 			dst--;
-			if (kassert(*src < src_palsz))
-				*dst = src_pal[*src];
+			*dst = src_pal[*src];
 			src++;
 		}
 		dst += dst_delta;
@@ -435,8 +421,7 @@ static void blit_bmp8_32_v(const unsigned char *src, unsigned int *dst,
 	while (rows--) {
 		tmp = columns;
 		while (tmp--) {
-			if (kassert(*src < src_palsz))
-				*dst = src_pal[*src];
+			*dst = src_pal[*src];
 			dst++;
 			src++;
 		}
@@ -458,8 +443,7 @@ static void blit_bmp8_32_hv(const unsigned char *src, unsigned int *dst,
 		tmp = columns;
 		while (tmp--) {
 			dst--;
-			if (kassert(*src < src_palsz))
-				*dst = src_pal[*src];
+			*dst = src_pal[*src];
 			src++;
 		}
 		dst -= dst_delta;
@@ -731,6 +715,10 @@ static void draw_line32(struct bmp *dst, int x, int y,
 {
 	unsigned int *pixels;
 	int p, rw;
+
+	/* Any transparency? Don't paint. */
+	if (s_draw_color & 0xff000000)
+		return;
        
 	pixels = (unsigned int *) dst->pixels;
 	rw = dst->pitch >> 2;

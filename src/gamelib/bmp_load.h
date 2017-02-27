@@ -43,7 +43,7 @@ enum {
  * A bitmap.
  *
  * If pal is not NULL, then palsz is in range [1..256] and data contains
- * indexes into pal, which contains 32 bit xrgb colors.
+ * indexes into pal, which contains 256 32-bit xrgb colors.
  *
  * If pal is NULL, palsz is zero, and data should be considered as
  * (unsigned int *) containing 32 bit xrgb colors.

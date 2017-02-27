@@ -176,7 +176,7 @@ typedef struct {
  *
  * If 'pal_size' is 0, creates a 32 bpp bitmap.
  * If 'pal_size' in [1..256], creates an 8 bpp bitmap with a palette of
- * 'pal_size' colors.
+ * 256 colors, but setting palsz to 'pal_size'.
  *
  * The image data and palette data contains garbage.
  *
@@ -234,7 +234,7 @@ static struct bmp *create_bmp(int width, int height, int pal_size, int *ecode)
 		 * Safe: pal_size in range [1..256] by (1).
 		 * Multiplied by 4 fits in 15 bits.
 		 */
-		if ((im->pal = malloc(pal_size * 4)) == NULL) {
+		if ((im->pal = malloc(256 * 4)) == NULL) {
 			*ecode = E_BMP_MEM;
 			goto freim;
 		}
