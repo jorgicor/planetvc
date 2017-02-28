@@ -47,7 +47,7 @@
 ## Building
 
 - Run the script "mkandroid <path_to_SDL2_source>" to create a build project
-  folder and build the app.
+  folder and build the app. Requires SDL2 2.0.5 at this point.
 
 - We can use 'NDKARGS="NDK_DEBUG=1" mkandroid ... ' to build unoptimized shared
   libraries.
