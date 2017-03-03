@@ -874,6 +874,7 @@ static void update(void)
 {
 	SDL_Rect sr;
 
+	// ktrace("run_update");
 	check_fullscreen();
 	kernel_snd_update();
 	if (on_frame != NULL) {
@@ -887,6 +888,7 @@ static void update(void)
 	SDL_RenderClear(s_renderer);
 	SDL_RenderCopy(s_renderer, s_backtex, &sr, NULL);
 	SDL_RenderPresent(s_renderer);
+	// ktrace("run_update end");
 }
 
 static int is_soundcfg_valid(const struct kernel_config *kcfg)
@@ -930,6 +932,8 @@ static int run_loop(const struct kernel_config *kcfg)
 	Uint64 t;
 	double frame_ms, passed;
 
+	// ktrace("run_loop ini");
+
 	s_kcanvas.pixels = s_backbuf->pixels;
 	s_kcanvas.pitch = s_backbuf->pitch;
 	s_kcanvas.w = s_backbuf->w;
@@ -959,19 +963,22 @@ static int run_loop(const struct kernel_config *kcfg)
 	passed = frame_ms;
 	nevents = 0;
 	while (s_running) {
+		// ktrace("run_loop");
 		t = SDL_GetPerformanceCounter();
 		if (passed >= frame_ms) {
 #if 0
 			SDL_LogDebug(SDL_LOG_CATEGORY_APPLICATION,
 				     "ms %f\n", passed);
 #endif
-			while (passed >= frame_ms)
+			while (passed >= frame_ms) {
 				passed -= frame_ms;
+			}
 			update();
 			clean_first_pressed_keys();
 			clean_released_fingers();
 		}
 		if (s_running) {
+			// ktrace("run_loop events");
 			nevents = 0;
 			while (nevents < MAX_FRAME_EVENTS &&
 			       SDL_PollEvent(&ev) != 0)
@@ -979,12 +986,14 @@ static int run_loop(const struct kernel_config *kcfg)
 				handle_event(&ev);
 				nevents++;
 			}
-			/* ktrace("%d events handled", nevents); */
+			// ktrace("%d events handled", nevents);
 			SDL_Delay(1);
 			passed += (SDL_GetPerformanceCounter() - t) * 1000.0 /
 				   SDL_GetPerformanceFrequency();
 		}
 	}
+
+	// ktrace("run_loop closing");
 
 	close_controllers();
 	close_joysticks();
@@ -1279,7 +1288,6 @@ static void open_url(const char *url)
 	jmethodID theMethod;
 	jstring str;
 
-
 	env = (JNIEnv *) SDL_AndroidGetJNIEnv();
 	theActivity = (jobject) SDL_AndroidGetActivity();
 
@@ -1312,7 +1320,6 @@ static void open_url(const char *url)
 
 	SDL_MinimizeWindow(s_win);
 	snprintf(cmd, sizeof(cmd), "xdg-open %s", url);
-	ktrace(cmd);
 	system(cmd);
 }
 
