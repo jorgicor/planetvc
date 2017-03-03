@@ -68,8 +68,8 @@ NOW WE HUMBLE HUMANS USE THEM TO TRAVEL TO THE STARS...
 ОНИ ОТКРЫЛИ ЛЮДЯМ ПУТЬ К ЗВЕЗДАМ...
 BUT ONCE WE GO THROUGH THEM, WE HAVE TO FIND ANOTHER TO COME BACK.
 НО, ПРОЙДЯ ЧЕРЕЗ ОДИН ПОРТАЛ, НУЖНО НАЙТИ ДРУГОЙ, ЧТОБЫ ВЕРНУТЬСЯ.
-WE HAVE A NEW MISSION FOR YOU. GLIESE 581. TESTS INDICATE RELATIVE SAFETY.
-У НАС ДЛЯ ТЕБЯ ЗАДАНИЕ. ГЛИЗЕ 581. ТАМ ОТНОСИТЕЛЬНО БЕЗОПАСНО.
+WE HAVE A NEW MISSION FOR YOU. PLANET: GLIESE 581 G. TESTS INDICATE RELATIVE SAFETY.
+У НАС ДЛЯ ТЕБЯ ЗАДАНИЕ. ГЛИЗЕ 581 G. ТАМ ОТНОСИТЕЛЬНО БЕЗОПАСНО.
 USE YOUR DEFINED KEYS\n- DEFAULT k l i j -\nTO MOVE, JUMP OR CROUCH. TRY YOUR GAMEPAD AS WELL.
 ИСПОЛЬЗУЙ ДЖОЙСТИК ИЛИ ЗАДАННЫЕ КЛАВИШИ\n- ПО УМОЛЧ. k l i j -\nЧТОБЫ ДВИГАТЬСЯ, ПРЫГАТЬ И ПРИСЕДАТЬ.
 SPACE SUIT WILL BE REQUIRED. GRAVITY 0.15G. YOU WILL FIND OXIGEN BUBBLES IN THE ATMOSPHERE.
@@ -86,8 +86,8 @@ YOU DID IT!\nOH WHAT A HEROIC FEAT!\nTODAY IS A DAY OF JOY ON EARTH!\n- PRESS 'E
 ТЫ ПОБЕДИЛ!\nТЫ СОВЕРШИЛ ПОДВИГ!\nДА ВОЗРАДУЕТСЯ СЕГОДНЯ ВСЯ ЗЕМЛЯ!\n- ЖМИ 'ENTER' -
 YOU HAVE SHOWN INCREDIBLE SKILLS AND UNPARALLELED INTELLIGENCE!
 ТЫ ПОКАЗАЛ УДИВИТЕЛЬНЫЕ СПОСОБНОСТИ И СМЕКАЛКУ!
-NOW WE HAVE A MAP OF THE PORTALS AND THEIR CONNECTIONS IN GLIESE 581, AND NOW WE KNOW THE WAY TO COME BACK.
-НАКОНЕЦ У НАС ЕСТЬ КАРТА ПОРТАЛОВ НА ЗЕМЛЕ И В СИСТЕМЕ ГЛИЗЕ 581. ТЕПЕРЬ НАМ ИЗВЕСТЕН ПУТЬ ДОМОЙ.
+NOW WE HAVE A MAP OF THE PORTALS AND THEIR CONNECTIONS ON GLIESE 581 G, AND NOW WE KNOW THE WAY TO COME BACK.
+НАКОНЕЦ У НАС ЕСТЬ КАРТА ПОРТАЛОВ НА ЗЕМЛЕ И В СИСТЕМЕ ГЛИЗЕ 581 G. ТЕПЕРЬ НАМ ИЗВЕСТЕН ПУТЬ ДОМОЙ.
 IN ADDITION WE KNOW A LOT MORE ABOUT THE FAUNA AND THE PERILS ON THE PLANET...
 МЫ УЗНАЛИ МНОГО НОВОГО О ФАУНЕ И ОПАСНОСТЯХ ДАЛЕКОЙ ПЛАНЕТЫ...
 THE EARTH IS GRATEFUL TO YOU.\n\nTHANK YOU!
