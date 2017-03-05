@@ -10,10 +10,10 @@ QUIT
 ВЫХОД
 OPTIONS
 ОПЦИИ
-MUSIC OFF
-МУЗЫКА ВЫКЛ.
-MUSIC ON
-МУЗЫКА ВКЛ.
+MUSIC: OFF
+МУЗЫКА: ВЫКЛ.
+MUSIC: ON
+МУЗЫКА: ВКЛ.
 BACK
 НАЗАД
 CREDITS
