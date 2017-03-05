@@ -69,7 +69,7 @@ NOW WE HUMBLE HUMANS USE THEM TO TRAVEL TO THE STARS...
 BUT ONCE WE GO THROUGH THEM, WE HAVE TO FIND ANOTHER TO COME BACK.
 НО, ПРОЙДЯ ЧЕРЕЗ ОДИН ПОРТАЛ, НУЖНО НАЙТИ ДРУГОЙ, ЧТОБЫ ВЕРНУТЬСЯ.
 WE HAVE A NEW MISSION FOR YOU. PLANET: GLIESE 581 G. TESTS INDICATE RELATIVE SAFETY.
-У НАС ДЛЯ ТЕБЯ ЗАДАНИЕ. ГЛИЗЕ 581 G. ТАМ ОТНОСИТЕЛЬНО БЕЗОПАСНО.
+У НАС ДЛЯ ТЕБЯ ЗАДАНИЕ. ПЛАНЕТА: ГЛИЗЕ 581 G. ТАМ ОТНОСИТЕЛЬНО БЕЗОПАСНО.
 USE YOUR DEFINED KEYS\n- DEFAULT k l i j -\nTO MOVE, JUMP OR CROUCH. TRY YOUR GAMEPAD AS WELL.
 ИСПОЛЬЗУЙ ДЖОЙСТИК ИЛИ ЗАДАННЫЕ КЛАВИШИ\n- ПО УМОЛЧ. k l i j -\nЧТОБЫ ДВИГАТЬСЯ, ПРЫГАТЬ И ПРИСЕДАТЬ.
 SPACE SUIT WILL BE REQUIRED. GRAVITY 0.15G. YOU WILL FIND OXIGEN BUBBLES IN THE ATMOSPHERE.
@@ -113,46 +113,46 @@ PRESS 'B' TO RESTART A LEVEL.
 PRESS 'PRACTICE' KEY - 'X' - TO TOGGLE PRACTICE MODE ON AND OFF.
 ЖМИ 'ПРАКТИКА'\n- 'X' -\nЧТОБЫ ВКЛ. И ВЫКЛ. РЕЖИМ ПРАКТИКИ.
 DEMO
-DEMO
+ДЕМО
 DEMO VERSION
-VERSIÓN DEMO
+ДЕМО-ВЕРСИЯ
 MORE GAMES
-MÁS JUEGOS
+БОЛЬШЕ ИГР
 SOUND
-SONIDO
+ЗВУК
 VOLUME
-VOLUMEN
+ГРОМКОСТЬ
 VOLUME: 100
-VOLUMEN: 100
+ГРОМКОСТЬ: 100
 DIFFICULTY
-DIFICULTAD
+СЛОЖНОСТЬ
 BEGINNER
-PRINCIPIANTE
+НОВИЧОК
 EXPERT
-EXPERTO
+ЭКСПЕРТ
 END OF THE DEMO VERSION.
-FIN DE LA VERSIÓN DEMO.
+ОКОНЧАНИЕ ДЕМО-ВЕРСИИ.
 IF YOU FIND A LEVEL TOO DIFFICULT, CHECK OUT 'OPTIONS - DEMO' TO LEARN HOW TO OVERCOME IT.
-SI ENCUENTRAS QUE ALGUNA PANTALLA ES DEMASIADO DIFÍCIL, ECHA UN VISTAZO A 'OPCIONES - DEMO' PARA APRENDER COMO SUPERARLA.
+ЕСЛИ УРОВЕНЬ КАЖЕТСЯ ВАМ СЛИШКОМ СЛОЖНЫМ, ЗАЙДИТЕ В 'ОПЦИИ', ЗАТЕМ В РУБРИКУ 'ДЕМО' И УЗНАЙТЕ, КАК ПРОЙТИ ЕГО.
 THANKS TO ANGELO MENDOLA, TONI BORDERÍA AND TO ALL THE FRIENDS WHO TESTED THE GAME.
-GRACIAS A ANGELO MENDOLA, TONI BORDERÍA Y A TODOS LOS AMIGOS QUE PROBARON EL JUEGO.
+БЛАГОДАРЯ АНДЖЕЛО МЕНДОЛЕ (ANGELO MENDOLA) И ТОНИ БОРДЕРИА (TONI BORDERÍA), А ТАКЖЕ ВСЕМ НАШИМ ДРУЗЬЯМ, МЫ ПРОТЕСТИРОВАЛИ ИГРУ.
 THIS GAME IS AVAILABLE FOR PC/WINDOWS, GNU/LINUX AND ANDROID.
-ESTE JUEGO ESTÁ DISPONIBLE PARA PC/WINDOWS, GNU/LINUX Y ANDROID.
+ИГРА ДОСТУПНА ДЛЯ ПК/WINDOWS, GNU/LINUX И ANDROID.
 BUY THE FULL VERSION TO GET:
-COMPRA LA VERSIÓN COMPLETA PARA OBTENER:
+ПРИОБРЕТИТЕ ПОЛНУЮ ВЕРСИЮ, ЧТОБЫ:
 m A VERY NICE ENDING.
-m UN MARAVILLOSO FINAL.
+m УВИДЕТЬ СЧАСТЛИВЫЙ КОНЕЦ.
 m 16 NEW LEVELS FOR A TOTAL OF 60 SITUATIONS.
-m 16 NUEVOS NIVELES PARA UN TOTAL DE 60 SITUACIONES.
+m ПРОЙТИ 16 НОВЫХ УРОВНЕЙ, ВКЛЮЧАЮЩИХ 60 ЭТАПОВ В ЦЕЛОМ.
 m 2 NEW REGIONS: THE CAVERNS AND THE LAVA REGION.
-m 2 NUEVAS REGIONES: LAS CAVERNAS Y LA REGIÓN DE LAVA.
+m ПОИГРАТЬ В ДВУХ НОВЫХ ЗЕМЛЯХ: ЗЕМЛЯ ПЕЩЕР И ЗЕМЛЯ ЛАВЫ.
 DO YOU WANT TO GO TO 'ITCH.IO' TO GET THE FULL VERSION OF THE GAME?
-¿QUIERES IR A 'ITCH.IO' PARA COMPRAR LA VERSIÓN COMPLETA DEL JUEGO?
+ВЫ ХОТИТЕ ПЕРЕЙТИ ПО 'ITCH.IO', ЧТОБЫ ПРИОБРЕСТИ ПОЛНУЮ ВЕРСИЮ ИГРЫ?
 DO YOU WANT TO GO TO 'STEAM' TO GET THE FULL VERSION OF THE GAME?
-¿QUIERES IR A 'STEAM' PARA COMPRAR LA VERSIÓN COMPLETA DEL JUEGO?
+ВЫ ХОТИТЕ ПЕРЕЙТИ ПО 'STEAM', ЧТОБЫ ПРИОБРЕСТИ ПОЛНУЮ ВЕРСИЮ ИГРЫ?
 DO YOU WANT TO GO TO 'GOOGLE PLAY STORE' TO GET THE FULL VERSION OF THE GAME?
-¿QUIERES IR A 'GOOGLE PLAY STORE' PARA COMPRAR LA VERSIÓN COMPLETA DEL JUEGO?
+ВЫ ХОТИТЕ ПЕРЕЙТИ ПО 'GOOGLE PLAY STORE', ЧТОБЫ ПРИОБРЕСТИ ПОЛНУЮ ВЕРСИЮ ИГРЫ?
 NOT NOW
-AHORA NO
+НЕ СЕЙЧАС
 ~
 This file has to be saved in utf8.
