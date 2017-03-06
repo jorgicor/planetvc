@@ -35,8 +35,8 @@ enum {
 
 static struct menu s_buymenu = {
 	.options = {
-		{ TX_BUY, OP_BUY },
 		{ TX_NOT_NOW, OP_NOT_NOW },
+		{ TX_BUY, OP_BUY },
 		{ NULL, -2 },
 	},
 };
