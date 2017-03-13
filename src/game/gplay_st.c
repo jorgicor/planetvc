@@ -36,18 +36,6 @@ enum {
 	OP_EXIT_NO
 };
 
-static const struct msgbox s_exit_msgbox = {
-	.title = "EXIT TO MENU?",
-	.options = { 
-		{ "YES", OP_EXIT_YES },
-		{ "NO" , OP_EXIT_NO},
-	},
-	.x = 5,
-       	.w = TE_FMW - 10,
-       	.y = (TE_FMH - 5) / 2,
-	.can_go_back = 1
-};
-
 static void draw(void)
 {
 	te_begin_draw();
@@ -74,7 +62,18 @@ static void update_exitq(void)
 
 static void set_exitq(void)
 {
-	show_msgbox(&s_exit_msgbox);
+	static const struct msgbox mb = {
+		.title = "EXIT TO MENU?",
+		.options = { 
+			{ "YES", OP_EXIT_YES },
+			{ "NO" , OP_EXIT_NO},
+		},
+		.x = 5,
+		.w = TE_FMW - 10,
+		.can_go_back = 1
+	};
+
+	show_msgbox(&mb);
 	te_enable_anims(0);
 	s_update_fn = update_exitq;
 }

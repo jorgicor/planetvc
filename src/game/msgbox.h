@@ -24,7 +24,7 @@ struct msgbox_option {
 struct msgbox {
 	const char *title;
 	struct msgbox_option options[4];
-	int x, y, w;
+	int x, w;
 	int can_go_back;
 };
 

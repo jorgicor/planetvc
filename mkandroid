@@ -1,5 +1,8 @@
 #!/bin/sh
 
+TARGET=android-22
+APPID="953069141779"
+
 case $# in
 	4) BUILDTYPE="$1" ; VERSIONCODE=$2 ; VERSIONNAME=$3 ; SDLPATH="$4" ;;
 	*) echo "Usage ./mkandroid full|demo versionCode versionName path_to_sdl_sources" ; exit 1 ;;
@@ -123,6 +126,7 @@ make_project () {
 	sed -i "s|SDLActivity|$ACTIVITY|g" "$BUILDPATH"/AndroidManifest.xml
 	sed -i "s|SDLActivity|$APP|g" "$BUILDPATH"/build.xml
 	sed -i "s|SDL App|$APPNAME|g" "$BUILDPATH"/res/values/strings.xml
+	sed -i "s|APPID|$APPID|g" "$BUILDPATH"/res/values/strings.xml
 
 	# Fill in a default Activity
 	echo "package $APP;" > "$ACTIVITY.java"
@@ -133,7 +137,7 @@ make_project () {
 
 	# Update project
 	cd "$BUILDPATH"
-	"$ANDROID" update project --path "$BUILDPATH" --target android-12
+	"$ANDROID" update project --path "$BUILDPATH" --target $TARGET --subprojects
 	cd "$BASEPATH"
 }
 
@@ -259,6 +263,39 @@ build_release () {
 	build release
 }
 
+install () {
+    local buildtype=$1
+    cd "$BUILDPATH"
+    "$ANT" $buildtype install
+    cd "$BASEPATH"
+}
+
+install_debug () {
+	install debug
+}
+
+install_release () {
+	install release
+}
+
+update_proj () {
+	cd "$BUILDPATH"
+	"$ANDROID" update lib-project --path "$BUILDPATH/google-play-services-base" --target $TARGET
+	"$ANDROID" update lib-project --path "$BUILDPATH/google-play-services-tasks" --target $TARGET
+	"$ANDROID" update lib-project --path "$BUILDPATH/google-play-services-basement" --target $TARGET
+	"$ANDROID" update lib-project --path "$BUILDPATH/google-play-services-drive" --target $TARGET
+	"$ANDROID" update lib-project --path "$BUILDPATH/google-play-services-games" --target $TARGET
+	"$ANDROID" update lib-project --path "$BUILDPATH/android-support-v4" --target $TARGET
+	"$ANDROID" update lib-project --path "$BUILDPATH/android-support-annotations" --target $TARGET
+	"$ANDROID" update lib-project --path "$BUILDPATH/android-support-compat" --target $TARGET
+	"$ANDROID" update lib-project --path "$BUILDPATH/android-support-core-ui" --target $TARGET
+	"$ANDROID" update lib-project --path "$BUILDPATH/android-support-core-utils" --target $TARGET
+	"$ANDROID" update lib-project --path "$BUILDPATH/android-support-fragment" --target $TARGET
+	"$ANDROID" update lib-project --path "$BUILDPATH/android-support-media-compat" --target $TARGET
+	"$ANDROID" update project --path "$BUILDPATH" --target $TARGET --library google-play-services-games
+	cd "$BASEPATH"
+}
+
 show_menu () {
 	echo "*********"
 	echo " M E N U "
@@ -267,6 +304,9 @@ show_menu () {
 	echo "2. Copy assets from data/ and optimize BMPs into project"
 	echo "3. Build debug"
 	echo "4. Build release"
+	echo "5. Install debug to device"
+	echo "6. Install release to device"
+	echo "7. Update project"
 	echo "0. Exit"
 }
 
@@ -279,6 +319,9 @@ read_option () {
 		2) copy_data ;;
 		3) build_debug ;;
 		4) build_release ;;
+		5) install_debug ;;
+		6) install_release ;;
+		7) update_proj ;;
 		0) exit 0 ;;
 		*) echo "Wrong option" ;;
 	esac

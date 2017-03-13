@@ -33,14 +33,33 @@ import android.content.pm.ActivityInfo;
 import android.content.res.AssetManager;
 import android.net.Uri;
 
+/* For Google Play */
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.games.GamesActivityResultCodes;
+import com.google.android.gms.games.leaderboard.Leaderboards;
+import android.content.IntentSender.SendIntentException;
+
 /**
     SDL Activity
 */
-public class SDLActivity extends Activity {
+public class SDLActivity extends Activity
+    implements GoogleApiClient.OnConnectionFailedListener,
+    	       GoogleApiClient.ConnectionCallbacks
+{
     private static final String TAG = "SDL";
 
     private static AssetManager mAssetManager;
     private static native void loadAssetManager(AssetManager mgr);
+
+    /* For Google Play */
+    private static GoogleApiClient mGoogleApiClient;
+    private static final int REQUEST_RESOLVE_ERROR = 1001;
+    private static final int REQUEST_LEADERBOARD = 1002;
+    private static boolean mResolvingError;
+    private static boolean mLeaderboardRequest;
 
     // Keep track of the paused state
     public static boolean mIsPaused, mIsSurfaceReady, mHasFocus;
@@ -120,6 +139,9 @@ public class SDLActivity extends Activity {
         mIsSurfaceReady = false;
         mHasFocus = true;
 	mAssetManager = null;
+	mGoogleApiClient = null;
+	mResolvingError = false;
+	mLeaderboardRequest = false;
     }
 
     // Setup
@@ -198,6 +220,17 @@ public class SDLActivity extends Activity {
 
 	mAssetManager = getResources().getAssets();
 	loadAssetManager(mAssetManager);
+
+	//mResolvingError = savedInstanceState != null
+        //    && savedInstanceState.getBoolean(STATE_RESOLVING_ERROR, false);
+
+        mGoogleApiClient =
+		new GoogleApiClient.Builder(this)
+			.addApi(Games.API)
+			.addScope(Games.SCOPE_GAMES)
+			.addOnConnectionFailedListener(this)
+			.addConnectionCallbacks(this)
+			.build();
     }
 
     // Events
@@ -469,6 +502,201 @@ public class SDLActivity extends Activity {
 	    {
 		    mSingleton.startActivity(intent);
 	    }
+    }
+
+    /**
+     * Called by game using JNI.
+     */
+    public static boolean isConnectedToGooglePlay()
+    {
+	    if (mSingleton == null) {
+		    return false;
+	    }
+
+	    if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
+		    return false;
+	    }
+	    
+	    return true;
+    }
+
+    /**
+     * Called by game using JNI.
+     */
+    public static boolean isConnectingToGooglePlay()
+    {
+	    if (mSingleton == null) {
+		    return false;
+	    }
+
+	    if (mGoogleApiClient == null) {
+		    return false;
+	    }
+	    
+	    return mResolvingError || mGoogleApiClient.isConnecting();
+    }
+
+    /**
+     * Called by game using JNI.
+     */
+    public static boolean isRequestingLeaderboard()
+    {
+	   return mLeaderboardRequest; 
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult result)
+    {
+        Log.v(TAG, "Connection failed");
+	if (mResolvingError) {
+		Log.v(TAG, "Resolving error");
+		return;
+	} else if (result.hasResolution()) {
+		try {
+			Log.v(TAG, "Start resolution");
+			mResolvingError = true;
+			result.startResolutionForResult(this,
+				REQUEST_RESOLVE_ERROR);
+		} catch (SendIntentException e) {
+			Log.v(TAG, "Reconnect");
+			mGoogleApiClient.connect();
+		}
+	} else {
+		Log.v(TAG, "Cannot resolve");
+		mResolvingError = false;
+		Log.v(TAG, "Final error");
+	}
+    }
+
+    private static final String STATE_RESOLVING_ERROR = "resolving_error";
+
+    /*
+    @Override
+    protected void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(STATE_RESOLVING_ERROR, mResolvingError);
+    }
+
+
+    @Override
+    public void onStart()
+    {
+	    super.onStart();
+	    if (mGoogleApiClient != null && mGoogleApiWasConnected) {
+		    mGoogleApiClient.connect();
+	    }
+    }
+
+    @Override
+    public void onStop()
+    {
+	    super.onStop();
+	    if (mGoogleApiClient != null) {
+		    mGoogleApiClient.disconnect();
+	    }
+    }
+    */
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+	    super.onActivityResult(requestCode, resultCode, data);
+
+	    if (requestCode == REQUEST_RESOLVE_ERROR) {
+		    Log.v(TAG, "Resolve error");
+		    mResolvingError = false;
+		    if (resultCode == RESULT_OK) {
+			    if (!mGoogleApiClient.isConnecting() &&
+			        !mGoogleApiClient.isConnected())
+			    {
+			        Log.v(TAG, "Connect again");
+				mGoogleApiClient.connect();
+			    }
+		    }
+	    } else if (requestCode == REQUEST_LEADERBOARD) {
+		    mLeaderboardRequest = false;
+		    if (resultCode ==
+			    GamesActivityResultCodes.RESULT_RECONNECT_REQUIRED)
+		    {
+			    mGoogleApiClient.disconnect();
+		    }
+	    }
+    }
+
+    /**
+     * Called by game using JNI.
+     */
+    public static void connectToGooglePlay()
+    {
+            Log.v(TAG, "Connect to Google Api Client");
+	    if (mGoogleApiClient != null
+	        && !mGoogleApiClient.isConnected()
+		&& !mGoogleApiClient.isConnecting())
+	    {
+		    mGoogleApiClient.connect();
+		    Log.v(TAG, "connectToGooglePlay isConnecting" +
+			mGoogleApiClient.isConnecting());
+	    }
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint)
+    {
+	    Log.v(TAG, "I am connected");
+    }
+
+    @Override
+    public void onConnectionSuspended(int cause)
+    {
+	    Log.v(TAG, "Connection suspended");
+    }
+
+    /**
+     * Called by game using JNI.
+     */
+    public static void sendScore(String boardId, String score)
+    {
+	    Log.e(TAG, "Submitting score");
+
+	    if (mSingleton == null) {
+		    return;
+	    }
+
+	    Log.e(TAG, "Submitting score 2");
+
+	    if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
+		    return;
+	    }
+
+	    Log.e(TAG, "Submitting score 3");
+
+	    try {
+		    Log.e(TAG, "Submitting score A");
+		    Games.Leaderboards.submitScore(mGoogleApiClient, boardId,
+			    Long.parseLong(score));
+	    } catch (Exception e) {
+                Log.e(TAG, "Exception submitScore");
+	    }
+    }
+
+    /**
+     * Called by game using JNI.
+     */
+    public static void showLeaderboard(String boardId)
+    {
+	    if (mSingleton == null) {
+		    return;
+	    }
+
+	    if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
+		    return;
+	    }
+
+	    mLeaderboardRequest = true;
+	    mSingleton.startActivityForResult(
+		    Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
+        		boardId), REQUEST_LEADERBOARD);
     }
 
     /**

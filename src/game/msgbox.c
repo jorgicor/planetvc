@@ -17,34 +17,76 @@ struct wav *wav_opmove;
 
 const static struct msgbox *s_mbox;
 
+static int s_msgbox_y;
 static int s_options_y;
 static int s_options_x;
 static int s_option;
 static int s_noptions;
+static int s_title_h;
+
+static struct {
+	short tseti;
+	short tilei;
+} s_backup[TE_FMW][TE_FMH];
 
 static void precalc(void)
 {
-	int w, y, maxw, i;
+	int w, h, maxw, i;
 
-	y = s_mbox->y;
-	if (s_mbox->title != NULL)
-		y += 2;
+	h = 0;
+	if (s_mbox->title != NULL) {
+		s_title_h = str_height_ww(_(s_mbox->title), s_mbox->x,
+			s_mbox->w);
+		h = s_title_h * 2;
+	}
 
-	s_options_y = y;
+	s_options_y = h;
 
 	maxw = 0;
 	s_noptions = 0;
 	for (i = 0; i < NELEMS(s_mbox->options); i++) {
-		if (s_mbox->options[i].str == NULL)
+		if (s_mbox->options[i].str == NULL) {
 			break;
+		}
 		s_noptions++;
+		h += 2;
 		w = utf8_strlen(_(s_mbox->options[i].str));
-		if (w > maxw)
+		if (w > maxw) {
 			maxw = w;
+		}
 	}
 
 	s_options_x = (s_mbox->w - maxw) / 2;
 	s_options_x += s_mbox->x;
+	s_msgbox_y = (TE_FMH - h) / 2;
+	s_options_y += s_msgbox_y;
+}
+
+static void save_background(void)
+{
+	int x, y;
+	int tseti, tilei;
+
+	for (x = 0; x < TE_FMW; x++) {
+		for (y = 0; y < TE_FMH; y++) {
+			te_fg_xy(x, y, &tseti, &tilei);
+			s_backup[x][y].tseti = tseti;
+			s_backup[x][y].tilei = tilei;
+		}
+	}
+}
+
+static void restore_background(void)
+{
+	int x, y;
+
+	for (x = 0; x < TE_FMW; x++) {
+		for (y = 0; y < TE_FMH; y++) {
+			te_set_fg_xy(x, y,
+				     s_backup[x][y].tseti,
+				     s_backup[x][y].tilei);
+		}
+	}
 }
 
 static void draw_box(void)
@@ -55,8 +97,8 @@ static void draw_box(void)
 
 	sx = s_mbox->x - 1;
 	sw = s_mbox->w + 2;
-	sy = s_mbox->y - 1;
-	h = 1 + s_options_y - s_mbox->y + s_noptions * 2;
+	sy = s_msgbox_y - 1;
+	h = 1 + s_options_y - s_msgbox_y + s_noptions * 2;
 
 	/* corners */
 	te_set_fg_xy(sx, sy, 1, chri('a'));
@@ -96,11 +138,16 @@ static void draw_msgbox(void)
 
 	draw_box();
 
-	y = s_mbox->y;
+	y = s_msgbox_y;
 	if (s_mbox->title != NULL) {
-		w = utf8_strlen(_(s_mbox->title));
-		x = (s_mbox->w - w) / 2;
-		draw_str(_(s_mbox->title), s_mbox->x + x, y, 1); 
+		if (s_title_h == 1) {
+			w = utf8_strlen(_(s_mbox->title));
+			x = (s_mbox->w - w) / 2;
+			draw_str(_(s_mbox->title), s_mbox->x + x, y, 1); 
+		} else {
+			draw_str_ww(_(s_mbox->title), s_mbox->x, y, 1, -1,
+				    s_mbox->w);
+		}
 	}
 
 	y = s_options_y;
@@ -120,9 +167,9 @@ static void clear_msgbox(void)
 
 	id_space = chri(' ');
 	sx = s_mbox->x - 1;
-	sy = s_mbox->y - 1;
+	sy = s_msgbox_y - 1;
 	sw = s_mbox->w + 2;
-	h = 1 + s_options_y - s_mbox->y + s_noptions * 2;
+	h = 1 + s_options_y - s_msgbox_y + s_noptions * 2;
 	for (y = 0; y < h; y++) {
 		for (x = 0; x < sw; x++) {
 			te_set_fg_xy(sx + x, sy + y, 0, id_space);
@@ -163,6 +210,8 @@ static void prev_option(void)
 
 int update_msgbox(void)
 {
+	int code;
+
 	if (s_mbox == NULL)
 		return MSGBOX_NONE;
 
@@ -170,10 +219,15 @@ int update_msgbox(void)
 		(is_first_pressed(LKEYY) || is_first_pressed(LKEYB)))
 	{
 		clear_msgbox();
+		restore_background();
+		s_mbox = NULL;
 		return MSGBOX_BACK;
 	} else if (is_first_pressed(LKEYA)) {
 		clear_msgbox();
-		return s_mbox->options[s_option].code;
+		restore_background();
+		code = s_mbox->options[s_option].code;
+		s_mbox = NULL;
+		return code;
 	} else if (is_first_pressed(LKDOWN)) {
 		next_option();
 	} else if (is_first_pressed(LKUP)) {
@@ -186,10 +240,12 @@ int update_msgbox(void)
 void show_msgbox(const struct msgbox *mbox)
 {
 	s_mbox = mbox;
-	if (s_mbox == NULL)
+	if (s_mbox == NULL) {
 		return;
+	}
 	s_option = 0;
 	precalc();
+	save_background();
 	draw_msgbox();
 	draw_arrow();
 }

@@ -144,13 +144,14 @@ am__planetvc_SOURCES_DIST = game/resource.rc cfg/cfg.h cbase/cbase.h \
 	game/fade.h game/fade.c game/prefs.h game/prefs.c \
 	game/initfile.h game/initfile.c game/readlin.h game/readlin.c \
 	game/demosave.h game/demosave.c game/arrow.h game/arrow.c \
-	game/pad.h game/pad.c libxmp-lite/common.h \
-	libxmp-lite/control.c libxmp-lite/dataio.c \
-	libxmp-lite/effects.c libxmp-lite/effects.h \
-	libxmp-lite/envelope.c libxmp-lite/envelope.h \
-	libxmp-lite/filter.c libxmp-lite/format.c libxmp-lite/format.h \
-	libxmp-lite/hio.c libxmp-lite/hio.h libxmp-lite/lfo.c \
-	libxmp-lite/lfo.h libxmp-lite/list.h libxmp-lite/load.c \
+	game/pad.h game/pad.c game/google.h game/google.c \
+	libxmp-lite/common.h libxmp-lite/control.c \
+	libxmp-lite/dataio.c libxmp-lite/effects.c \
+	libxmp-lite/effects.h libxmp-lite/envelope.c \
+	libxmp-lite/envelope.h libxmp-lite/filter.c \
+	libxmp-lite/format.c libxmp-lite/format.h libxmp-lite/hio.c \
+	libxmp-lite/hio.h libxmp-lite/lfo.c libxmp-lite/lfo.h \
+	libxmp-lite/list.h libxmp-lite/load.c \
 	libxmp-lite/load_helpers.c libxmp-lite/mdataio.h \
 	libxmp-lite/memio.c libxmp-lite/memio.h libxmp-lite/mix_all.c \
 	libxmp-lite/mixer.c libxmp-lite/mixer.h libxmp-lite/period.c \
@@ -207,7 +208,7 @@ am_planetvc_OBJECTS = $(am__objects_1) cbase/planetvc-cbase.$(OBJEXT) \
 	game/planetvc-prefs.$(OBJEXT) game/planetvc-initfile.$(OBJEXT) \
 	game/planetvc-readlin.$(OBJEXT) \
 	game/planetvc-demosave.$(OBJEXT) game/planetvc-arrow.$(OBJEXT) \
-	game/planetvc-pad.$(OBJEXT) \
+	game/planetvc-pad.$(OBJEXT) game/planetvc-google.$(OBJEXT) \
 	libxmp-lite/planetvc-control.$(OBJEXT) \
 	libxmp-lite/planetvc-dataio.$(OBJEXT) \
 	libxmp-lite/planetvc-effects.$(OBJEXT) \
@@ -531,6 +532,7 @@ planetvc_SOURCES = $(RESOURCE) \
 			game/demosave.h game/demosave.c \
 			game/arrow.h game/arrow.c \
 			game/pad.h game/pad.c \
+			game/google.h game/google.c \
 			\
 			libxmp-lite/common.h libxmp-lite/control.c \
 			libxmp-lite/dataio.c \
@@ -821,6 +823,8 @@ game/planetvc-arrow.$(OBJEXT): game/$(am__dirstamp) \
 	game/$(DEPDIR)/$(am__dirstamp)
 game/planetvc-pad.$(OBJEXT): game/$(am__dirstamp) \
 	game/$(DEPDIR)/$(am__dirstamp)
+game/planetvc-google.$(OBJEXT): game/$(am__dirstamp) \
+	game/$(DEPDIR)/$(am__dirstamp)
 libxmp-lite/$(am__dirstamp):
 	@$(MKDIR_P) libxmp-lite
 	@: > libxmp-lite/$(am__dirstamp)
@@ -920,6 +924,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-fish.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-game.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-gameover.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-google.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-gplay_st.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-grasshop.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-hiscore.Po@am__quote@
@@ -1914,6 +1919,20 @@ game/planetvc-pad.obj: game/pad.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='game/pad.c' object='game/planetvc-pad.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -c -o game/planetvc-pad.obj `if test -f 'game/pad.c'; then $(CYGPATH_W) 'game/pad.c'; else $(CYGPATH_W) '$(srcdir)/game/pad.c'; fi`
+
+game/planetvc-google.o: game/google.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -MT game/planetvc-google.o -MD -MP -MF game/$(DEPDIR)/planetvc-google.Tpo -c -o game/planetvc-google.o `test -f 'game/google.c' || echo '$(srcdir)/'`game/google.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) game/$(DEPDIR)/planetvc-google.Tpo game/$(DEPDIR)/planetvc-google.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='game/google.c' object='game/planetvc-google.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -c -o game/planetvc-google.o `test -f 'game/google.c' || echo '$(srcdir)/'`game/google.c
+
+game/planetvc-google.obj: game/google.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -MT game/planetvc-google.obj -MD -MP -MF game/$(DEPDIR)/planetvc-google.Tpo -c -o game/planetvc-google.obj `if test -f 'game/google.c'; then $(CYGPATH_W) 'game/google.c'; else $(CYGPATH_W) '$(srcdir)/game/google.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) game/$(DEPDIR)/planetvc-google.Tpo game/$(DEPDIR)/planetvc-google.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='game/google.c' object='game/planetvc-google.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -c -o game/planetvc-google.obj `if test -f 'game/google.c'; then $(CYGPATH_W) 'game/google.c'; else $(CYGPATH_W) '$(srcdir)/game/google.c'; fi`
 
 libxmp-lite/planetvc-control.o: libxmp-lite/control.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -MT libxmp-lite/planetvc-control.o -MD -MP -MF libxmp-lite/$(DEPDIR)/planetvc-control.Tpo -c -o libxmp-lite/planetvc-control.o `test -f 'libxmp-lite/control.c' || echo '$(srcdir)/'`libxmp-lite/control.c

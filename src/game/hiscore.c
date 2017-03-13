@@ -13,6 +13,7 @@
 #include "win_st.h"
 #include "msgbox.h"
 #include "confpath.h"
+#include "google.h"
 #include "gamelib/mixer.h"
 #include "gamelib/vfs.h"
 #include "kernel/kernel.h"
@@ -67,6 +68,11 @@ static struct hiscore *s_hiscores_by[] = {
 static const char *s_difficulty_name[] = {
        	"EXPERT",
         "BEGINNER"
+};
+
+const char *s_board_id[] = {
+	"CgkIk_7jut4bEAIQBA",
+	"CgkIk_7jut4bEAIQAQ"
 };
 
 static struct hiscore *s_hiscores_tab = s_hiscores;
@@ -279,6 +285,30 @@ static void clear_char_pos(void)
 		     s_hiscore_nmaps);
 }
 
+static void sendScore(int difficulty, int nvisited)
+{
+	int n;
+	char scorestr[16];
+
+	if (Android_IsConnectedToGooglePlay()) {
+		n = nvisited * 100;
+		snprintf(scorestr, sizeof(scorestr), "%d", n);
+		Android_SendScore(s_board_id[s_difficulty], scorestr);
+		Android_ShowLeaderboard(s_board_id[s_difficulty]);
+	}
+}
+
+static void hiscore_wait_leaderboard(struct actor *pac)
+{
+	if (!Android_IsRequestingLeaderboard()) {
+		pac->update = hiscore_void;
+		if (!Android_IsConnectedToGooglePlay()) {
+			set_preference_int("autoconnect", 0);
+			save_prefs();
+		}
+	}
+}
+
 static void hiscore_enter(struct actor *pac)
 {
 	pac->t = dectime(pac->t);
@@ -314,8 +344,14 @@ static void hiscore_enter(struct actor *pac)
 		if (s_enter_chr_pos >= 3) {
 			clear_hint(TE_FMH - 2);
 			hiscore_save();
-			pac->update = hiscore_void;
 			kernel_get_device()->clear_first_pressed_keys();
+			if (Android_IsConnectedToGooglePlay()) {
+				sendScore(s_difficulty,
+					s_hiscores_tab[s_enter_hspos].nvisited);
+				pac->update = hiscore_wait_leaderboard;
+			} else {
+				pac->update = hiscore_void;
+			}
 		}
 	}
 }
@@ -354,7 +390,7 @@ int hiscore_is_working(void)
 	if (is_free_actor(pac))
 		return 0;
 
-	if (pac->update == hiscore_enter)
+	if (pac->update != hiscore_void)
 		return 1;
 
 	return 0;

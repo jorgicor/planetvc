@@ -99,6 +99,7 @@ planetvc_SOURCES =	$(RESOURCE) \
 			game/demosave.h game/demosave.c \
 			game/arrow.h game/arrow.c \
 			game/pad.h game/pad.c \
+			game/google.h game/google.c \
 			\
 			libxmp-lite/common.h libxmp-lite/control.c \
 			libxmp-lite/dataio.c \

@@ -274,6 +274,62 @@ void draw_str_ww(const char *s, int x, int y, int color, int len, int w)
 	}
 }
 
+/* Calculates the number of lines a word wrapped string will ocuppy. */
+int str_height_ww(const char *s, int x, int w)
+{
+	int y, ox, sp, wlen, d, uc;
+
+	if (x < 0 || x >= TE_FMW)
+		return 0;
+
+	if (w <= 0)
+		w = 1;
+
+	/* Transform w in the x limit. */
+	w = x + w;
+
+	ox = x;
+	sp = 1;
+	y = 0;
+	while ((d = utf8_next_code(s, &uc)) != '\0') {
+		if (uc == '\n') {
+			sp = 1;
+			x = ox;
+			y++;
+		} else if (isspace(uc)) {
+			sp = 1;
+			if (x > ox) {
+				x++;
+				if (x >= w) {
+					x = ox;
+					y++;
+				}
+			}
+		} else {
+			if (sp && x > ox) {
+				wlen = wordlen(s);
+				if (x + wlen > w && ox + wlen <= w) {
+					x = ox;
+					y++;
+				}
+			}
+			x++;
+			if (x >= w) {
+				x = ox;
+				y++;
+			}
+			sp = 0;
+		}
+		s += d;
+	}
+
+	if (x == ox) {
+		return y;
+	} else {
+		return y + 1;
+	}
+}
+
 void strdraw_init(void)
 {
 	register_bitmap(&bmp_font0, "font0", 1, 0x8080);
