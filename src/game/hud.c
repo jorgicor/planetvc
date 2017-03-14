@@ -129,17 +129,17 @@ static const struct achiev s_visit_achievs[NDIFFICULTY_LEVELS][NACHIEVS] =
 	{
 		{ 3,  "CgkIk_7jut4bEAIQDg" },
 		{ 17, "CgkIk_7jut4bEAIQDw" },
-		{ 25, "CgkIk_7jut4bEAIQEA" },
-		{ 34, "CgkIk_7jut4bEAIQEQ" },
-		{ 43, "CgkIk_7jut4bEAIQEg" },
+		{ 26, "CgkIk_7jut4bEAIQEA" },
+		{ 35, "CgkIk_7jut4bEAIQEQ" },
+		{ 44, "CgkIk_7jut4bEAIQEg" },
 	},
 		/* Beginner */
 	{
 		{ 3,  "CgkIk_7jut4bEAIQBw" },
 		{ 17, "CgkIk_7jut4bEAIQCA" },
-		{ 25, "CgkIk_7jut4bEAIQCQ" },
-		{ 34, "CgkIk_7jut4bEAIQCg" },
-		{ 43, "CgkIk_7jut4bEAIQCw" }
+		{ 26, "CgkIk_7jut4bEAIQCQ" },
+		{ 35, "CgkIk_7jut4bEAIQCg" },
+		{ 44, "CgkIk_7jut4bEAIQCw" }
 	},
 };
 
