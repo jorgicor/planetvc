@@ -11,9 +11,9 @@ QUIT
 OPTIONS
 ОПЦИИ
 MUSIC: OFF
-МУЗЫКА: ВЫКЛ
+МУЗЫКА: ВЫКЛ.
 MUSIC: ON
-МУЗЫКА: ВКЛ
+МУЗЫКА: ВКЛ.
 BACK
 НАЗАД
 CREDITS
