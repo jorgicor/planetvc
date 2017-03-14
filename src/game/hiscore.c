@@ -309,8 +309,8 @@ static void sendScore(int difficulty, int nvisited)
 	if (Android_IsConnectedToGooglePlay()) {
 		n = nvisited * 100;
 		snprintf(scorestr, sizeof(scorestr), "%d", n);
-		Android_SendScore(s_board_id[s_difficulty], scorestr);
-		Android_ShowLeaderboard(s_board_id[s_difficulty]);
+		Android_SendScore(s_board_id[difficulty], scorestr);
+		Android_ShowLeaderboard(s_board_id[difficulty]);
 	}
 }
 
@@ -362,7 +362,7 @@ static void hiscore_enter(struct actor *pac)
 			hiscore_save();
 			kernel_get_device()->clear_first_pressed_keys();
 			if (Android_IsConnectedToGooglePlay()) {
-				sendScore(s_difficulty,
+				sendScore(get_difficulty(),
 					decrypt(s_hiscores_tab[s_enter_hspos]
 						.nvisited));
 				pac->update = hiscore_wait_leaderboard;
@@ -422,8 +422,8 @@ struct actor *spawn_hiscore(int x, int y)
 	if (!is_free_actor(pac))
 		return NULL;
 
-	draw_mode(6, s_difficulty);
-	s_hiscores_tab = s_hiscores_by[s_difficulty];
+	draw_mode(6, get_difficulty());
+	s_hiscores_tab = s_hiscores_by[get_difficulty()];
 	s_hiscore_y = y;
 	s_hiscore_nmaps = initfile_getvar("nmaps_to_win");
 	n = get_nvisited_maps();

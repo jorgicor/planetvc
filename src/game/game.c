@@ -21,6 +21,7 @@
 #include "demo_st.h"
 #include "hiscore.h"
 #include "pad.h"
+#include "crypt.h"
 #include "gamelib/vfs.h"
 #include "gamelib/mixer.h"
 #include "kernel/kernel.h"
@@ -40,7 +41,7 @@ enum {
 };
 
 /* DIFFICULTY_EXPERT, BEGINNER, etc. */
-int s_difficulty;
+static int s_difficulty;
 
 /* If we go step by step. */
 static int s_step_mode;
@@ -258,7 +259,7 @@ static void exec_spawn(char *args)
 
 static void exec_nspawn(char *args)
 {
-	if (s_difficulty == DIFFICULTY_BEGINNER) {
+	if (get_difficulty() == DIFFICULTY_BEGINNER) {
 		s_last_spawned_actor = NULL;
 	} else {
 		exec_spawn(args);
@@ -1210,6 +1211,16 @@ int how_far_y(int x0, int y0, int x1, int y1, int delta)
 	} while (d < delta);
 
 	return flip * delta;
+}
+
+int get_difficulty(void)
+{
+	return decrypt(s_difficulty);
+}
+
+void set_difficulty(int difficulty)
+{
+	s_difficulty = encrypt(difficulty);
 }
 
 int dectime(int t)

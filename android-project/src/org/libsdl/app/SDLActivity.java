@@ -39,7 +39,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.GamesActivityResultCodes;
-import com.google.android.gms.games.leaderboard.Leaderboards;
 import android.content.IntentSender.SendIntentException;
 
 /**
@@ -697,6 +696,22 @@ public class SDLActivity extends Activity
 	    mSingleton.startActivityForResult(
 		    Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
         		boardId), REQUEST_LEADERBOARD);
+    }
+
+    /**
+     * Called by game using JNI.
+     */
+    public static void unlockAchievement(String achievementId)
+    {
+	    if (mSingleton == null) {
+		    return;
+	    }
+
+	    if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
+		    return;
+	    }
+
+	    Games.Achievements.unlock(mGoogleApiClient, achievementId);
     }
 
     /**

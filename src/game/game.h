@@ -209,7 +209,8 @@ enum {
 	NDIFFICULTY_LEVELS
 };
 
-extern int s_difficulty;
+int get_difficulty(void);
+void set_difficulty(int difficulty);
 
 int tokscanf(char *str, const char *fmt, ...);
 void scroll_to_map(int mapid);

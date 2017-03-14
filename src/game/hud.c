@@ -17,6 +17,7 @@
 #include "msgbox.h"
 #include "initfile.h"
 #include "crypt.h"
+#include "google.h"
 #include "gamelib/mixer.h"
 #include "kernel/kernel.h"
 #include "cbase/kassert.h"
@@ -113,6 +114,53 @@ static unsigned short s_visited[16];
 /* Rooms visited to calculate progression. */
 static int s_nvisited;
 
+struct achiev {
+	int nvisited;
+	const char *id;
+};
+
+enum {
+	NACHIEVS = 5
+};
+
+static const struct achiev s_visit_achievs[NDIFFICULTY_LEVELS][NACHIEVS] =
+{
+		/* Expert */
+	{
+		{ 3,  "CgkIk_7jut4bEAIQDg" },
+		{ 17, "CgkIk_7jut4bEAIQDw" },
+		{ 25, "CgkIk_7jut4bEAIQEA" },
+		{ 34, "CgkIk_7jut4bEAIQEQ" },
+		{ 43, "CgkIk_7jut4bEAIQEg" },
+	},
+		/* Beginner */
+	{
+		{ 3,  "CgkIk_7jut4bEAIQBw" },
+		{ 17, "CgkIk_7jut4bEAIQCA" },
+		{ 25, "CgkIk_7jut4bEAIQCQ" },
+		{ 34, "CgkIk_7jut4bEAIQCg" },
+		{ 43, "CgkIk_7jut4bEAIQCw" }
+	},
+};
+
+static void check_visit_achievements(int nvisited)
+{
+	int i;
+	const struct achiev *visit_achievs;
+
+	if (!Android_IsConnectedToGooglePlay()) {
+		return;
+	}
+
+	visit_achievs = s_visit_achievs[get_difficulty()];
+	for (i = 0; i < NACHIEVS; i++) {
+		if (visit_achievs[i].nvisited == nvisited) {
+			Android_UnlockAchievement(visit_achievs[i].id);
+			break;
+		}
+	}
+}
+
 int is_training(void)
 {
 	return s_training;
@@ -148,6 +196,7 @@ static void visit_map(int id)
 		return;
 	s_visited[i] |= b; 
 	s_nvisited = encrypt(decrypt(s_nvisited) + 1);
+	check_visit_achievements(decrypt(s_nvisited));
 }
 
 void hud_game_started(void)

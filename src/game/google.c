@@ -31,6 +31,32 @@ static int Android_BooleanVoidFn(const char *func)
 #endif
 }
 
+static void Android_VoidStringFn(const char *func, const char *s)
+{
+#if PP_ANDROID
+	JNIEnv *env;
+	jobject theActivity;
+	jclass theClass;
+	jmethodID theMethod;
+	jstring sj;
+
+	env = (JNIEnv *) SDL_AndroidGetJNIEnv();
+	theActivity = (jobject) SDL_AndroidGetActivity();
+
+	theClass = (*env)->GetObjectClass(env, theActivity);
+	theMethod = (*env)->GetStaticMethodID(env, theClass, func,
+			"(Ljava/lang/String;)V");
+	sj = (*env)->NewStringUTF(env, s); 
+	if (sj != NULL) {
+		(*env)->CallStaticVoidMethod(env, theClass, theMethod, sj);
+		(*env)->DeleteLocalRef(env, sj);
+	}
+
+	(*env)->DeleteLocalRef(env, theActivity);
+	(*env)->DeleteLocalRef(env, theClass);
+#endif
+}
+
 int Android_IsConnectedToGooglePlay(void)
 {
 	return Android_BooleanVoidFn("isConnectedToGooglePlay");
@@ -102,26 +128,10 @@ void Android_SendScore(const char *boardId, const char *score)
 
 void Android_ShowLeaderboard(const char *boardId)
 {
-#if PP_ANDROID
-	JNIEnv *env;
-	jobject theActivity;
-	jclass theClass;
-	jmethodID theMethod;
-	jstring boardj;
+	Android_VoidStringFn("showLeaderboard", boardId);
+}
 
-	env = (JNIEnv *) SDL_AndroidGetJNIEnv();
-	theActivity = (jobject) SDL_AndroidGetActivity();
-
-	theClass = (*env)->GetObjectClass(env, theActivity);
-	theMethod = (*env)->GetStaticMethodID(env, theClass, "showLeaderboard",
-			"(Ljava/lang/String;)V");
-	boardj = (*env)->NewStringUTF(env, boardId); 
-	if (boardj != NULL) {
-		(*env)->CallStaticVoidMethod(env, theClass, theMethod, boardj);
-		(*env)->DeleteLocalRef(env, boardj);
-	}
-
-	(*env)->DeleteLocalRef(env, theActivity);
-	(*env)->DeleteLocalRef(env, theClass);
-#endif
+void Android_UnlockAchievement(const char *achievementId)
+{
+	Android_VoidStringFn("unlockAchievement", achievementId);
 }

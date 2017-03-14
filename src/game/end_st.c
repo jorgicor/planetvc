@@ -10,6 +10,8 @@
 #include "game.h"
 #include "strdraw.h"
 #include "initfile.h"
+#include "google.h"
+#include "cfg/cfg.h"
 
 static void draw(void)
 {
@@ -28,6 +30,15 @@ static void update(void)
 
 static void enter(const struct state *old_state)
 {
+	static const char *last_achiev[NDIFFICULTY_LEVELS] = {
+		"CgkIk_7jut4bEAIQEw",
+		"CgkIk_7jut4bEAIQDQ"
+	};
+
+	if (!PP_DEMO && Android_IsConnectedToGooglePlay()) {
+		Android_UnlockAchievement(last_achiev[get_difficulty()]);
+	}
+
 	load_map(initfile_getvar("end_map"));
 }
 

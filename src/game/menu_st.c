@@ -518,7 +518,7 @@ static void try_show_leaderboard(void)
 	};
 
 	if (Android_IsConnectedToGooglePlay()) {
-		show_leaderboard(s_difficulty);
+		show_leaderboard(get_difficulty());
 	} else if (strcmp(get_preference("autoconnect"), "1") == 0) {
 		connect_to_leaderboards();
 	} else {
@@ -558,7 +558,7 @@ static void update_connect(void)
 static void show_leaderboard_fn(void)
 {
 	connection_question_answered(1);
-	show_leaderboard(s_difficulty);
+	show_leaderboard(get_difficulty());
 }
 
 static void leaderboards_connect_error_fn(void)
@@ -704,12 +704,12 @@ static void update_main_menu(void)
 		push_level_menu(-1);
 		break;
 	case OP_BEGINNER:
-		s_difficulty = DIFFICULTY_BEGINNER;
+		set_difficulty(DIFFICULTY_BEGINNER);
 	       	mixer_play(wav_play);
 		try_play();
 		break;
 	case OP_EXPERT:
-		s_difficulty = DIFFICULTY_EXPERT;
+		set_difficulty(DIFFICULTY_EXPERT);
 	       	mixer_play(wav_play);
 		try_play();
 		break;
@@ -743,7 +743,7 @@ static void update_main_menu(void)
 		push_sound_menu(-1);
 		break;
 	case OP_DEMO:
-		s_difficulty = DIFFICULTY_EXPERT;
+		set_difficulty(DIFFICULTY_EXPERT);
 		s_last_menu_op = OP_DEMO;
 		s_last_menu = &s_options_menu;
 		clear_hint();
@@ -778,12 +778,12 @@ static void update_main_menu(void)
 		break;
 	case OP_LEADERBOARDS_BEGINNER:
 		mixer_play(wav_opsel);
-		s_difficulty = DIFFICULTY_BEGINNER;
+		set_difficulty(DIFFICULTY_BEGINNER);
 		try_show_leaderboard();
 		break;
 	case OP_LEADERBOARDS_EXPERT:
 		mixer_play(wav_opsel);
-		s_difficulty = DIFFICULTY_EXPERT;
+		set_difficulty(DIFFICULTY_EXPERT);
 		try_show_leaderboard();
 		break;
 	case -2: 

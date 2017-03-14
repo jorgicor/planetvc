@@ -7,14 +7,15 @@ enum {
 	N = 32
 };
 
-static const int s_table[N] = {
+static const unsigned char s_table[N] = {
 	30, 3, 6, 25, 14, 7, 21, 0, 9, 31,
 	1, 13, 19, 2, 29, 26, 23, 16, 4, 8,
 	22, 15, 5, 17, 10, 27, 18, 11, 24, 20, 
 	28, 12
 };
 
-static int s_rtable[N];
+static unsigned char s_rtable[N];
+const unsigned int XOR = 0xC69BA35Eu;
 
 int encrypt(int n)
 {
@@ -22,6 +23,7 @@ int encrypt(int n)
 	unsigned int k, r, un;
 
 	un = n;
+	un ^= XOR;
 	k = 1;
 	r = 0;
 	for (i = 0; i < N; i++, k <<= 1) {
@@ -45,7 +47,7 @@ int decrypt(int n)
 			r |= 1 << s_rtable[i];
 		}
 	}
-	return r;
+	return r ^ XOR;
 }
 
 static void check_no_duplicates(void)
@@ -67,7 +69,7 @@ void crypt_init(void)
 	check_no_duplicates();
 	
 	for (i = 0; i < N; i++) {
-		s_rtable[s_table[i]] = i;
+		s_rtable[s_table[i]] = (unsigned char) i;
 	}
 #if 0
 	for (i = 0; i < INT_MAX; i++) {

@@ -7,5 +7,6 @@ void Android_ConnectToGooglePlay(void);
 void Android_SendScore(const char *boardId, const char *score);
 void Android_ShowLeaderboard(const char *boardId);
 int Android_IsRequestingLeaderboard(void);
+void Android_UnlockAchievement(const char *achievementId);
 
 #endif
