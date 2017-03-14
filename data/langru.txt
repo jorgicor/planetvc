@@ -11,9 +11,9 @@ QUIT
 OPTIONS
 ОПЦИИ
 MUSIC: OFF
-МУЗЫКА: ВЫКЛ.
+МУЗЫКА: ВЫКЛ
 MUSIC: ON
-МУЗЫКА: ВКЛ.
+МУЗЫКА: ВКЛ
 BACK
 НАЗАД
 CREDITS
@@ -107,11 +107,11 @@ PRESS 'B'
 PORTALS...\nFOUND BURIED ON EARTH.\nWHO MADE THEM? WE KNOW NOT.\n- PRESS 'B' -
 ПОРТАЛЫ...\nИХ ОБНАРУЖИЛИ НА ЗЕМЛЕ.\nКТО СОЗДАЛ ИХ? МЫ НЕ ЗНАЕМ.\n- ЖМИ 'B' -
 USE k, l, 'A', j TO MOVE, JUMP OR CROUCH.
-ИСПОЛЬЗУЙ k l i j ЧТОБЫ ДВИГАТЬСЯ, ПРЫГАТЬ И ПРИСЕДАТЬ.
+ИСПОЛЬЗУЙ k, l, 'A', j ЧТОБЫ ДВИГАТЬСЯ, ПРЫГАТЬ И ПРИСЕДАТЬ.
 PRESS 'B' TO RESTART A LEVEL.
 ЖМИ 'B' ЧТОБЫ НАЧАТЬ УРОВЕНЬ ЗАНОВО.
 PRESS 'PRACTICE' KEY - 'X' - TO TOGGLE PRACTICE MODE ON AND OFF.
-ЖМИ 'ПРАКТИКА'\n- 'X' -\nЧТОБЫ ВКЛ. И ВЫКЛ. РЕЖИМ ПРАКТИКИ.
+ЖМИ 'ПРАКТИКА' - 'X' -\nЧТОБЫ ВКЛ. И ВЫКЛ. РЕЖИМ ПРАКТИКИ.
 DEMO
 ДЕМО
 DEMO VERSION
