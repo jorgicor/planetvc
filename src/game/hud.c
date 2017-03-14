@@ -16,6 +16,7 @@
 #include "cheats.h"
 #include "msgbox.h"
 #include "initfile.h"
+#include "crypt.h"
 #include "gamelib/mixer.h"
 #include "kernel/kernel.h"
 #include "cbase/kassert.h"
@@ -146,7 +147,7 @@ static void visit_map(int id)
 	if ((n & b) != 0)
 		return;
 	s_visited[i] |= b; 
-	s_nvisited++;
+	s_nvisited = encrypt(decrypt(s_nvisited) + 1);
 }
 
 void hud_game_started(void)
@@ -154,7 +155,7 @@ void hud_game_started(void)
 	reset_nlifes();
 	reset_training_mode();
 	reset_visited_map();
-	s_nvisited = 0;
+	s_nvisited = encrypt(0);
 }
 
 void hud_teleported(void)
@@ -164,7 +165,7 @@ void hud_teleported(void)
 
 int get_nvisited_maps(void)
 {
-	return s_nvisited;
+	return decrypt(s_nvisited);
 }
 
 static void show_nvisited(void)
@@ -175,7 +176,7 @@ static void show_nvisited(void)
 	if (s_training)
 		return;
 
-	snprintf(str, sizeof(str), "%d/%d", s_nvisited, 
+	snprintf(str, sizeof(str), "%d/%d", decrypt(s_nvisited), 
 		 initfile_getvar("nmaps_to_win"));
 	x = TE_FMW - strlen(str);
 	draw_str(str, x, TE_FMH - 1, 0);

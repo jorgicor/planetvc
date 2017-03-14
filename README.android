@@ -31,9 +31,11 @@
 
 - Run "android". Install:
 
-  - Android API 12
-  - Android SDK Tools 25.1.7
-  - Android SDK Build-tools 23.0.1
+  - Android API 22
+  - Android SDK Tools 25.2.5
+  - Android SDK Build-tools 23.0.3
+  - Google Play services.
+  - Google Repository.
 
 - Download 
 
@@ -46,8 +48,9 @@
 
 ## Building
 
-- Run the script "mkandroid <path_to_SDL2_source>" to create a build project
-  folder and build the app. Requires SDL2 2.0.5 at this point.
+- Run the script "mkandroid demo|full versionCode version
+<path_to_SDL2_source>" to create a build project folder and build the app.
+Requires SDL2 2.0.5 at this point.
 
 - We can use 'NDKARGS="NDK_DEBUG=1" mkandroid ... ' to build unoptimized shared
   libraries.

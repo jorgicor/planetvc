@@ -47,6 +47,7 @@ planetvc_SOURCES =	$(RESOURCE) \
 			gamelib/state.h gamelib/state.c \
 			gamelib/lang.h gamelib/lang.c \
 			\
+			game/crypt.c game/crypt.h \
 			game/cheats.c game/cheats.h \
 			game/confpath.h game/confpath.c \
 			game/log.c game/log.h \

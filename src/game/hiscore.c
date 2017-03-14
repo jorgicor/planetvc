@@ -14,6 +14,8 @@
 #include "msgbox.h"
 #include "confpath.h"
 #include "google.h"
+#include "crypt.h"
+#include "prefs.h"
 #include "gamelib/mixer.h"
 #include "gamelib/vfs.h"
 #include "kernel/kernel.h"
@@ -90,6 +92,15 @@ static int s_hiscore_y;
 static int s_hiscore_nmaps;
 static int s_blink;
 
+static void encrypt_scores(struct hiscore table[])
+{
+	int i;
+
+	for (i = 0; i < NSCORES; i++) {
+		table[i].nvisited = encrypt(table[i].nvisited);
+	}
+}
+
 /* Returns NULL if failure, or a pointer to path, that will be filled.
  * path must have space for OPEN_FILE_MAX_PATH_LEN + 1 characters.
  */
@@ -119,7 +130,7 @@ static void save_scores(FILE *fp, int difficulty)
 
 	for (i = 0; i < NSCORES; i++) {
 		fprintf(fp, "%s %d\n", s_hiscores_by[difficulty][i].name,
-			s_hiscores_by[difficulty][i].nvisited);
+			decrypt(s_hiscores_by[difficulty][i].nvisited));
 	}
 }
 
@@ -159,6 +170,8 @@ static int load_scores(FILE *fp, int difficulty)
 		s_hiscores_by[difficulty][i] = bscores[i];
 	}
 
+	encrypt_scores(s_hiscores_by[difficulty]);
+
 	return 0;
 }
 
@@ -193,9 +206,11 @@ static int get_hiscore_pos(int nvisited)
 
 	all_atmax = 1;
 	for (i = 0; i < NSCORES; i++) {
-		if (s_hiscores_tab[i].nvisited != s_hiscore_nmaps)
+		if (decrypt(s_hiscores_tab[i].nvisited) != s_hiscore_nmaps)
+		{
 			all_atmax = 0;
-		if (nvisited >= s_hiscores_tab[i].nvisited)
+		}
+		if (nvisited >= decrypt(s_hiscores_tab[i].nvisited))
 			return i;
 	}
 
@@ -213,7 +228,8 @@ static void draw_hiscore(int i, int y, int total)
 	char str[TE_FMW + 1];
 
 	snprintf(str, sizeof(str), "%d. %s     %2d/%d", i + 1,
-		 s_hiscores_tab[i].name, s_hiscores_tab[i].nvisited, total);
+		 s_hiscores_tab[i].name,
+		 decrypt(s_hiscores_tab[i].nvisited), total);
 	draw_str(str, (TE_FMW - strlen(str)) / 2, y, 0);
 }
 
@@ -347,7 +363,8 @@ static void hiscore_enter(struct actor *pac)
 			kernel_get_device()->clear_first_pressed_keys();
 			if (Android_IsConnectedToGooglePlay()) {
 				sendScore(s_difficulty,
-					s_hiscores_tab[s_enter_hspos].nvisited);
+					decrypt(s_hiscores_tab[s_enter_hspos]
+						.nvisited));
 				pac->update = hiscore_wait_leaderboard;
 			} else {
 				pac->update = hiscore_void;
@@ -365,7 +382,7 @@ static void set_hiscore_enter(struct actor *pac, int pos, int nvisited)
 	}
 		
 	strcpy(s_hiscores_tab[pos].name, "AAA");
-	s_hiscores_tab[pos].nvisited = nvisited;
+	s_hiscores_tab[pos].nvisited = encrypt(nvisited);
 	s_enter_hspos = pos;
 	s_enter_chr_pos = 0;
 	s_enter_chr_num = 0;
@@ -443,6 +460,9 @@ void hiscore_init(void)
 	memcpy(s_hiscores, s_hiscores_const, sizeof(s_hiscores));
 	memcpy(s_hiscores_beginner, s_hiscores_const,
 	       sizeof(s_hiscores_beginner));
+
+	encrypt_scores(s_hiscores);
+	encrypt_scores(s_hiscores_beginner);
 
 	register_spawn_fn("hiscore", spawn_hiscore_fp);
 }
