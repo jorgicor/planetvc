@@ -52,6 +52,7 @@
 #include "log.h"
 #include "tilengin.h"
 #include "crypt.h"
+#include "coroutin.h"
 #include "gamelib/bmp.h"
 #include "gamelib/lang.h"
 #include "gamelib/mixer.h"
@@ -95,6 +96,7 @@ int main(int argc, char *argv[])
 	kassert_set_log_fun(kernel_get_device()->trace);
 
 	crypt_init();
+	coroutin_init();
 	bmp_draw_init();
 	lang_init();
 	state_init();

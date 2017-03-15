@@ -23,6 +23,7 @@
 #include "cheats.h"
 #include "hiscore.h"
 #include "google.h"
+#include "coroutin.h"
 #include "gamelib/mixer.h"
 #include "kernel/kernel.h"
 #include "cbase/kassert.h"
@@ -54,7 +55,12 @@ static struct wav *wav_play;
 #define TX_MUSIC_OFF	"MUSIC: OFF"
 #define TX_VOLUME_100	"VOLUME: 100"
 
-#define TX_CONNECT_Q	"DO YOU WANT TO SIGN IN WITH 'GOOGLE PLAY GAMES' TO PARTICIPATE IN ONLINE LEADERBOARDS?"
+#define TX_CONNECT_Q	"DO YOU WANT TO SIGN IN WITH GOOGLE TO UNLOCK ACHIEVEMENTS AND ENTER ONLINE LEADERBOARDS?"
+
+#define TX_RETRY_Q	"THERE WAS AN ERROR SIGNING IN. RETRY?"
+
+static int connect_then_play(int restart);
+static int ask_connect_then_play(int restart);
 
 static struct closure {
 	void (*yes)(void);
@@ -170,11 +176,9 @@ static struct menu s_leaderboards_menu = {
 enum {
 	OP_LEADERBOARDS_CONNECT_YES,
 	OP_LEADERBOARDS_CONNECT_NO,
-	OP_PLAY_CONNECT_YES,
-	OP_PLAY_CONNECT_NO,
-	OP_PLAY_CONNECT_ERROR_OK,
-	OP_PLAY_CONNECT_ERROR_INFO_OK,
 	OP_LEADERBOARDS_CONNECT_ERROR_OK,
+	OP_YES,
+	OP_NO,
 };
 
 enum {
@@ -564,47 +568,10 @@ static void show_leaderboard_fn(void)
 static void leaderboards_connect_error_fn(void)
 {
 	static const struct msgbox mb = {
-		.title = "THERE WAS AN ERROR SIGNING IN WITH GOOGLE PLAY. RETRY?",
+		.title = TX_RETRY_Q,
 		.options = { 
 			{ "YES", OP_LEADERBOARDS_CONNECT_YES },
 			{ "NO", OP_LEADERBOARDS_CONNECT_ERROR_OK },
-		},
-		.x = 3,
-		.w = TE_FMW - 3 * 2,
-		.can_go_back = 0
-	};
-
-	show_msgbox(&mb);
-}
-
-static void play_fn(void)
-{
-	connection_question_answered(1);
-	fade_to_state(&gplay_st);
-}
-
-static void show_play_connect_error_info(void)
-{
-	static const struct msgbox mb = {
-		.title = "IF YOU WANT TO SIGN IN IN THE FUTURE, GO TO 'OPTIONS - LEADERBOARDS'.",
-		.options = { 
-			{ "OK", OP_PLAY_CONNECT_ERROR_INFO_OK },
-		},
-		.x = 3,
-		.w = TE_FMW - 3 * 2,
-		.can_go_back = 0
-	};
-
-	show_msgbox(&mb);
-}
-
-static void play_connect_error_fn(void)
-{
-	static const struct msgbox mb = {
-		.title = "THERE WAS AN ERROR SIGNING IN WITH GOOGLE PLAY. RETRY?",
-		.options = { 
-			{ "YES", OP_PLAY_CONNECT_YES },
-			{ "NO", OP_PLAY_CONNECT_ERROR_OK },
 		},
 		.x = 3,
 		.w = TE_FMW - 3 * 2,
@@ -629,29 +596,12 @@ static void connect_to_leaderboards(void)
 	Android_ConnectToGooglePlay();
 }
 
-static void play_connect(void)
-{
-	s_state = STATE_CONNECT;
-	s_closure.yes = play_fn;
-	s_closure.no = play_connect_error_fn;
-	Android_ConnectToGooglePlay();
-}
-
 static void handle_msgbox(int r)
 {
 	if (r == OP_LEADERBOARDS_CONNECT_YES) {
 		connect_to_leaderboards();
 	} else if (r == OP_LEADERBOARDS_CONNECT_NO) {
 		connection_question_answered(0);
-	} else if (r == OP_PLAY_CONNECT_YES) {
-		play_connect();
-	} else if (r == OP_PLAY_CONNECT_NO) {
-		show_play_connect_error_info();
-	} else if (r == OP_PLAY_CONNECT_ERROR_OK ) {
-		show_play_connect_error_info();
-	} else if (r == OP_PLAY_CONNECT_ERROR_INFO_OK ) {
-		connection_question_answered(0);
-	       	fade_to_state(&gplay_st);
 	} else if (r == OP_LEADERBOARDS_CONNECT_ERROR_OK) {
 		connection_question_answered(0);
 	}
@@ -659,27 +609,16 @@ static void handle_msgbox(int r)
 
 static void try_play(void)
 {
-	static const struct msgbox mb = {
-		.title = TX_CONNECT_Q,
-		.options = { 
-			{ "YES", OP_PLAY_CONNECT_YES },
-			{ "NO" , OP_PLAY_CONNECT_NO},
-		},
-		.x = 3,
-		.w = TE_FMW - 3 * 2,
-		.can_go_back = 1
-	};
-
 	if (PP_PHONE_MODE &&
 		strcmp(get_preference("autoconnect"), "1") == 0 &&
 		!Android_IsConnectedToGooglePlay())
 	{
-		play_connect();
+		start_coroutine(connect_then_play);
 	} else if (PP_PHONE_MODE &&
 		strcmp(get_preference("connectq"), "1") != 0 &&
 	       	!Android_IsConnectedToGooglePlay())
        	{
-		show_msgbox(&mb);
+		start_coroutine(ask_connect_then_play);
 	} else {
 	       	fade_to_state(&gplay_st);
 	}
@@ -689,6 +628,11 @@ static void update_main_menu(void)
 {
 	const struct kernel_device *d;
 	int r;
+
+	if (is_coroutine_running()) {
+		run_coroutine();
+		return;
+	}
 
 	if ((r = update_msgbox()) != MSGBOX_NONE) {
 		handle_msgbox(r);
@@ -1119,4 +1063,115 @@ void menu_st_init(void)
 		set_preference_int(s_redefine_info[i].pref_name,
 			get_game_key_value(s_redefine_info[i].game_key));
 	}
+}
+
+static void show_connect_msgbox(void)
+{
+	static const struct msgbox mb = {
+		.title = TX_CONNECT_Q,
+		.options = { 
+			{ "YES", OP_YES },
+			{ "NO" , OP_NO},
+		},
+		.x = 3,
+		.w = TE_FMW - 3 * 2,
+		.can_go_back = 1
+	};
+
+	show_msgbox(&mb);
+}
+
+static void show_retry_msgbox(void)
+{
+	static const struct msgbox mb = {
+		.title = TX_RETRY_Q,
+		.options = { 
+			{ "YES", OP_YES },
+			{ "NO", OP_NO },
+		},
+		.x = 3,
+		.w = TE_FMW - 3 * 2,
+		.can_go_back = 0
+	};
+
+	show_msgbox(&mb);
+}
+
+static void show_error_info_msgbox(void)
+{
+	static const struct msgbox mb = {
+		.title = "IF YOU WANT TO SIGN IN IN THE FUTURE, GO TO 'OPTIONS - LEADERBOARDS'.",
+		.options = { 
+			{ "OK", OP_YES },
+		},
+		.x = 3,
+		.w = TE_FMW - 3 * 2,
+		.can_go_back = 0
+	};
+
+	show_msgbox(&mb);
+}
+
+#define UPDATE_MSGBOX \
+	do { \
+		r = update_msgbox(); \
+		while (r == MSGBOX_IDLE) { \
+			crReturn(0); \
+			r = update_msgbox(); \
+		} \
+	} while (0)
+
+/* Ask and connect to google play */
+static int ask_connect_then_play(int restart)
+{
+	int r;
+
+	crBegin(restart);
+	show_connect_msgbox();
+	crReturn(0);
+	UPDATE_MSGBOX;
+	if (r == OP_YES) {
+		start_coroutine(connect_then_play);
+		crReturn(1);
+	} else {
+		show_error_info_msgbox();
+		crReturn(0);
+		UPDATE_MSGBOX;
+		connection_question_answered(0);
+	}
+	crFinish;
+	fade_to_state(&gplay_st);
+	return 1;
+}
+
+/* Connect to google play */
+static int connect_then_play(int restart)
+{
+	int r;
+
+	crBegin(restart);
+connect:	
+	Android_ConnectToGooglePlay();
+	while (Android_IsConnectingToGooglePlay()) {
+		crReturn(0);
+	}
+	if (!Android_IsConnectedToGooglePlay()) {
+		show_retry_msgbox();
+		crReturn(0);
+		UPDATE_MSGBOX;
+		if (r == OP_YES) {
+			crReturn(0);
+			goto connect;
+		} else {
+			show_error_info_msgbox();
+			crReturn(0);
+			UPDATE_MSGBOX;
+			connection_question_answered(0);
+		}
+	} else {
+		connection_question_answered(1);
+	}
+	crFinish;
+	fade_to_state(&gplay_st);
+	return 1;
 }

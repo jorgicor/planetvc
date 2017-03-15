@@ -156,5 +156,7 @@ DO YOU WANT TO GO TO 'GOOGLE PLAY STORE' TO GET THE FULL VERSION OF THE GAME?
 ВЫ ХОТИТЕ ПЕРЕЙТИ ПО 'GOOGLE PLAY STORE', ЧТОБЫ ПРИОБРЕСТИ ПОЛНУЮ ВЕРСИЮ ИГРЫ?
 NOT NOW
 НЕ СЕЙЧАС
+LEADERBOARDS
+?LEADERBOARDS
 ~
 This file has to be saved in utf8.

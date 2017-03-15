@@ -119,32 +119,33 @@ am__planetvc_SOURCES_DIST = game/resource.rc cfg/cfg.h cbase/cbase.h \
 	gamelib/bmp_draw.c gamelib/wav.h gamelib/wav_load.c \
 	gamelib/vfs.h gamelib/vfs.c gamelib/mixer.h gamelib/mixer.c \
 	gamelib/state.h gamelib/state.c gamelib/lang.h gamelib/lang.c \
-	game/crypt.c game/crypt.h game/cheats.c game/cheats.h \
-	game/confpath.h game/confpath.c game/log.c game/log.h \
-	game/data.c game/data.h game/bitmaps.c game/bitmaps.h \
-	game/sounds.c game/sounds.h game/tilengin.c game/tilengin.h \
-	game/path.c game/path.h game/main.c game/modplay.h \
-	game/modplay.c game/game.h game/game.c game/input.h \
-	game/input.c game/text.h game/text.c game/strdraw.h \
-	game/strdraw.c game/load_st.h game/load_st.c game/gplay_st.h \
-	game/gplay_st.c game/menu_st.h game/menu_st.c game/buy_st.h \
-	game/buy_st.c game/fade_st.h game/fade_st.c game/over_st.h \
-	game/over_st.c game/end_st.h game/end_st.c game/win_st.h \
-	game/win_st.c game/demo_st.h game/demo_st.c game/cosmonau.h \
-	game/cosmonau.c game/oxigen.h game/oxigen.c game/wasp.h \
-	game/wasp.c game/caterpil.h game/caterpil.c game/balloon.h \
-	game/balloon.c game/spider.h game/spider.c game/platform.h \
-	game/platform.c game/drop.h game/drop.c game/moth.h \
-	game/moth.c game/grasshop.h game/grasshop.c game/lavatong.h \
-	game/lavatong.c game/stargate.h game/stargate.c game/bat.h \
-	game/bat.c game/fish.h game/fish.c game/fenix.h game/fenix.c \
-	game/draco.h game/draco.c game/lavashot.h game/lavashot.c \
-	game/hud.h game/hud.c game/gameover.h game/gameover.c \
-	game/hiscore.h game/hiscore.c game/msgbox.h game/msgbox.c \
-	game/menu.h game/menu.c game/fade.h game/fade.c game/prefs.h \
-	game/prefs.c game/initfile.h game/initfile.c game/readlin.h \
-	game/readlin.c game/demosave.h game/demosave.c game/arrow.h \
-	game/arrow.c game/pad.h game/pad.c game/google.h game/google.c \
+	game/crypt.c game/crypt.h game/coroutin.c game/coroutin.h \
+	game/cheats.c game/cheats.h game/confpath.h game/confpath.c \
+	game/log.c game/log.h game/data.c game/data.h game/bitmaps.c \
+	game/bitmaps.h game/sounds.c game/sounds.h game/tilengin.c \
+	game/tilengin.h game/path.c game/path.h game/main.c \
+	game/modplay.h game/modplay.c game/game.h game/game.c \
+	game/input.h game/input.c game/text.h game/text.c \
+	game/strdraw.h game/strdraw.c game/load_st.h game/load_st.c \
+	game/gplay_st.h game/gplay_st.c game/menu_st.h game/menu_st.c \
+	game/buy_st.h game/buy_st.c game/fade_st.h game/fade_st.c \
+	game/over_st.h game/over_st.c game/end_st.h game/end_st.c \
+	game/win_st.h game/win_st.c game/demo_st.h game/demo_st.c \
+	game/cosmonau.h game/cosmonau.c game/oxigen.h game/oxigen.c \
+	game/wasp.h game/wasp.c game/caterpil.h game/caterpil.c \
+	game/balloon.h game/balloon.c game/spider.h game/spider.c \
+	game/platform.h game/platform.c game/drop.h game/drop.c \
+	game/moth.h game/moth.c game/grasshop.h game/grasshop.c \
+	game/lavatong.h game/lavatong.c game/stargate.h \
+	game/stargate.c game/bat.h game/bat.c game/fish.h game/fish.c \
+	game/fenix.h game/fenix.c game/draco.h game/draco.c \
+	game/lavashot.h game/lavashot.c game/hud.h game/hud.c \
+	game/gameover.h game/gameover.c game/hiscore.h game/hiscore.c \
+	game/msgbox.h game/msgbox.c game/menu.h game/menu.c \
+	game/fade.h game/fade.c game/prefs.h game/prefs.c \
+	game/initfile.h game/initfile.c game/readlin.h game/readlin.c \
+	game/demosave.h game/demosave.c game/arrow.h game/arrow.c \
+	game/pad.h game/pad.c game/google.h game/google.c \
 	libxmp-lite/common.h libxmp-lite/control.c \
 	libxmp-lite/dataio.c libxmp-lite/effects.c \
 	libxmp-lite/effects.h libxmp-lite/envelope.c \
@@ -179,6 +180,7 @@ am_planetvc_OBJECTS = $(am__objects_1) cbase/planetvc-cbase.$(OBJEXT) \
 	gamelib/planetvc-mixer.$(OBJEXT) \
 	gamelib/planetvc-state.$(OBJEXT) \
 	gamelib/planetvc-lang.$(OBJEXT) game/planetvc-crypt.$(OBJEXT) \
+	game/planetvc-coroutin.$(OBJEXT) \
 	game/planetvc-cheats.$(OBJEXT) \
 	game/planetvc-confpath.$(OBJEXT) game/planetvc-log.$(OBJEXT) \
 	game/planetvc-data.$(OBJEXT) game/planetvc-bitmaps.$(OBJEXT) \
@@ -482,6 +484,7 @@ planetvc_SOURCES = $(RESOURCE) \
 			gamelib/lang.h gamelib/lang.c \
 			\
 			game/crypt.c game/crypt.h \
+			game/coroutin.c game/coroutin.h \
 			game/cheats.c game/cheats.h \
 			game/confpath.h game/confpath.c \
 			game/log.c game/log.h \
@@ -723,6 +726,8 @@ gamelib/planetvc-lang.$(OBJEXT): gamelib/$(am__dirstamp) \
 	gamelib/$(DEPDIR)/$(am__dirstamp)
 game/planetvc-crypt.$(OBJEXT): game/$(am__dirstamp) \
 	game/$(DEPDIR)/$(am__dirstamp)
+game/planetvc-coroutin.$(OBJEXT): game/$(am__dirstamp) \
+	game/$(DEPDIR)/$(am__dirstamp)
 game/planetvc-cheats.$(OBJEXT): game/$(am__dirstamp) \
 	game/$(DEPDIR)/$(am__dirstamp)
 game/planetvc-confpath.$(OBJEXT): game/$(am__dirstamp) \
@@ -915,6 +920,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-caterpil.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-cheats.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-confpath.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-coroutin.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-cosmonau.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-crypt.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-data.Po@am__quote@
@@ -1210,6 +1216,20 @@ game/planetvc-crypt.obj: game/crypt.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='game/crypt.c' object='game/planetvc-crypt.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -c -o game/planetvc-crypt.obj `if test -f 'game/crypt.c'; then $(CYGPATH_W) 'game/crypt.c'; else $(CYGPATH_W) '$(srcdir)/game/crypt.c'; fi`
+
+game/planetvc-coroutin.o: game/coroutin.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -MT game/planetvc-coroutin.o -MD -MP -MF game/$(DEPDIR)/planetvc-coroutin.Tpo -c -o game/planetvc-coroutin.o `test -f 'game/coroutin.c' || echo '$(srcdir)/'`game/coroutin.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) game/$(DEPDIR)/planetvc-coroutin.Tpo game/$(DEPDIR)/planetvc-coroutin.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='game/coroutin.c' object='game/planetvc-coroutin.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -c -o game/planetvc-coroutin.o `test -f 'game/coroutin.c' || echo '$(srcdir)/'`game/coroutin.c
+
+game/planetvc-coroutin.obj: game/coroutin.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -MT game/planetvc-coroutin.obj -MD -MP -MF game/$(DEPDIR)/planetvc-coroutin.Tpo -c -o game/planetvc-coroutin.obj `if test -f 'game/coroutin.c'; then $(CYGPATH_W) 'game/coroutin.c'; else $(CYGPATH_W) '$(srcdir)/game/coroutin.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) game/$(DEPDIR)/planetvc-coroutin.Tpo game/$(DEPDIR)/planetvc-coroutin.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='game/coroutin.c' object='game/planetvc-coroutin.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -c -o game/planetvc-coroutin.obj `if test -f 'game/coroutin.c'; then $(CYGPATH_W) 'game/coroutin.c'; else $(CYGPATH_W) '$(srcdir)/game/coroutin.c'; fi`
 
 game/planetvc-cheats.o: game/cheats.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -MT game/planetvc-cheats.o -MD -MP -MF game/$(DEPDIR)/planetvc-cheats.Tpo -c -o game/planetvc-cheats.o `test -f 'game/cheats.c' || echo '$(srcdir)/'`game/cheats.c
