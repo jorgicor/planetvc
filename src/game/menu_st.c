@@ -43,6 +43,8 @@ static struct wav *wav_play;
 #define TX_DEMO		"DEMO"
 #define TX_CREDITS	"CREDITS"
 #define TX_LEADERBOARDS	"LEADERBOARDS"
+#define TX_ACHIEVEMENTS	"ACHIEVEMENTS"
+#define TX_GOOGLE	"GOOGLE PLAY"
 #define TX_BACK		"BACK"
 
 #define TX_BEGINNER	"BEGINNER"
@@ -59,13 +61,14 @@ static struct wav *wav_play;
 
 #define TX_RETRY_Q	"THERE WAS AN ERROR SIGNING IN. RETRY?"
 
-static int connect_then_play(int restart);
 static int ask_connect_then_play(int restart);
-
-static struct closure {
-	void (*yes)(void);
-	void (*no)(void);
-} s_closure;
+static int connect_then_play(int restart);
+static int ask_connect_then_leaderboard(int restart);
+static int connect_then_leaderboard(int restart);
+static int show_leaderboard_cr(int restart);
+static int ask_connect_then_achievements(int restart);
+static int connect_then_achievements(int restart);
+static int show_achievements_cr(int restart);
 
 enum {
 	OP_PLAY,
@@ -82,9 +85,11 @@ enum {
 	OP_EXPERT,
 	OP_SOUND,
 	OP_VOLUME,
+	OP_GOOGLE,
 	OP_LEADERBOARDS,
 	OP_LEADERBOARDS_BEGINNER,
 	OP_LEADERBOARDS_EXPERT,
+	OP_ACHIEVEMENTS,
 };
 
 enum {
@@ -93,6 +98,7 @@ enum {
 	LEVEL_MENU_Y = 15,
 	SOUND_MENU_Y = 15,
 	LEADERBOARDS_MENU_Y = 15,
+	GOOGLE_MENU_Y = 15,
 	OP_MUSIC_INDEX = 0,
 	OP_VOLUME_INDEX = 1,
 };
@@ -111,7 +117,7 @@ static struct menu s_main_menu = {
 static struct menu s_options_menu_nodemo = {
 	.options = {
 #if PP_PHONE_MODE
-		{ TX_LEADERBOARDS, OP_LEADERBOARDS },
+		{ TX_GOOGLE, OP_GOOGLE },
 #else
 		{ TX_REDEFINE, OP_REDEFINE },
 #endif
@@ -125,7 +131,7 @@ static struct menu s_options_menu_nodemo = {
 static struct menu s_options_menu = {
 	.options = {
 #if PP_PHONE_MODE
-		{ TX_LEADERBOARDS, OP_LEADERBOARDS },
+		{ TX_GOOGLE, OP_GOOGLE },
 #else
 		{ TX_REDEFINE, OP_REDEFINE },
 #endif
@@ -164,6 +170,15 @@ static struct menu s_level_menu = {
 	},
 };
 
+static struct menu s_google_menu = {
+	.options = {
+		{ TX_LEADERBOARDS, OP_LEADERBOARDS },
+		{ TX_ACHIEVEMENTS, OP_ACHIEVEMENTS },
+		{ TX_BACK, OP_BACK },
+		{ NULL, -2 },
+	},
+};
+
 static struct menu s_leaderboards_menu = {
 	.options = {
 		{ TX_BEGINNER, OP_LEADERBOARDS_BEGINNER },
@@ -174,9 +189,6 @@ static struct menu s_leaderboards_menu = {
 };
 
 enum {
-	OP_LEADERBOARDS_CONNECT_YES,
-	OP_LEADERBOARDS_CONNECT_NO,
-	OP_LEADERBOARDS_CONNECT_ERROR_OK,
 	OP_YES,
 	OP_NO,
 };
@@ -186,8 +198,6 @@ enum {
 	STATE_REDEFINE,
 	STATE_LANG,
 	STATE_VOLUME,
-	STATE_CONNECT,
-	STATE_LEADERBOARD,
 };
 
 static int s_state;
@@ -286,7 +296,6 @@ static void set_redefine_state(void);
 static void set_lang_state(void);
 static void set_volume_state(void);
 static void connection_question_answered(int accepted);
-static void connect_to_leaderboards(void);
 
 /* Loads the defined keys from preferences and redefines them. */
 void load_defined_keys(void)
@@ -491,94 +500,31 @@ static void leaderboards_selected(void)
 	menu_push(&s_leaderboards_menu, LEADERBOARDS_MENU_Y, -1, NULL);
 }
 
-static void disconnected_after_leaderboard_fn(void)
+static void google_selected(void)
 {
-	set_preference_int("autoconnect", 0);
-	save_prefs();
-}
-
-static void show_leaderboard(int difficulty)
-{
-	if (kassert(difficulty >= 0 && difficulty < NDIFFICULTY_LEVELS))
-	{
-		s_state = STATE_LEADERBOARD;
-		s_closure.yes = NULL;
-		s_closure.no = disconnected_after_leaderboard_fn;
-		Android_ShowLeaderboard(s_board_id[difficulty]);
-	}
+	menu_push(&s_google_menu, GOOGLE_MENU_Y, -1, NULL);
 }
 
 static void try_show_leaderboard(void)
 {
-	static const struct msgbox mb = {
-		.title = TX_CONNECT_Q,
-		.options = { 
-			{ "YES", OP_LEADERBOARDS_CONNECT_YES },
-			{ "NO" , OP_LEADERBOARDS_CONNECT_NO},
-		},
-		.x = 3,
-		.w = TE_FMW - 3 * 2,
-		.can_go_back = 1
-	};
-
 	if (Android_IsConnectedToGooglePlay()) {
-		show_leaderboard(get_difficulty());
+		start_coroutine(show_leaderboard_cr);
 	} else if (strcmp(get_preference("autoconnect"), "1") == 0) {
-		connect_to_leaderboards();
+		start_coroutine(connect_then_leaderboard);
 	} else {
-		show_msgbox(&mb);
+		start_coroutine(ask_connect_then_leaderboard);
 	}
 }
 
-static void update_leaderboard(void)
+static void try_show_achievements(void)
 {
-	if (!Android_IsRequestingLeaderboard()) {
-		s_state = STATE_MAIN_MENU;
-		if (Android_IsConnectedToGooglePlay()) {
-			if (s_closure.yes != NULL) {
-				s_closure.yes();
-			}
-		} else if (s_closure.no != NULL) {
-			s_closure.no();
-		}
+	if (Android_IsConnectedToGooglePlay()) {
+		start_coroutine(show_achievements_cr);
+	} else if (strcmp(get_preference("autoconnect"), "1") == 0) {
+		start_coroutine(connect_then_achievements);
+	} else {
+		start_coroutine(ask_connect_then_achievements);
 	}
-}
-
-static void update_connect(void)
-{
-	ktrace("isConnecting %d", Android_IsConnectingToGooglePlay());
-	if (!Android_IsConnectingToGooglePlay()) {
-		s_state = STATE_MAIN_MENU;
-		if (Android_IsConnectedToGooglePlay()) {
-			if (s_closure.yes != NULL) {
-				s_closure.yes();
-			}
-		} else if (s_closure.no != NULL) {
-			s_closure.no();
-		}
-	}
-}
-
-static void show_leaderboard_fn(void)
-{
-	connection_question_answered(1);
-	show_leaderboard(get_difficulty());
-}
-
-static void leaderboards_connect_error_fn(void)
-{
-	static const struct msgbox mb = {
-		.title = TX_RETRY_Q,
-		.options = { 
-			{ "YES", OP_LEADERBOARDS_CONNECT_YES },
-			{ "NO", OP_LEADERBOARDS_CONNECT_ERROR_OK },
-		},
-		.x = 3,
-		.w = TE_FMW - 3 * 2,
-		.can_go_back = 0
-	};
-
-	show_msgbox(&mb);
 }
 
 static void connection_question_answered(int accepted)
@@ -586,25 +532,6 @@ static void connection_question_answered(int accepted)
 	set_preference_int("connectq", 1);
 	set_preference_int("autoconnect", accepted != 0);
 	save_prefs();
-}
-
-static void connect_to_leaderboards(void)
-{
-	s_state = STATE_CONNECT;
-	s_closure.yes = show_leaderboard_fn;
-	s_closure.no = leaderboards_connect_error_fn;
-	Android_ConnectToGooglePlay();
-}
-
-static void handle_msgbox(int r)
-{
-	if (r == OP_LEADERBOARDS_CONNECT_YES) {
-		connect_to_leaderboards();
-	} else if (r == OP_LEADERBOARDS_CONNECT_NO) {
-		connection_question_answered(0);
-	} else if (r == OP_LEADERBOARDS_CONNECT_ERROR_OK) {
-		connection_question_answered(0);
-	}
 }
 
 static void try_play(void)
@@ -631,11 +558,6 @@ static void update_main_menu(void)
 
 	if (is_coroutine_running()) {
 		run_coroutine();
-		return;
-	}
-
-	if ((r = update_msgbox()) != MSGBOX_NONE) {
-		handle_msgbox(r);
 		return;
 	}
 
@@ -716,6 +638,10 @@ static void update_main_menu(void)
 		mixer_play(wav_opsel);
 	       	set_volume_state();
 		break;
+	case OP_GOOGLE:
+		mixer_play(wav_opsel);
+		google_selected();
+		break;
 	case OP_LEADERBOARDS:
 		mixer_play(wav_opsel);
 		leaderboards_selected();
@@ -729,6 +655,11 @@ static void update_main_menu(void)
 		mixer_play(wav_opsel);
 		set_difficulty(DIFFICULTY_EXPERT);
 		try_show_leaderboard();
+		break;
+	case OP_ACHIEVEMENTS:
+		mixer_play(wav_opsel);
+		try_show_achievements();
+		break;
 		break;
 	case -2: 
 		mixer_play(wav_opmove);
@@ -950,8 +881,6 @@ static void update(void)
 	case STATE_REDEFINE: update_redefine(); break;
 	case STATE_LANG: update_lang(); break;
 	case STATE_VOLUME: update_volume(); break;
-	case STATE_CONNECT: update_connect(); break;
-	case STATE_LEADERBOARD: update_leaderboard(); break;
 	}
 }
 
@@ -1173,5 +1102,127 @@ connect:
 	}
 	crFinish;
 	fade_to_state(&gplay_st);
+	return 1;
+}
+
+static int ask_connect_then_leaderboard(int restart)
+{
+	int r;
+
+	crBegin(restart);
+	show_connect_msgbox();
+	crReturn(0);
+	UPDATE_MSGBOX;
+	if (r == OP_YES) {
+		start_coroutine(connect_then_leaderboard);
+		crReturn(1);
+	} else {
+		connection_question_answered(0);
+	}
+	crFinish;
+	return 1;
+}
+
+static int connect_then_leaderboard(int restart)
+{
+	int r;
+
+	crBegin(restart);
+connect:	
+	Android_ConnectToGooglePlay();
+	while (Android_IsConnectingToGooglePlay()) {
+		crReturn(0);
+	}
+	if (!Android_IsConnectedToGooglePlay()) {
+		show_retry_msgbox();
+		crReturn(0);
+		UPDATE_MSGBOX;
+		if (r == OP_YES) {
+			crReturn(0);
+			goto connect;
+		} else {
+			connection_question_answered(0);
+		}
+	} else {
+		connection_question_answered(1);
+		start_coroutine(show_leaderboard_cr);
+	}
+	crFinish;
+	return 1;
+}
+
+static int show_leaderboard_cr(int restart)
+{
+	crBegin(restart);
+	Android_ShowLeaderboard(s_board_id[get_difficulty()]);
+	if (Android_IsRequestingLeaderboard()) {
+		crReturn(0);
+	}
+	if (!Android_IsConnectedToGooglePlay()) {
+		set_preference_int("autoconnect", 0);
+		save_prefs();
+	}
+	crFinish;
+	return 1;
+}
+
+static int show_achievements_cr(int restart)
+{
+	crBegin(restart);
+	Android_ShowAchievements();
+	if (Android_IsRequestingAchievements()) {
+		crReturn(0);
+	}
+	if (!Android_IsConnectedToGooglePlay()) {
+		set_preference_int("autoconnect", 0);
+		save_prefs();
+	}
+	crFinish;
+	return 1;
+}
+
+static int ask_connect_then_achievements(int restart)
+{
+	int r;
+
+	crBegin(restart);
+	show_connect_msgbox();
+	crReturn(0);
+	UPDATE_MSGBOX;
+	if (r == OP_YES) {
+		start_coroutine(connect_then_achievements);
+		crReturn(1);
+	} else {
+		connection_question_answered(0);
+	}
+	crFinish;
+	return 1;
+}
+
+static int connect_then_achievements(int restart)
+{
+	int r;
+
+	crBegin(restart);
+connect:	
+	Android_ConnectToGooglePlay();
+	while (Android_IsConnectingToGooglePlay()) {
+		crReturn(0);
+	}
+	if (!Android_IsConnectedToGooglePlay()) {
+		show_retry_msgbox();
+		crReturn(0);
+		UPDATE_MSGBOX;
+		if (r == OP_YES) {
+			crReturn(0);
+			goto connect;
+		} else {
+			connection_question_answered(0);
+		}
+	} else {
+		connection_question_answered(1);
+		start_coroutine(show_achievements_cr);
+	}
+	crFinish;
 	return 1;
 }

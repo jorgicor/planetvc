@@ -57,6 +57,26 @@ static void Android_VoidStringFn(const char *func, const char *s)
 #endif
 }
 
+static void Android_VoidVoidFn(const char *func)
+{
+#if PP_ANDROID
+	JNIEnv *env;
+	jobject theActivity;
+	jclass theClass;
+	jmethodID theMethod;
+
+	env = (JNIEnv *) SDL_AndroidGetJNIEnv();
+	theActivity = (jobject) SDL_AndroidGetActivity();
+
+	theClass = (*env)->GetObjectClass(env, theActivity);
+	theMethod = (*env)->GetStaticMethodID(env, theClass, func, "()V");
+	(*env)->CallStaticVoidMethod(env, theClass, theMethod);
+
+	(*env)->DeleteLocalRef(env, theActivity);
+	(*env)->DeleteLocalRef(env, theClass);
+#endif
+}
+
 int Android_IsConnectedToGooglePlay(void)
 {
 	return Android_BooleanVoidFn("isConnectedToGooglePlay");
@@ -134,4 +154,14 @@ void Android_ShowLeaderboard(const char *boardId)
 void Android_UnlockAchievement(const char *achievementId)
 {
 	Android_VoidStringFn("unlockAchievement", achievementId);
+}
+
+void Android_ShowAchievements(void)
+{
+	Android_VoidVoidFn("showAchievements");
+}
+
+int Android_IsRequestingAchievements(void)
+{
+	return Android_BooleanVoidFn("isRequestingAchievements");
 }

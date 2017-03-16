@@ -16,7 +16,7 @@
 #endif
 
 enum {
-	NMENUS = 3
+	NMENUS = 5
 };
 
 struct menu_info {

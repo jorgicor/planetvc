@@ -57,8 +57,10 @@ public class SDLActivity extends Activity
     private static GoogleApiClient mGoogleApiClient;
     private static final int REQUEST_RESOLVE_ERROR = 1001;
     private static final int REQUEST_LEADERBOARD = 1002;
+    private static final int REQUEST_ACHIEVEMENTS = 1003;
     private static boolean mResolvingError;
     private static boolean mLeaderboardRequest;
+    private static boolean mAchievementsRequest;
 
     // Keep track of the paused state
     public static boolean mIsPaused, mIsSurfaceReady, mHasFocus;
@@ -141,6 +143,7 @@ public class SDLActivity extends Activity
 	mGoogleApiClient = null;
 	mResolvingError = false;
 	mLeaderboardRequest = false;
+	mAchievementsRequest = false;
     }
 
     // Setup
@@ -535,14 +538,6 @@ public class SDLActivity extends Activity
 	    return mResolvingError || mGoogleApiClient.isConnecting();
     }
 
-    /**
-     * Called by game using JNI.
-     */
-    public static boolean isRequestingLeaderboard()
-    {
-	   return mLeaderboardRequest; 
-    }
-
     @Override
     public void onConnectionFailed(ConnectionResult result)
     {
@@ -615,6 +610,13 @@ public class SDLActivity extends Activity
 		    }
 	    } else if (requestCode == REQUEST_LEADERBOARD) {
 		    mLeaderboardRequest = false;
+		    if (resultCode ==
+			    GamesActivityResultCodes.RESULT_RECONNECT_REQUIRED)
+		    {
+			    mGoogleApiClient.disconnect();
+		    }
+	    } else if (requestCode == REQUEST_ACHIEVEMENTS) {
+		    mAchievementsRequest = false;
 		    if (resultCode ==
 			    GamesActivityResultCodes.RESULT_RECONNECT_REQUIRED)
 		    {
@@ -701,6 +703,14 @@ public class SDLActivity extends Activity
     /**
      * Called by game using JNI.
      */
+    public static boolean isRequestingLeaderboard()
+    {
+	   return mLeaderboardRequest; 
+    }
+
+    /**
+     * Called by game using JNI.
+     */
     public static void unlockAchievement(String achievementId)
     {
 	    if (mSingleton == null) {
@@ -712,6 +722,33 @@ public class SDLActivity extends Activity
 	    }
 
 	    Games.Achievements.unlock(mGoogleApiClient, achievementId);
+    }
+
+    /**
+     * Called by game using JNI.
+     */
+    public static void showAchievements()
+    {
+	    if (mSingleton == null) {
+		    return;
+	    }
+
+	    if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
+		    return;
+	    }
+
+	    mAchievementsRequest = true;
+	    mSingleton.startActivityForResult(
+		    Games.Achievements.getAchievementsIntent(mGoogleApiClient),
+                    	REQUEST_ACHIEVEMENTS);
+    }
+
+    /**
+     * Called by game using JNI.
+     */
+    public static boolean isRequestingAchievements()
+    {
+	   return mAchievementsRequest; 
     }
 
     /**
