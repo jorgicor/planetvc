@@ -34,10 +34,14 @@ static void precalc(void)
 	int w, h, maxw, i;
 
 	h = 0;
+	if (s_mbox->icon != NULL) {
+		h += 3;
+	}
+
 	if (s_mbox->title != NULL) {
 		s_title_h = str_height_ww(_(s_mbox->title), s_mbox->x,
 			s_mbox->w);
-		h = s_title_h * 2;
+		h += s_title_h * 2;
 	}
 
 	s_options_y = h;
@@ -139,6 +143,12 @@ static void draw_msgbox(void)
 	draw_box();
 
 	y = s_msgbox_y;
+	if (s_mbox->icon != NULL) {
+		x = (s_mbox->w - 2) / 2;
+		draw_icon(s_mbox->icon, s_mbox->x + x, y, 1);
+		y += 3;
+	}
+
 	if (s_mbox->title != NULL) {
 		if (s_title_h == 1) {
 			w = utf8_strlen(_(s_mbox->title));

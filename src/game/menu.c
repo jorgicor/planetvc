@@ -181,18 +181,6 @@ int menu_get_cur_op_i(void)
 	return s_menus[s_free_index - 1].opi;
 }
 
-static void draw_icon(int x, int y, const char *chars)
-{
-	if (kassert_fails(chars != NULL && strlen(chars) >= 4)) {
-		return;
-	}
-
-	te_set_fg_xy(x, y, 0, chri(chars[0]));
-	te_set_fg_xy(x + 1, y, 0, chri(chars[1]));
-	te_set_fg_xy(x, y + 1, 0, chri(chars[2]));
-	te_set_fg_xy(x + 1, y + 1, 0, chri(chars[3]));
-}
-
 void menu_redraw(void)
 {
 	struct menu_info *pminfo;
@@ -213,8 +201,8 @@ void menu_redraw(void)
 		len = utf8_strlen(str);
 		draw_str(str, pminfo->x, y, 0);
 		if (pminfo->pmenu->options[i].icon != NULL) {
-			draw_icon(pminfo->x + len + 1, y,
-				pminfo->pmenu->options[i].icon);
+			draw_icon(pminfo->pmenu->options[i].icon,
+				  pminfo->x + len + 1, y, 0);
 		}
 		y += 2;
 	}

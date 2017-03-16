@@ -19,6 +19,7 @@ int utf8_strlen(const char *s);
 void draw_str(const char *s, int x, int y, int color);
 void draw_str_ww(const char *s, int x, int y, int color, int len, int w);
 int str_height_ww(const char *s, int x, int w);
+void draw_icon(const char *s, int x, int y, int color);
 
 void strdraw_init(void);
 

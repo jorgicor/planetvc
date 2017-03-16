@@ -6,9 +6,11 @@
 #include "tilengin.h"
 #include "bitmaps.h"
 #include "kernel/kernel.h"
+#include "cbase/kassert.h"
 #include <ctype.h>
 #include <limits.h>
 #include <stdlib.h>
+#include <string.h>
 
 /* 
  * These are Unicode codes, sorted so we can do binary search.
@@ -328,6 +330,26 @@ int str_height_ww(const char *s, int x, int w)
 	} else {
 		return y + 1;
 	}
+}
+
+/* Draws an icon specified by the string s.
+ * 's' must have at least 4 characters, say "abcd".
+ * And they will be drawn this way:
+ *
+ * ab
+ * cd
+ *
+ */
+void draw_icon(const char *s, int x, int y, int color)
+{
+	if (kassert_fails(s != NULL && strlen(s) >= 4)) {
+			return;
+	}
+
+	te_set_fg_xy(x, y, color, chri(s[0]));
+	te_set_fg_xy(x + 1, y, color, chri(s[1]));
+	te_set_fg_xy(x, y + 1, color, chri(s[2]));
+	te_set_fg_xy(x + 1, y + 1, color, chri(s[3]));
 }
 
 void strdraw_init(void)

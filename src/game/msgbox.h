@@ -21,7 +21,9 @@ struct msgbox_option {
 	int code;
 };
 
+/* For the icon format see draw_icon() in strdraw. */
 struct msgbox {
+	const char *icon;
 	const char *title;
 	struct msgbox_option options[4];
 	int x, w;

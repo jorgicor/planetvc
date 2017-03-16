@@ -59,7 +59,7 @@ static struct wav *wav_play;
 
 #define TX_CONNECT_Q	"DO YOU WANT TO SIGN IN WITH GOOGLE TO UNLOCK ACHIEVEMENTS AND ENTER ONLINE LEADERBOARDS?"
 
-#define TX_RETRY_Q	"THERE WAS AN ERROR SIGNING IN. RETRY?"
+#define TX_RETRY_Q	"THERE WAS AN ERROR SIGNING IN WITH GOOGLE. RETRY?"
 
 static int ask_connect_then_play(int restart);
 static int connect_then_play(int restart);
@@ -981,6 +981,7 @@ static struct actor *spawn_menu_fp(int x, int y)
 static void show_connect_msgbox(void)
 {
 	static const struct msgbox mb = {
+		.icon = "pqrs",
 		.title = TX_CONNECT_Q,
 		.options = { 
 			{ "YES", OP_YES },
@@ -997,6 +998,7 @@ static void show_connect_msgbox(void)
 static void show_retry_msgbox(void)
 {
 	static const struct msgbox mb = {
+		.icon = "pqrs",
 		.title = TX_RETRY_Q,
 		.options = { 
 			{ "YES", OP_YES },
@@ -1013,6 +1015,7 @@ static void show_retry_msgbox(void)
 static void show_error_info_msgbox(void)
 {
 	static const struct msgbox mb = {
+		.icon = "pqrs",
 		.title = "IF YOU WANT TO SIGN IN IN THE FUTURE, GO TO 'OPTIONS - GOOGLE PLAY'.",
 		.options = { 
 			{ "OK", OP_YES },

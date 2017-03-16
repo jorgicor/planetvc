@@ -10,12 +10,7 @@ enum {
 	MENU_NADDITIONAL = 8
 };
 
-/* icon is a string with four characters, for example "abcd",
- * that will be printed on the screen as
- * ab
- * cd
- * It can be NULL.
- */
+/* For the icon string, see draw_icon in strdraw. */
 struct menu_option {
 	const char *str;
 	int code;
