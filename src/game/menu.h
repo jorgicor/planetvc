@@ -10,9 +10,16 @@ enum {
 	MENU_NADDITIONAL = 8
 };
 
+/* icon is a string with four characters, for example "abcd",
+ * that will be printed on the screen as
+ * ab
+ * cd
+ * It can be NULL.
+ */
 struct menu_option {
 	const char *str;
 	int code;
+	const char *icon;
 };
 
 /* Should have NOPTIONS or be NULL terminated, that is,

@@ -60,16 +60,17 @@ static void menu_clear(void)
 	struct menu_info *pminfo;
 	int i, y;
 
-	if (s_free_index == 0)
+	if (s_free_index == 0) {
 		return;
+	}
 
 	pminfo = &s_menus[s_free_index - 1];
 	y = pminfo->y;
 	for (i = 0; i < MENU_NOPTIONS; i++) {
-		if (pminfo->pmenu->options[i].str == NULL)
+		if (pminfo->pmenu->options[i].str == NULL) {
 			break;
-
-		te_fill_fg(0, y, TE_FMW, 1, 0, chri(' '));
+		}
+		te_fill_fg(0, y, TE_FMW, 2, 0, chri(' '));
 		y += 2;
 	}
 
@@ -180,10 +181,23 @@ int menu_get_cur_op_i(void)
 	return s_menus[s_free_index - 1].opi;
 }
 
+static void draw_icon(int x, int y, const char *chars)
+{
+	if (kassert_fails(chars != NULL && strlen(chars) >= 4)) {
+		return;
+	}
+
+	te_set_fg_xy(x, y, 0, chri(chars[0]));
+	te_set_fg_xy(x + 1, y, 0, chri(chars[1]));
+	te_set_fg_xy(x, y + 1, 0, chri(chars[2]));
+	te_set_fg_xy(x + 1, y + 1, 0, chri(chars[3]));
+}
+
 void menu_redraw(void)
 {
 	struct menu_info *pminfo;
-	int i, y;
+	int i, y, len;
+	const char *str;
 
 	if (s_free_index == 0)
 		return;
@@ -191,11 +205,17 @@ void menu_redraw(void)
 	pminfo = &s_menus[s_free_index - 1];
 	y = pminfo->y;
 	for (i = 0; i < MENU_NOPTIONS; i++) {
-		if (pminfo->pmenu->options[i].str == NULL)
+		if (pminfo->pmenu->options[i].str == NULL) {
 			break;
-
-		te_fill_fg(0, y, TE_FMW, 1, 0, chri(' '));
-		draw_str(_(pminfo->pmenu->options[i].str), pminfo->x, y, 0);
+		}
+		te_fill_fg(0, y, TE_FMW, 2, 0, chri(' '));
+		str = _(pminfo->pmenu->options[i].str);
+		len = utf8_strlen(str);
+		draw_str(str, pminfo->x, y, 0);
+		if (pminfo->pmenu->options[i].icon != NULL) {
+			draw_icon(pminfo->x + len + 1, y,
+				pminfo->pmenu->options[i].icon);
+		}
 		y += 2;
 	}
 
@@ -273,8 +293,9 @@ void menu_push(const struct menu *pmenu, int y, int firstop,
 	if (kassert_fails(s_free_index < NMENUS))
 		return;
 
-	if (s_free_index > 0)
+	if (s_free_index > 0) {
 		menu_clear();
+	}
 
 	pminfo = &s_menus[s_free_index];
 	pminfo->pmenu  = pmenu;

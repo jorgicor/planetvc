@@ -117,7 +117,7 @@ static struct menu s_main_menu = {
 static struct menu s_options_menu_nodemo = {
 	.options = {
 #if PP_PHONE_MODE
-		{ TX_GOOGLE, OP_GOOGLE },
+		{ TX_GOOGLE, OP_GOOGLE, "pqrs" },
 #else
 		{ TX_REDEFINE, OP_REDEFINE },
 #endif
@@ -131,7 +131,7 @@ static struct menu s_options_menu_nodemo = {
 static struct menu s_options_menu = {
 	.options = {
 #if PP_PHONE_MODE
-		{ TX_GOOGLE, OP_GOOGLE },
+		{ TX_GOOGLE, OP_GOOGLE, "pqrs" },
 #else
 		{ TX_REDEFINE, OP_REDEFINE },
 #endif
@@ -978,22 +978,6 @@ static struct actor *spawn_menu_fp(int x, int y)
 	return pac;
 }
 
-/* Must init after input and prefs */
-void menu_st_init(void)
-{
-	int i;
-
-	s_hint_drawn = 0;
-	register_spawn_fn("menu", spawn_menu_fp);
-	register_sound(&wav_play, "opplay");
-
-	/* Set initial keys */
-	for (i = 0; i < NELEMS(s_redefine_info); i++) {
-		set_preference_int(s_redefine_info[i].pref_name,
-			get_game_key_value(s_redefine_info[i].game_key));
-	}
-}
-
 static void show_connect_msgbox(void)
 {
 	static const struct msgbox mb = {
@@ -1029,7 +1013,7 @@ static void show_retry_msgbox(void)
 static void show_error_info_msgbox(void)
 {
 	static const struct msgbox mb = {
-		.title = "IF YOU WANT TO SIGN IN IN THE FUTURE, GO TO 'OPTIONS - LEADERBOARDS'.",
+		.title = "IF YOU WANT TO SIGN IN IN THE FUTURE, GO TO 'OPTIONS - GOOGLE PLAY'.",
 		.options = { 
 			{ "OK", OP_YES },
 		},
@@ -1225,4 +1209,20 @@ connect:
 	}
 	crFinish;
 	return 1;
+}
+
+/* Must init after input and prefs */
+void menu_st_init(void)
+{
+	int i;
+
+	s_hint_drawn = 0;
+	register_spawn_fn("menu", spawn_menu_fp);
+	register_sound(&wav_play, "opplay");
+
+	/* Set initial keys */
+	for (i = 0; i < NELEMS(s_redefine_info); i++) {
+		set_preference_int(s_redefine_info[i].pref_name,
+			get_game_key_value(s_redefine_info[i].game_key));
+	}
 }
