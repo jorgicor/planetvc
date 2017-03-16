@@ -57,7 +57,7 @@ static struct wav *wav_play;
 #define TX_MUSIC_OFF	"MUSIC: OFF"
 #define TX_VOLUME_100	"VOLUME: 100"
 
-#define TX_CONNECT_Q	"DO YOU WANT TO SIGN IN WITH GOOGLE TO UNLOCK ACHIEVEMENTS AND ENTER ONLINE LEADERBOARDS?"
+#define TX_CONNECT_Q	"DO YOU WANT TO SIGN IN WITH GOOGLE TO ENTER ONLINE LEADERBOARDS AND UNLOCK ACHIEVEMENTS?"
 
 #define TX_RETRY_Q	"THERE WAS AN ERROR SIGNING IN WITH GOOGLE. RETRY?"
 
@@ -1142,7 +1142,7 @@ static int show_leaderboard_cr(int restart)
 {
 	crBegin(restart);
 	Android_ShowLeaderboard(s_board_id[get_difficulty()]);
-	if (Android_IsRequestingLeaderboard()) {
+	while (Android_IsRequestingLeaderboard()) {
 		crReturn(0);
 	}
 	if (!Android_IsConnectedToGooglePlay()) {
@@ -1157,7 +1157,7 @@ static int show_achievements_cr(int restart)
 {
 	crBegin(restart);
 	Android_ShowAchievements();
-	if (Android_IsRequestingAchievements()) {
+	while (Android_IsRequestingAchievements()) {
 		crReturn(0);
 	}
 	if (!Android_IsConnectedToGooglePlay()) {

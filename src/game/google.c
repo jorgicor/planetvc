@@ -94,23 +94,7 @@ int Android_IsRequestingLeaderboard(void)
 
 void Android_ConnectToGooglePlay(void)
 {
-#if PP_ANDROID
-	JNIEnv *env;
-	jobject theActivity;
-	jclass theClass;
-	jmethodID theMethod;
-
-	env = (JNIEnv *) SDL_AndroidGetJNIEnv();
-	theActivity = (jobject) SDL_AndroidGetActivity();
-
-	theClass = (*env)->GetObjectClass(env, theActivity);
-	theMethod = (*env)->GetStaticMethodID(env, theClass,
-		       	"connectToGooglePlay", "()V");
-	(*env)->CallStaticVoidMethod(env, theClass, theMethod);
-
-	(*env)->DeleteLocalRef(env, theActivity);
-	(*env)->DeleteLocalRef(env, theClass);
-#endif
+	Android_VoidVoidFn("connectToGooglePlay");
 }
 
 void Android_SendScore(const char *boardId, const char *score)

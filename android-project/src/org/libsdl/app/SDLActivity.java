@@ -558,7 +558,6 @@ public class SDLActivity extends Activity
 	} else {
 		Log.v(TAG, "Cannot resolve");
 		mResolvingError = false;
-		Log.v(TAG, "Final error");
 	}
     }
 
@@ -636,7 +635,7 @@ public class SDLActivity extends Activity
 		&& !mGoogleApiClient.isConnecting())
 	    {
 		    mGoogleApiClient.connect();
-		    Log.v(TAG, "connectToGooglePlay isConnecting" +
+		    Log.v(TAG, "connectToGooglePlay isConnecting " +
 			mGoogleApiClient.isConnecting());
 	    }
     }
