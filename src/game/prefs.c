@@ -178,9 +178,14 @@ void save_prefs(void)
 	fclose(fp);
 }
 
+int preference_equals(const char *pref, const char *val)
+{
+	return strcmp(get_preference(pref), val) == 0;
+}
+
 int is_music_enabled(void)
 {
-	return strcmp(get_preference("music"), "1") == 0;
+	return preference_equals("music", "1");
 }
 
 void prefs_init(void)

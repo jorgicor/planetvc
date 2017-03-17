@@ -14,6 +14,8 @@
 #include "prefs.h"
 #include "initfile.h"
 #include "hiscore.h"
+#include "coroutin.h"
+#include "google.h"
 #include "gamelib/vfs.h"
 #include "gamelib/wav.h"
 #include "gamelib/mixer.h"
@@ -28,10 +30,14 @@ enum {
 	LOAD_NEXT_BITMAP,
 	LOAD_NEXT_SOUND,
 	LOAD_DATA_LOADED,
+	LOAD_GOOGLE_CONNECT,
+	LOAD_GOOGLE_CONNECTING,
 	LOAD_LAST_STATE
 };
 
 static int s_state;
+
+int s_google_autoconnect_performed;
 
 static void draw(void)
 {
@@ -100,7 +106,7 @@ static void on_data_loaded(void)
 	loaded = 0;
 	save = 0;
 	load_prefs();
-	if (strcmp(get_preference("default"), "1") == 0) {
+	if (preference_equals("default", "1")) {
 		save = 1;
 		lang = get_lang_equivalence(guess_lang());
 		if (is_lang_code_listed(lang)) {
@@ -131,7 +137,7 @@ static void on_data_loaded(void)
 	hiscore_load();
 	mixer_set_volume(atoi(get_preference("volume")));
 
-	if (strcmp(get_preference("stargate"), "1") == 0) {
+	if (preference_equals("stargate", "1")) {
 		apply_stargate_symbols();
 	}
 
@@ -141,12 +147,46 @@ static void on_data_loaded(void)
 	s_state++;
 }
 
+static int google_connect_cr(int restart)
+{
+	crBegin(restart);
+	Android_ConnectToGooglePlay();
+	while (Android_IsConnectingToGooglePlay()) {
+		crReturn(0);
+	}
+	crFinish;
+	return 1;
+}
+
+static void google_connect(void)
+{
+	s_google_autoconnect_performed = 0;
+	if (preference_equals("connectq", "1") &&
+	    preference_equals("autoconnect", "1"))
+	{
+		s_google_autoconnect_performed = 1;
+		start_coroutine(google_connect_cr);
+	}
+	s_state++;
+}
+
+static void google_connecting(void)
+{
+	if (is_coroutine_running()) {
+		run_coroutine();
+	} else {
+		s_state++;
+	}
+}
+
 static void update(void)
 {
 	switch (s_state) {
 	case LOAD_NEXT_BITMAP: load_next_bitmaps(); break;
 	case LOAD_NEXT_SOUND: load_next_sounds(); break;
 	case LOAD_DATA_LOADED: on_data_loaded(); break;
+	case LOAD_GOOGLE_CONNECT: google_connect(); break;
+	case LOAD_GOOGLE_CONNECTING: google_connecting(); break;
 	case LOAD_LAST_STATE: switch_to_state(&menu_st); break;
 	}
 }

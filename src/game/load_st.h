@@ -9,6 +9,7 @@
 #include "gamelib/state.h"
 #endif
 
+extern int s_google_autoconnect_performed;
 extern const struct state load_st;
 
 #endif
