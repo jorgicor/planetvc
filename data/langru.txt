@@ -152,8 +152,8 @@ DO YOU WANT TO GO TO 'ITCH.IO' TO GET THE FULL VERSION OF THE GAME?
 ВЫ ХОТИТЕ ПЕРЕЙТИ ПО 'ITCH.IO', ЧТОБЫ ПРИОБРЕСТИ ПОЛНУЮ ВЕРСИЮ ИГРЫ?
 DO YOU WANT TO GO TO 'STEAM' TO GET THE FULL VERSION OF THE GAME?
 ВЫ ХОТИТЕ ПЕРЕЙТИ ПО 'STEAM', ЧТОБЫ ПРИОБРЕСТИ ПОЛНУЮ ВЕРСИЮ ИГРЫ?
-DO YOU WANT TO GO TO 'GOOGLE PLAY STORE' TO GET THE FULL VERSION OF THE GAME?
-ВЫ ХОТИТЕ ПЕРЕЙТИ ПО 'GOOGLE PLAY STORE', ЧТОБЫ ПРИОБРЕСТИ ПОЛНУЮ ВЕРСИЮ ИГРЫ?
+DO YOU WANT TO GO TO 'GOOGLE PLAY' TO GET THE FULL VERSION OF THE GAME?
+ВЫ ХОТИТЕ ПЕРЕЙТИ ПО 'GOOGLE PLAY', ЧТОБЫ ПРИОБРЕСТИ ПОЛНУЮ ВЕРСИЮ ИГРЫ?
 NOT NOW
 НЕ СЕЙЧАС
 LEADERBOARDS
