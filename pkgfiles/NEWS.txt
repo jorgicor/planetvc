@@ -12,7 +12,11 @@
 
 	* Support for Android.
 
-	* Removed the 'Stargate' symbols from portals.
+	* Removed the 'Stargate' symbols from portals by default. They can be
+	  reactivated by writting 'stargate' at the main menu.
+
+	* Added command line --filter and --scale options (see README - 11.
+	  Command line arguments).
 
 2016-12-30
 

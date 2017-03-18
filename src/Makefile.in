@@ -119,13 +119,14 @@ am__planetvc_SOURCES_DIST = game/resource.rc cfg/cfg.h cbase/cbase.h \
 	gamelib/bmp_draw.c gamelib/wav.h gamelib/wav_load.c \
 	gamelib/vfs.h gamelib/vfs.c gamelib/mixer.h gamelib/mixer.c \
 	gamelib/state.h gamelib/state.c gamelib/lang.h gamelib/lang.c \
-	game/crypt.c game/crypt.h game/coroutin.c game/coroutin.h \
-	game/cheats.c game/cheats.h game/confpath.h game/confpath.c \
-	game/log.c game/log.h game/data.c game/data.h game/bitmaps.c \
-	game/bitmaps.h game/sounds.c game/sounds.h game/tilengin.c \
-	game/tilengin.h game/path.c game/path.h game/main.c \
-	game/modplay.h game/modplay.c game/game.h game/game.c \
-	game/input.h game/input.c game/text.h game/text.c \
+	gamelib/ngetopt.h gamelib/ngetopt.c game/cmdline.c \
+	game/cmdline.h game/crypt.c game/crypt.h game/coroutin.c \
+	game/coroutin.h game/cheats.c game/cheats.h game/confpath.h \
+	game/confpath.c game/log.c game/log.h game/data.c game/data.h \
+	game/bitmaps.c game/bitmaps.h game/sounds.c game/sounds.h \
+	game/tilengin.c game/tilengin.h game/path.c game/path.h \
+	game/main.c game/modplay.h game/modplay.c game/game.h \
+	game/game.c game/input.h game/input.c game/text.h game/text.c \
 	game/strdraw.h game/strdraw.c game/load_st.h game/load_st.c \
 	game/gplay_st.h game/gplay_st.c game/menu_st.h game/menu_st.c \
 	game/buy_st.h game/buy_st.c game/fade_st.h game/fade_st.c \
@@ -179,7 +180,9 @@ am_planetvc_OBJECTS = $(am__objects_1) cbase/planetvc-cbase.$(OBJEXT) \
 	gamelib/planetvc-vfs.$(OBJEXT) \
 	gamelib/planetvc-mixer.$(OBJEXT) \
 	gamelib/planetvc-state.$(OBJEXT) \
-	gamelib/planetvc-lang.$(OBJEXT) game/planetvc-crypt.$(OBJEXT) \
+	gamelib/planetvc-lang.$(OBJEXT) \
+	gamelib/planetvc-ngetopt.$(OBJEXT) \
+	game/planetvc-cmdline.$(OBJEXT) game/planetvc-crypt.$(OBJEXT) \
 	game/planetvc-coroutin.$(OBJEXT) \
 	game/planetvc-cheats.$(OBJEXT) \
 	game/planetvc-confpath.$(OBJEXT) game/planetvc-log.$(OBJEXT) \
@@ -482,7 +485,9 @@ planetvc_SOURCES = $(RESOURCE) \
 			gamelib/mixer.h gamelib/mixer.c \
 			gamelib/state.h gamelib/state.c \
 			gamelib/lang.h gamelib/lang.c \
+			gamelib/ngetopt.h gamelib/ngetopt.c \
 			\
+			game/cmdline.c game/cmdline.h \
 			game/crypt.c game/crypt.h \
 			game/coroutin.c game/coroutin.h \
 			game/cheats.c game/cheats.h \
@@ -724,6 +729,10 @@ gamelib/planetvc-state.$(OBJEXT): gamelib/$(am__dirstamp) \
 	gamelib/$(DEPDIR)/$(am__dirstamp)
 gamelib/planetvc-lang.$(OBJEXT): gamelib/$(am__dirstamp) \
 	gamelib/$(DEPDIR)/$(am__dirstamp)
+gamelib/planetvc-ngetopt.$(OBJEXT): gamelib/$(am__dirstamp) \
+	gamelib/$(DEPDIR)/$(am__dirstamp)
+game/planetvc-cmdline.$(OBJEXT): game/$(am__dirstamp) \
+	game/$(DEPDIR)/$(am__dirstamp)
 game/planetvc-crypt.$(OBJEXT): game/$(am__dirstamp) \
 	game/$(DEPDIR)/$(am__dirstamp)
 game/planetvc-coroutin.$(OBJEXT): game/$(am__dirstamp) \
@@ -919,6 +928,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-buy_st.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-caterpil.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-cheats.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-cmdline.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-confpath.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-coroutin.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@game/$(DEPDIR)/planetvc-cosmonau.Po@am__quote@
@@ -971,6 +981,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@gamelib/$(DEPDIR)/planetvc-bmp_load.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@gamelib/$(DEPDIR)/planetvc-lang.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@gamelib/$(DEPDIR)/planetvc-mixer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@gamelib/$(DEPDIR)/planetvc-ngetopt.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@gamelib/$(DEPDIR)/planetvc-state.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@gamelib/$(DEPDIR)/planetvc-vfs.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@gamelib/$(DEPDIR)/planetvc-wav_load.Po@am__quote@
@@ -1202,6 +1213,34 @@ gamelib/planetvc-lang.obj: gamelib/lang.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='gamelib/lang.c' object='gamelib/planetvc-lang.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -c -o gamelib/planetvc-lang.obj `if test -f 'gamelib/lang.c'; then $(CYGPATH_W) 'gamelib/lang.c'; else $(CYGPATH_W) '$(srcdir)/gamelib/lang.c'; fi`
+
+gamelib/planetvc-ngetopt.o: gamelib/ngetopt.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -MT gamelib/planetvc-ngetopt.o -MD -MP -MF gamelib/$(DEPDIR)/planetvc-ngetopt.Tpo -c -o gamelib/planetvc-ngetopt.o `test -f 'gamelib/ngetopt.c' || echo '$(srcdir)/'`gamelib/ngetopt.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) gamelib/$(DEPDIR)/planetvc-ngetopt.Tpo gamelib/$(DEPDIR)/planetvc-ngetopt.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='gamelib/ngetopt.c' object='gamelib/planetvc-ngetopt.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -c -o gamelib/planetvc-ngetopt.o `test -f 'gamelib/ngetopt.c' || echo '$(srcdir)/'`gamelib/ngetopt.c
+
+gamelib/planetvc-ngetopt.obj: gamelib/ngetopt.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -MT gamelib/planetvc-ngetopt.obj -MD -MP -MF gamelib/$(DEPDIR)/planetvc-ngetopt.Tpo -c -o gamelib/planetvc-ngetopt.obj `if test -f 'gamelib/ngetopt.c'; then $(CYGPATH_W) 'gamelib/ngetopt.c'; else $(CYGPATH_W) '$(srcdir)/gamelib/ngetopt.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) gamelib/$(DEPDIR)/planetvc-ngetopt.Tpo gamelib/$(DEPDIR)/planetvc-ngetopt.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='gamelib/ngetopt.c' object='gamelib/planetvc-ngetopt.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -c -o gamelib/planetvc-ngetopt.obj `if test -f 'gamelib/ngetopt.c'; then $(CYGPATH_W) 'gamelib/ngetopt.c'; else $(CYGPATH_W) '$(srcdir)/gamelib/ngetopt.c'; fi`
+
+game/planetvc-cmdline.o: game/cmdline.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -MT game/planetvc-cmdline.o -MD -MP -MF game/$(DEPDIR)/planetvc-cmdline.Tpo -c -o game/planetvc-cmdline.o `test -f 'game/cmdline.c' || echo '$(srcdir)/'`game/cmdline.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) game/$(DEPDIR)/planetvc-cmdline.Tpo game/$(DEPDIR)/planetvc-cmdline.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='game/cmdline.c' object='game/planetvc-cmdline.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -c -o game/planetvc-cmdline.o `test -f 'game/cmdline.c' || echo '$(srcdir)/'`game/cmdline.c
+
+game/planetvc-cmdline.obj: game/cmdline.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -MT game/planetvc-cmdline.obj -MD -MP -MF game/$(DEPDIR)/planetvc-cmdline.Tpo -c -o game/planetvc-cmdline.obj `if test -f 'game/cmdline.c'; then $(CYGPATH_W) 'game/cmdline.c'; else $(CYGPATH_W) '$(srcdir)/game/cmdline.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) game/$(DEPDIR)/planetvc-cmdline.Tpo game/$(DEPDIR)/planetvc-cmdline.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='game/cmdline.c' object='game/planetvc-cmdline.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -c -o game/planetvc-cmdline.obj `if test -f 'game/cmdline.c'; then $(CYGPATH_W) 'game/cmdline.c'; else $(CYGPATH_W) '$(srcdir)/game/cmdline.c'; fi`
 
 game/planetvc-crypt.o: game/crypt.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(planetvc_CPPFLAGS) $(CPPFLAGS) $(planetvc_CFLAGS) $(CFLAGS) -MT game/planetvc-crypt.o -MD -MP -MF game/$(DEPDIR)/planetvc-crypt.Tpo -c -o game/planetvc-crypt.o `test -f 'game/crypt.c' || echo '$(srcdir)/'`game/crypt.c

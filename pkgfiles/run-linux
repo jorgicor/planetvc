@@ -4,7 +4,7 @@ show_help () {
 echo This script is used for two reasons:
 echo
 echo 1. Selecting the proper executable depending on your architecture: 32-bits
-echo    or echo 64-bits.
+echo    or 64-bits.
 echo
 echo 2. Choosing our precompiled SDL2 library inside x86 or x86_64 instead of
 echo    the SDL2 library on your system.
@@ -22,17 +22,24 @@ echo    launch the 64-bits binary.
 use_my_sdl=0
 m32=0
 m64=0
+skipnext=0
 for op in "$@"; do
-	case "$op" in
-		"--use-my-sdl") use_my_sdl=1 ;;
-		"--m32") m32=1 ; m64=0 ;;
-		"--m64") m64=1 ; m32=0 ;;
-		"--help") show_help ; exit 0 ;;
-		*) echo "Unknown option $op" ;
-		   echo "";
-		   echo "Launch with --help for the list of options." ;
-		   exit 1 ;;
-	esac
+	if [ $skipnext -eq 0 ]; then
+		case "$op" in
+			"--use-my-sdl") use_my_sdl=1 ;;
+			"--m32") m32=1 ; m64=0 ;;
+			"--m64") m64=1 ; m32=0 ;;
+			"--help") show_help ; exit 0 ;;
+			"--filter") skipnext=1 ;;
+			"--scale") skipnext=1 ;;
+			*) echo "Unknown option $op" ;
+			   echo "";
+			   echo "Launch with --help for the list of options." ;
+			   exit 1 ;;
+		esac
+	else
+		skipnext=0
+	fi
 done
 
 pwddir=`pwd`
@@ -57,15 +64,15 @@ cd "$bindir"
 
 if [ $arch = "x86_64" ]; then
 	if [ $use_my_sdl -eq 1 ]; then
-		./pvc64
+		./pvc64 $*
 	else
-		LD_PRELOAD="$m64dir"/$libname ./pvc64
+		LD_PRELOAD="$m64dir"/$libname ./pvc64 $*
 	fi
 else
 	if [ $use_my_sdl -eq 1 ]; then
-		./pvc32
+		./pvc32 $*
 	else
-		LD_PRELOAD="$m32dir"/$libname ./pvc32
+		LD_PRELOAD="$m32dir"/$libname ./pvc32 $*
 	fi
 fi
 cd "$pwddir"

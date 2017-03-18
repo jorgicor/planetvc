@@ -46,7 +46,9 @@ planetvc_SOURCES =	$(RESOURCE) \
 			gamelib/mixer.h gamelib/mixer.c \
 			gamelib/state.h gamelib/state.c \
 			gamelib/lang.h gamelib/lang.c \
+			gamelib/ngetopt.h gamelib/ngetopt.c \
 			\
+			game/cmdline.c game/cmdline.h \
 			game/crypt.c game/crypt.h \
 			game/coroutin.c game/coroutin.h \
 			game/cheats.c game/cheats.h \

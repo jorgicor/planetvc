@@ -22,6 +22,7 @@
 #include "hiscore.h"
 #include "pad.h"
 #include "crypt.h"
+#include "cmdline.h"
 #include "gamelib/vfs.h"
 #include "gamelib/mixer.h"
 #include "kernel/kernel.h"
@@ -30,6 +31,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdarg.h>
+#include <stdlib.h>
 #include <locale.h>
 
 enum {
@@ -1266,7 +1268,7 @@ static struct kernel_config kcfg = {
 	.canvas_width = TE_SCRW,
 	.canvas_height = TE_SCRH,
 	.fullscreen = !PP_DEBUG,
-	.maximized = 1,
+	.maximized = 0,
 	.frames_per_second = FPS,
 	.on_frame = on_frame,
 	.on_sound = on_sound,
@@ -1278,8 +1280,12 @@ int game_run(void)
 	int ret;
 	const struct kernel_device *d;
 
-	d = kernel_get_device();
 	kcfg.canvas_height = TE_SCRH + pad_scrh();
+	kcfg.hint_scale_quality = (s_cmdline_filter != 0);
+	kcfg.fullscreen = (s_cmdline_scale <= 0);
+	kcfg.zoom_factor = s_cmdline_scale;
+
+	d = kernel_get_device();
 	ret = d->run(&kcfg, NULL);
 	return ret;
 }

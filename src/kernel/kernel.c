@@ -23,9 +23,11 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "kernel.h"
 #include "kernel_snd.h"
+#include "cbase/cbase.h"
 #include "cbase/kassert.h"
 #include "cfg/cfg.h"
 #include <SDL.h>
+#include <limits.h>
 #include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
@@ -1069,6 +1071,20 @@ static int run_win(const struct kernel_config *kcfg)
 {
 	Uint32 wflags;
 	int ret;
+	int zoom;
+
+	zoom = kcfg->zoom_factor;
+	if (zoom <= 1) {
+		zoom = 1;
+	}
+
+	if (imul_overflows_int(zoom, kcfg->canvas_width)) {
+		zoom = INT_MAX / kcfg->canvas_width;
+	}
+
+	if (imul_overflows_int(zoom, kcfg->canvas_height)) {
+		zoom = INT_MAX / kcfg->canvas_height;
+	}
 
 	wflags = SDL_WINDOW_RESIZABLE;
 	if (kcfg->fullscreen)
@@ -1080,7 +1096,8 @@ static int run_win(const struct kernel_config *kcfg)
 	s_win = SDL_CreateWindow(kcfg->title,
 				 SDL_WINDOWPOS_UNDEFINED,
 				 SDL_WINDOWPOS_UNDEFINED,
-				 kcfg->canvas_width, kcfg->canvas_height,
+				 kcfg->canvas_width * zoom,
+				 kcfg->canvas_height * zoom,
 				 wflags);
 
 	if (s_win == NULL) {
@@ -1171,8 +1188,9 @@ static int run(const struct kernel_config *kcfg, void *data)
 	kasserta(SDL_GetPerformanceFrequency() != 0);
 
 	flags = SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER;
-	if (kcfg->on_sound != NULL)
+	if (kcfg->on_sound != NULL) {
 		flags |= SDL_INIT_AUDIO;
+	}
 
 	if (SDL_Init(flags) < 0) {
 		ret = KERNEL_E_ERROR;

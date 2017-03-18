@@ -1,10 +1,10 @@
                                Johanna Brahe in
                      The Planet of the Vicious Creatures
 
-                        Copyright (c) 2016 Jorge Giner
+		     Copyright (c) 2016, 2017 Jorge Giner
 
 --------------------------------------
-FREQUENTLY ASKED QUESTIONS (FAQ v1.02)
+FREQUENTLY ASKED QUESTIONS (FAQ v1.03)
 --------------------------------------
 
         1. Which is the language LSF (PEANO) in the game?
@@ -17,7 +17,7 @@ FREQUENTLY ASKED QUESTIONS (FAQ v1.02)
 1. Which is the language LSF (PEANO) in the game?
 -------------------------------------------------
 
-Latino sine flexio. It is an international auxiliary language, proposed by
+Latino sine flexione. It is an international auxiliary language, proposed by
 Giuseppe Peano first in 1903. As everyone in the universities used Latin, and
 everyone had a Latin dictionary, he proposed to use a simplified version of it
 for International communication. This was before the First and Second World
@@ -46,11 +46,11 @@ https://sites.google.com/site/latinosineflexio/
 
 To praise Johannes Kepler and Tycho Brahe.
 
-3. What is Gliese 581?
-----------------------
+3. What is Gliese 581 g?
+------------------------
 
-Correctly, Gliese 581 g. An actual planet orbiting the red dwarf Gliese 581.
-It would be near the habitable zone of the star. Read more on Wikipedia.
+It is an actual planet orbiting the red dwarf Gliese 581. It would be near the
+habitable zone of the star. Read more on Wikipedia.
 
 4. How can the game occupy only 1 megabyte?
 -------------------------------------------
@@ -78,7 +78,9 @@ https://www.inf.ethz.ch/personal/wirth/Articles/LeanSoftware.pdf
 Gameplay is based on "Abu Simbel, Profanation", by Dinamic, 1985. The killing
 drops and hard gameplay comes from there.
 
-Portals, of course from the film "Stargate", 1994.
+Portals, of course from the film "Stargate", 1994. You can activate the hidden
+Stargate symbols on portals in the game by writting 'stargate' at the main
+menu.
 
 The title of the game tries to mimic pulp science fiction.
 

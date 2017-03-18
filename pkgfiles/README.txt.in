@@ -14,9 +14,10 @@
         8.  GNU/Linux version
         9.  Other files
         10. Requirements
-        11. Modifying the game
-        12. Credits
-        13. Contact
+	11. Command line arguments
+        12. Modifying the game
+        13. Credits
+        14. Contact
 
 ---------------
 1. Introduction
@@ -28,16 +29,13 @@ place were other portal exists. But to come back, we need to find a portal in
 the destination connected to the original.
 
 We needed a special group of astronauts willing to take the risks, and Johanna
-Brahe always succeeded. So after we discovered a new destination, Gliese 581,
-appropriate in terms of gravity, geology and atmosphere, we offered her the new
-mission, and she accepted.
+Brahe always succeeded. So after we discovered a new destination, Gliese 581
+g, appropriate in terms of gravity, geology and atmosphere, we offered her the
+new mission, and she accepted.
 
 --------------
 2. How to play
 --------------
-
-Side note: You can switch between full screen and a windowed mode by pressing
-Alt + Enter at any time.
 
 By default, you can move with the arrow keys of your keyboard:
 
@@ -123,7 +121,7 @@ game, you will be able to put your initials in the score table of the game!
 ------------
 
 The game comes in English, Spanish, French, Portuguese, Brazilian Portuguese,
-Italian, Polish, German, Russian and Latino sine flexio. You can change the
+Italian, Polish, German, Russian and Latino sine flexione. You can change the
 language on the main menu.
 
 If you would like the game in your language, you can traslate it if you want
@@ -272,8 +270,36 @@ GNU libc with version 2.15 at least.
 
 Note: The game consumes 5% to 8% of CPU on a computer from 2003.
 
+--------------------------
+11. Command line arguments
+--------------------------
+
+It is possible to pass some command line arguments to the game executable:
+
+--filter n:
+
+	n is 0 or 1. This enables linear filtering (1) or disables it (0). By
+default the game uses linear filtering.
+
+--scale n:
+
+	If n is 0, the game will run in full screen mode (this is the default).
+	If not, n is a scale factor for each pixel size and the game will run
+in windowed mode.
+	For example, if n is 1, the game will run in a window of 256x224
+pixels. If n is 2, each pixel width and height will be doubled, so the game
+will run in a window of 512x448 pixels.
+
+For example, this runs then game in a window, with filtering off and double
+pixel size:
+
+	planetvc --filter 0 --scale 2
+
+Note that you can always switch between full screen and a windowed mode by
+pressing Alt + Enter.
+
 ----------------------
-11. Modifying the game
+12. Modifying the game
 ----------------------
 
 In the full version of the game, the file 'data.pak' is no more than a ZIP
@@ -308,26 +334,26 @@ file MODIFY.html which comes with the full version of the game. You can find
 it online too at http://jorgicor.sdfeu.org/planetvc/modify.html .
 
 -----------
-12. Credits
+13. Credits
 -----------
 
 Ana Catarina Ribeiro Dias Alves, for the Portuguese translation.
 Anna Jakubiec, for the French and Polish translations.
+Angelo Mendola, for additional French translations.
 Elaine Suchara Gomes, for the Brazilian Portuguese translation.
 Fabio Tricarico for the Italian translation.
 Star Servicios Ligüísticos for German, Russian and additional translations.
+Tomedes - Smart Human Translations, for additional translations.
 
 THANKS TO ALL THE TRANSLATORS FOR THE HARD WORK!
 
 Thanks to Anna Jakubiek and Antonio Vicente Bordería Giner for the English
 corrections.
 
-Thanks to Angelo Mendola for other language corrections.
-
 THANKS TO ALL THE FRIENDS WHO TESTED THE GAME!
 
 -----------
-13. Contact
+14. Contact
 -----------
 
 For bug reports or to praise the author, contact Jorge Giner Cordero:

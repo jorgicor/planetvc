@@ -53,6 +53,7 @@
 #include "tilengin.h"
 #include "crypt.h"
 #include "coroutin.h"
+#include "cmdline.h"
 #include "gamelib/bmp.h"
 #include "gamelib/lang.h"
 #include "gamelib/mixer.h"
@@ -84,7 +85,6 @@ int main(int argc, char *argv[])
 	mtrace();
 #endif
 #endif
-
 	/*
 	 * All modules are initialized here.
 	 */
@@ -94,6 +94,8 @@ int main(int argc, char *argv[])
 	/* Log to console always. */
 	kassert_init();
 	kassert_set_log_fun(kernel_get_device()->trace);
+
+	read_cmd_line(argc, argv);
 
 	crypt_init();
 	coroutin_init();
