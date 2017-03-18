@@ -95,7 +95,12 @@ int main(int argc, char *argv[])
 	kassert_init();
 	kassert_set_log_fun(kernel_get_device()->trace);
 
-	read_cmd_line(argc, argv);
+	/* I suppose it is safe to run this on a mobile, but just
+	 * in case it is not, don't do it there.
+	 */
+	if (!PP_ANDROID) {
+		read_cmd_line(argc, argv);
+	}
 
 	crypt_init();
 	coroutin_init();
