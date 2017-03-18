@@ -1241,7 +1241,9 @@ static void on_frame(void *data)
 		switch_to_state(&load_st);
 	}
 
-	update_pad();
+	if (g_state != &load_st) {
+		update_pad();
+	}
 
 	if (s_cheats_debug_mode)  {
 		if (kd->key_first_pressed(KERNEL_KSC_P))

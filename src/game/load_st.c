@@ -39,22 +39,63 @@ static int s_state;
 
 int s_google_autoconnect_performed;
 
+enum {
+	POINTW = 3
+};
+
+static void draw_point(int x, int y, int color)
+{
+	unsigned char *pb;
+	unsigned int *pi;
+
+	if (x < 0 || x > te_screen.w - POINTW)
+		return;
+	if (y < 0 || y > te_screen.h - POINTW)
+		return;
+	pb = te_screen.pixels + y * te_screen.pitch;
+	pi = (unsigned int *) pb;
+	pi += x;
+	for (y = 0; y < POINTW; y++) {
+		for (x = 0; x < POINTW; x++) {
+			*(pi + x) = color;
+		}
+		pb = (unsigned char *) pi;
+		pb += te_screen.pitch;
+		pi = (unsigned int *) pb;
+	}
+}
+
+static void draw_loading(void)
+{
+	int x, y, w, i;
+
+	y = (te_screen.h - POINTW) / 2;
+	w = (POINTW + 1) * LOAD_LAST_STATE;
+	x = (te_screen.w - w) / 2;
+	for (i = 0; i < LOAD_LAST_STATE; i++) {
+		if (i >= s_state) {
+			draw_point(x, y, 0x888888);
+		} else {
+			draw_point(x, y, 0xffffff);
+		}
+		x += POINTW + 1;
+	}
+}
+
 static void draw(void)
 {
-	unsigned int *pi;
 	unsigned char *pb;
-	int x, y;
+	int y;
 
 	te_begin_draw();
 
 	pb = te_screen.pixels;
-	pi = (unsigned int *) pb;
 	for (y = 0; y < te_screen.h; y++) {
-		for (x = 0; x < te_screen.w; x++)
-			*pi++ = 0x00000000;
+		memset(pb, 0, te_screen.w * sizeof(unsigned int));
 		pb += te_screen.pitch;
-		pi = (unsigned int *) pb;
 	}
+
+	draw_loading();
 
 	te_end_draw();
 }
