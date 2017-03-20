@@ -136,8 +136,8 @@ END OF THE DEMO VERSION.
 ОКОНЧАНИЕ ДЕМО-ВЕРСИИ.
 IF YOU FIND A LEVEL TOO DIFFICULT, CHECK OUT 'OPTIONS - DEMO' TO LEARN HOW TO OVERCOME IT.
 ЕСЛИ УРОВЕНЬ КАЖЕТСЯ ВАМ СЛИШКОМ СЛОЖНЫМ, ЗАЙДИТЕ В 'ОПЦИИ', ЗАТЕМ В РУБРИКУ 'ДЕМО' И УЗНАЙТЕ, КАК ПРОЙТИ ЕГО.
-THANKS TO ANGELO MENDOLA, TONI BORDERÍA AND TO ALL THE FRIENDS WHO TESTED THE GAME.
-БЛАГОДАРЯ АНДЖЕЛО МЕНДОЛЕ (ANGELO MENDOLA) И ТОНИ БОРДЕРИА (TONI BORDERÍA), А ТАКЖЕ ВСЕМ НАШИМ ДРУЗЬЯМ, МЫ ПРОТЕСТИРОВАЛИ ИГРУ.
+THANKS TO TONI BORDERÍA AND TO ALL THE FRIENDS WHO TESTED THE GAME.
+БЛАГОДАРЯ ТОНИ БОРДЕРИА (TONI BORDERÍA), А ТАКЖЕ ВСЕМ НАШИМ ДРУЗЬЯМ, МЫ ПРОТЕСТИРОВАЛИ ИГРУ.
 THIS GAME IS AVAILABLE FOR PC/WINDOWS, GNU/LINUX AND ANDROID.
 ИГРА ДОСТУПНА ДЛЯ ПК/WINDOWS, GNU/LINUX И ANDROID.
 BUY THE FULL VERSION TO GET:

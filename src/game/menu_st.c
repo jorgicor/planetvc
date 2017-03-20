@@ -404,7 +404,7 @@ static void draw_demo(void)
 	const char *str;
 
 	str = _("DEMO VERSION");
-	x = (TE_FMW - strlen(str)) / 2;
+	x = (TE_FMW - utf8_strlen(str)) / 2;
 	draw_str(str, x, TE_FMH - 2, 0);
 }
 
