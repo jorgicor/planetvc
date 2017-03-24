@@ -157,14 +157,14 @@ DO YOU WANT TO GO TO 'GOOGLE PLAY' TO GET THE FULL VERSION OF THE GAME?
 NOT NOW
 НЕ СЕЙЧАС
 LEADERBOARDS
-?ЛИДЕРЫ
+РЕЙТИНГИ
 ACHIEVEMENTS
 ДОСТИЖЕНИЯ
 DO YOU WANT TO SIGN IN WITH GOOGLE TO ENTER ONLINE LEADERBOARDS AND UNLOCK ACHIEVEMENTS?
-DO YOU WANT TO SIGN IN WITH GOOGLE TO ENTER ONLINE LEADERBOARDS AND UNLOCK ACHIEVEMENTS?
+ВЫ ХОТИТЕ ВОЙТИ В СИСТЕМУ С ПОМОЩЬЮ GOOGLE, ЧТОБЫ УЧАСТВОВАТЬ В ОНЛАЙН-РЕЙТИНГЕ И РАЗБЛОКИРОВАТЬ ДОСТИЖЕНИЯ?
 THERE WAS AN ERROR SIGNING IN WITH GOOGLE. RETRY?
-THERE WAS AN ERROR SIGNING IN WITH GOOGLE. RETRY?
+ПРИ ВХОДЕ В СИСТЕМУ С ПОМОЩЬЮ GOOGLE ПРОИЗОШЛА ОШИБКА. ПОВТОРИТЬ ПОПЫТКУ?
 IF YOU WANT TO SIGN IN IN THE FUTURE, GO TO 'OPTIONS - GOOGLE PLAY'.
-IF YOU WANT TO SIGN IN IN THE FUTURE, GO TO 'OPTIONS - GOOGLE PLAY'.
+ЕСЛИ ВЫ ХОТИТЕ ДАЛЕЕ ОСУЩЕСТВЛЯТЬ ВХОД В СИСТЕМУ, ПЕРЕЙДИТЕ В РАЗДЕЛ GOOGLE PLAY В МЕНЮ ОПЦИЙ.
 ~
 This file has to be saved in utf8.

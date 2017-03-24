@@ -185,7 +185,7 @@ void te_fg_xy(int tx, int ty, int *tseti, int *tilei)
 		tx = te_fgi(tx, ty);
 		if (kassert(tx >= 0 && tx < TE_FMSZ)) {
 			ti = s_fg_map[tx];
-			si = ti & 0xff00;
+			si = (ti >> 8) & 0xff;
 			ti &= 0xff;
 		}
 	}
