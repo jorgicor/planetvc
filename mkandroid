@@ -259,6 +259,7 @@ build_release () {
 		echo "Keystore file $keystore does not exist. Aborting."
 		return
 	fi
+	mkdir -p "$BUILDPATH"/keystore
 	cp "$keystore" "$BUILDPATH"/keystore/. 
 	build release
 }
