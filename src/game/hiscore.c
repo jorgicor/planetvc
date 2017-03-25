@@ -301,13 +301,13 @@ static void clear_char_pos(void)
 		     s_hiscore_nmaps);
 }
 
-static void sendScore(int difficulty, int nvisited)
+static void sendScore(int difficulty, int nvisited, int nlifes)
 {
 	int n;
 	char scorestr[16];
 
 	if (Android_IsConnectedToGooglePlay()) {
-		n = nvisited * 100;
+		n = nvisited * 100 + nlifes;
 		snprintf(scorestr, sizeof(scorestr), "%d", n);
 		Android_SendScore(s_board_id[difficulty], scorestr);
 		Android_ShowLeaderboard(s_board_id[difficulty]);
@@ -364,7 +364,8 @@ static void hiscore_enter(struct actor *pac)
 			if (Android_IsConnectedToGooglePlay()) {
 				sendScore(get_difficulty(),
 					decrypt(s_hiscores_tab[s_enter_hspos]
-						.nvisited));
+						.nvisited),
+					get_nlifes_remaining());
 				pac->update = hiscore_wait_leaderboard;
 			} else {
 				pac->update = hiscore_void;

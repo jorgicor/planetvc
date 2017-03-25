@@ -177,6 +177,11 @@ static void reset_nlifes(void)
 	s_nlifes = s_total_nlifes;
 }
 
+int get_nlifes_remaining(void)
+{
+	return s_nlifes;
+}
+
 static void reset_visited_map(void)
 {
 	memset(s_visited, 0, sizeof(s_visited));
