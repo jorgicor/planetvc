@@ -9,5 +9,5 @@ wait ~
 clrscr ~
 textfc 0 24 32 PLAY.GOOGLE.COM/STORE/APPS~
 textf 1 5 DO YOU WANT TO GO TO 'GOOGLE PLAY' TO GET THE FULL VERSION OF THE GAME?~
-spawn buymenu 0 15 https://play.google.com/store/apps~ 
+spawn buymenu 0 15 https://play.google.com/store/apps/details?id=org.jorgicor.planetvc~ 
 .
