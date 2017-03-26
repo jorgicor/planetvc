@@ -14,6 +14,8 @@ make_data_dir () {
 			cp $f "$databuilddir"/$f
 		fi
 	done
+	cp stargate.bmp "$databuilddir"
+	cp tileset.bmp "$databuilddir"
 	cp *.txt "$databuilddir"
 	cp *.xm "$databuilddir"
 	cp *.wav "$databuilddir"

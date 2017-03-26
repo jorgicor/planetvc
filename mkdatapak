@@ -20,6 +20,8 @@ make_data () {
 			cp $fd "$buildd"
 		fi
 	done
+	cp "$datad"/tileset.bmp "$buildd"
+	cp "$datad"/stargate.bmp "$buildd"
 	cp "$datad"/*.txt "$buildd"
 	cp "$datad"/*.xm "$buildd"
 	cp "$datad"/*.wav "$buildd"

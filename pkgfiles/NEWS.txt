@@ -1,3 +1,9 @@
+2017-03-26
+
+	* Version 1.10
+
+	* Fixed worng pixels when enabling Stargate symbols.
+
 2017-03-01
 
 	* Version 1.09
