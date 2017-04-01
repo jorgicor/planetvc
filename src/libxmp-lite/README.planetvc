@@ -7,9 +7,9 @@ http://xmp.sourceforge.net .
 I embedded the package in the game, following the autotools guidelines. Things
 were working fine on Linux, but on Windows I had problems. The same happened
 when I tried to run "make dist" . These problems were due to my lack of
-knowledge only. So bassically I have taken all the .c and .h files, I have put
-them in this folder and then I compile them with the game. In the Makefile.am
-of the root folder you will see:
+knowledge only. So bassically I took all the .c and .h files, I put them in
+this folder and then I compiled them with the game. In the Makefile.am of the
+root folder you will see:
 
 AM_CPPFLAGS = -DLIBXMP_CORE_PLAYER -DLIBXMP_CORE_DISABLE_IT -DBUILDING_STATIC
 
