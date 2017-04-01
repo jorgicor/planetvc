@@ -7,7 +7,7 @@ We have two packages. One is planetvc, the other planetvc-data. 'planetvc'
 builds the engine of the game. 'planetvc-data' contains the graphics, music,
 levels, etc. of the game.  The game is separated in these two packages to allow
 GNU/Linux distributions to separate them between free, non-free, etc. planetvc
-is GPL, but planetvc-data is CC-NC-SA.
+is licensed under MIT/Expat, but planetvc-data is CC-NC-SA.
 
 Both packages come with a GNU build system, meaning that you can follow the
 instructions in INSTALL to build and install the packages (that is, use a
@@ -21,14 +21,6 @@ You can change where to install the game by passing --prefix to the configure
 script. For example, using './configure --prefix=/usr/local' will install in
 /usr/local. But remember to pass the same prefix to the configure script of
 the 'planetvc-data' package, so it installs in the same places.
-
-License
-=======
-
-The package is under the GPL v3 license (see COPYING).
-
-But some parts of the source are under Expat/MIT license: source code in
-/cbase, /kernel, /gamelib and /libxmp-lite.
 
 Configure options
 =================
@@ -59,19 +51,22 @@ using this flag if you get that XDM error.
 --enable-debugmode
 
 	Adds some debugging for synchronization of dragons and lava tongues.
-And makes the game to start in windowed mode. Nothing more.
 
 --enable-demoversion
 
 	Compiles a demo version of the program. Only useful for the author.
 Will require a demo version of the game data.
 
+--enable-phone-mode
+
+	Simulates the build for mobile phones.
+
 Portability
 ===========
 
-We assume Windows, Linux, BSD's or Mac little endian.
+We assume that Windows, Linux, BSD's, Mac or Androids are little endian.
 
-We assume char 8 bits, short 16 bits, int 32 bits.
+We assume that a char is 8 bits, short 16 bits, int 32 bits.
 
 For now we don't use long: on a 32 bit machine, it is 32 bits. But on a 64 bit
 machine, it is 32 bits on Windows but 64 bits on Linux. If we are in the need
@@ -105,11 +100,8 @@ make
 For developers: debugging the program
 =====================================
 
-* * * * 
-
- SDL gives a lot of memory leaks when using this methods, so it is not useful.
-
-* * * *
+Note: SDL gives a lot of memory leaks when using this methods, so this is not
+useful...
 
 On a GNU/Linux system, you can call configure like this:
 
@@ -170,7 +162,8 @@ Bundling SDL2
 
 We can use:
 
-LD_TRACE_LOADED_OBJECTS=1 /lib/ld-linux.so.2 ./planetvc to see which libraries get loaded.
+LD_TRACE_LOADED_OBJECTS=1 /lib/ld-linux.so.2 ./planetvc to see which libraries
+get loaded.
 
 Using:
 
@@ -192,5 +185,5 @@ This seems to work ok.
 
 ----
 
-August 2016
+August 2017
 Jorge Giner
