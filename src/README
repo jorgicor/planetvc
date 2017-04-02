@@ -37,11 +37,11 @@ executable. (This is used to make standalone binary distributions).
 
 --enable-x11
 
-	This will link with the X11 library. If you use XDM as the login
-manager, the program will refuse to start with: 'XDM authorization key matches
-an existing client!'.
-	One option is to enable ...
-	Another option is to enable this flag to link with X.
+	By default the game does not link with the X11 library, as this is
+done dinamically if needed by the SDL library. But if the program refuses to
+start with the error 'XDM authorization key matches an existing client!', it
+is because you are using the XDM login manager, and in that case you can link
+with the X11 library by using this command option and the game will run.
 	The solution used in the standalone binary distributions of the game
 has been to compile a patched version of the SDL 2 library to bypass this, and
 bundle it with the game, so the game does not depend on any version of the X
@@ -76,9 +76,9 @@ libxmp-lite
 ===========
 
 The source code of libxmp-lite is embedded. Its license is MIT.  It is used to
-play .MOD tracker files.
+play xm tracker files.
 
-Some of the compilation flags that we use in Makefile.am AM_CPPFLAGS are for
+Some of the compilation flags that we use in Makefile.am - AM_CPPFLAGS are for
 the use of this library only:
 
 AM_CPPFLAGS = -DLIBXMP_CORE_PLAYER -DLIBXMP_CORE_DISABLE_IT -DBUILDING_STATIC
@@ -91,7 +91,7 @@ Install cygwin with i686-w64-ming32-gcc, bc.
 Go to libsdl.org and download the development libraries for mingw.
 
 Inside cygwin terminal and inside the sdl libraries folder type 'make native':
-this will install the library.
+this will install the SDL library.
 
 Then compile the project with:
 ./configure --host=i686-w64-mingw32 --enable-sdl-datadir
@@ -185,5 +185,5 @@ This seems to work ok.
 
 ----
 
-August 2017
+April 2017
 Jorge Giner

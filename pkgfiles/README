@@ -1,0 +1,13 @@
+
+This folder contains the files included in the binary distributions of the
+game.
+
+The Makefile is used to build the html version of modify.md, which is a
+Markdown formatted file. To build it we use the program 'discount', which is a
+Markdown to html implementation in C:
+
+http://www.pell.portland.or.us/~orc/Code/discount/
+
+----
+April 2017
+Jorge Giner

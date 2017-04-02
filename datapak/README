@@ -7,7 +7,7 @@ We have two packages. One is planetvc, the other planetvc-data. 'planetvc'
 builds the engine of the game. 'planetvc-data' contains the graphics, music,
 levels, etc. of the game.  The game is separated in these two packages to allow
 GNU/Linux distributions to separate them between free, non-free, etc. planetvc
-is GPL, but planetvc-data is CC-NC-SA.
+is MIT/Expat licensed, but planetvc-data is CC-NC-SA.
 
 Both packages come with a GNU build system, meaning that you can follow the
 instructions in INSTALL to build and install the packages (that is, use a
@@ -25,15 +25,15 @@ the 'planetvc-data' package, so it installs in the same places.
 License
 =======
 
-"The Planet of the vicious Creatures - Data" (c) 2016 Jorge Giner
+"The Planet of the vicious Creatures - Data" (c) 2016-2017 Jorge Giner
 
 "The Planet of the Vicious Creatures - Data" is licensed under a
-Creative Commons Attribution-ShareAlike 4.0 International License
+Creative Commons Attribution-ShareAlike 4.0 International License.
 
 You should have received a copy of the license along with this
 work (file COPYING).  If not, see
 <http://creativecommons.org/licenses/by-sa/4.0/>.
 
 -----------
-August 2016
+April 2017
 Jorge Giner

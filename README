@@ -6,8 +6,12 @@ datapak/	The data.pak with the game assets, ready for distribution.
 data/		The assets of the game, unoptimized.
 pakcloak/	Utility to obfuscate a zip file.
 pkfiles/	Files for the binary distributions.
+android-project/	Android project.
 mkdatapak	Takes data/ and builds datapak/data.pak.
 mkpkg		To build the binary distributions.
+mkdatatest	Generates a data directory for full, build, demo, etc.
+mkdist		Generates a package with all files under version control.
+mkandroid	To build the android apks.
 
 Making a release
 ================
@@ -35,15 +39,15 @@ sudo apt-get install libasound2-dev libpulse-dev libaudio-dev libx11-dev libxext
 This ensures we have all the library headers to enable all the SDL library
 features.
 
-Then we take our SDL2-2.0.4-patched.tar.gz, unpack it and:
+Then we take our SDL2-2.0.5-patched.tar.gz, unpack it and:
 
 ./configure
 make
 sudo make install
 
-Or SDL library is patched to solve a bug if we run the game on a system with
-the XDM login manager: here we will get 'XDM authorization key matches an
-existing client!'. 
+Or SDL library is patched to solve something that happens when we run the game
+on a system with the XDM login manager: here we will get 'XDM authorization
+key matches an existing client!'. 
 
 The patch only takes the file SDL_x11video.c, adds the '#include "SDL_timer.h"'
 and changes this line:
@@ -59,32 +63,32 @@ to enable the workaround.
 After we have installed the SDL library, we take it and place it in the
 corresponding pkgfiles/x86 or x86_64, after running strip on it.
 
-This is only done once in the 32 bit and 64 bits version and the libraries are
-added to the main trunk of our game.
+This is only done once in the 32 bits and 64 bits version and the libraries
+are added to the main trunk of our game.
 
-We can run 'ldd <sdl-library-name>' to see the libraries needed.
-Or 'objdump -p <sdl-library-name>' to see the glibc version and libraries
-needed by it. 
+We can run 'ldd <sdl-library-name>' to see the libraries needed.  Or 'objdump
+-p <sdl-library-name>' to see the glibc version and libraries needed by it. 
 The same can be done for the executables.
 
-1. On an Ubuntu 12.04 (glibc 2.15) 32 bits we run:
+1. On a Ubuntu 12.04 (glibc 2.15) 32 bits we run:
 
-	./mkpkg 105 /media/USB DISK/planetvc/v105
+	./mkpkg 1 05 /media/USB DISK/planetvc/v105
 
-The number 105 is an example of the version number. The second path, is a place where to generate an incremental build.tar file with the builds.
+The number 1 05 is an example of the version number. The second path, is a
+place where to generate an incremental build.tar file with the builds.
 
 We choose '1' in the menu to make the data. Then '2' to compile. Then '3' to copy the first files to 'build.tar' .
 
-2. On an Ubuntu 12.04 (glibc 2.15) 64 bits we run:
+2. On a Ubuntu 12.04 (glibc 2.15) 64 bits we run:
 
-	./mkpkg 105 /media/USB DISK/planetvc/v105
+	./mkpkg 1 05 /media/USB DISK/planetvc/v105
 
 We choose '2' to build the 64 bits version and then '3' to copy it to the
 'build.tar'.
 
 3. On Windows with cygwin and i686-w64-mingw32-gcc we run:
 
-	./mkpkg 105 /cygdrive/f/planetvc/v105
+	./mkpkg 1 05 /cygdrive/f/planetvc/v105
 
 We choose '2' to make the full version and the demo version. Then choose '3' to move it to the 'build.tar'.
 
@@ -92,5 +96,5 @@ We choose '2' to make the full version and the demo version. Then choose '3' to 
 
 ----
 
-August 2016
+August 2017
 Jorge Giner
