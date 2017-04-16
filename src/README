@@ -23,6 +23,12 @@ script. For example, using './configure --prefix=/usr/local' will install in
 /usr/local. But remember to pass the same prefix to the configure script of
 the 'planetvc-data' package, so it installs in the same places.
 
+Requirements
+============
+
+For GNU/Linux, you will need the SDL2 library installed on your system,
+version 2.0.5.
+
 Configure options
 =================
 
