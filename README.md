@@ -1,5 +1,5 @@
-planetvc - The Planet of the Vicious Cretures
-=============================================
+planetvc - The Planet of the Vicious Creatures
+==============================================
 
 The Planet of the Vicious Creatures is a videogame released for GNU/Linux,
 Windows and Android. It is an old-school platformer set in outer space,

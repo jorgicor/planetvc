@@ -1,5 +1,5 @@
-planetvc - The Planet of the Vicious Cretures
-=============================================
+planetvc - The Planet of the Vicious Creatures
+==============================================
 
 The Planet of the Vicious Creatures is a videogame released for GNU/Linux,
 Windows and Android. It is an old-school platformer set in outer space,
@@ -29,6 +29,13 @@ mkpkg		To build the binary distributions.
 mkdatatest	Generates a data directory for full, build, demo, etc.
 mkdist		Generates a package with all files under version control.
 mkandroid	To build the android apks.
+
+If you are a package maintainer for a Linux distro, and you want to include
+the game, you only need to get `src/` to build the game, and either take the
+`data/` folder for the game assets, or use `./mkdatapak` to create a
+`data.pak` file inside `datapak/`, and use the scripts in `datapak/` to
+install the assets as if it were an autotools source code package. For more
+info read README in `src/` and `datapak`.
 
 ----
 
