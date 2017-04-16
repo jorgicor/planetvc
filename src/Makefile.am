@@ -25,7 +25,7 @@
 AM_CFLAGS = $(WARN_CFLAGS)
 
 nobase_dist_doc_DATA = README NEWS COPYING \
-		       libxmp-lite/README libxmp-lite/README2
+		       libxmp-lite/README libxmp-lite/README-planetvc
 
 dist_pkgdata_DATA = gcdb/gamecontrollerdb.txt gcdb/README-gcdb
 

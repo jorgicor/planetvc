@@ -1,0 +1,101 @@
+Portability
+===========
+
+We assume that Windows, Linux, BSD's, Mac or Androids are little endian.
+
+We assume that a char is 8 bits, short 16 bits, int 32 bits.
+
+For now we don't use long: on a 32 bit machine, it is 32 bits. But on a 64 bit
+machine, it is 32 bits on Windows but 64 bits on Linux. If we are in the need
+for a 64 bit data type, we will see in the future.
+
+For developers: debugging the program
+=====================================
+
+Note: SDL gives a lot of memory leaks when using this methods, so this is not
+useful...
+
+On a GNU/Linux system, you can call configure like this:
+
+./configure CPPFLAGS="-DDEBUG"
+
+This will compile the program with memory leaks detection support .
+
+To check for memory leaks, first you have to export MALLOC_TRACE with a
+name of the file that will contain the log for the leaks, and then call the
+mtrace tool that should be installed in your system if you have the GNU C
+compiler and the GNU libc.
+
+You can make a quick script for this on the top level directory of the
+distribution, to run the game and see the leaks if any in one shot:
+
+#!/bin/sh
+export MALLOC_TRACE=./leaks
+./planetvc
+mtrace ./planetvc leaks
+
+Call it 'run.sh' and and then make it executable:
+
+chmod +x run.sh
+
+Now you can run the game with:
+
+./run.sh
+
+And when it closes you will see the memory leaks info, if any.
+
+Debugging and CORE file
+=======================
+
+When the program stops due to an segmentation fault or an assertion failing,
+a core dump file should be generated and you can use it with gdb to debug.
+
+If it is not generated, maybe is due to your current shell limits.
+
+Run 'ulimit -a' to know the current active limits. If core file size is 0,
+run 'ulimit -c unlimited' to allow the creation of the core file.
+
+The core file will be in the process working directory.
+
+The name of the file is configured in the system. Look in
+/proc/sys/kernel/core_pattern and /proc/sys/kernel/core_uses_pid. These two
+specify the name of the core file and if the pid of the process is appended to
+the file name. Note that the name can be a path. For example:
+
+mkdir -p /var/core
+echo "/var/core/core" > /proc/sys/kernel/core_pattern
+echo 1 > /proc/sys/kernel/core_uses_pid
+
+This will create the core file in /var/core with the name 'core' and the pid of
+the process appended.
+
+Bundling SDL2
+=============
+
+We can use:
+
+LD_TRACE_LOADED_OBJECTS=1 /lib/ld-linux.so.2 ./planetvc to see which libraries
+get loaded.
+
+Using:
+
+LD_LIBRARY_PATH=<path to our bundled sdl2> LD_TRACE_LOADED_OBJECTS=1 /lib/ld-linux.so.2 ./planetvc
+
+should load our SDL2 library, but it is not working on Slackware I don't know
+why, maybe because we have to change at link time the rpath to something like
+$ORIGIN/x86 .
+
+Currently, we use:
+
+LD_PRELOAD=<path to our bundled sdl2>/libSDL2-2.0.so.0 LD_TRACE_LOADED_OBJECTS=1 /lib/ld-linux.so.2 ./planetvc
+
+that is:
+
+LD_PRELOAD=<path to our bundled sdl2>/libSDL2-2.0.so.0 ./planetvc
+
+This seems to work ok.
+
+----
+
+April 2017
+Jorge Giner

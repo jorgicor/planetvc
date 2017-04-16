@@ -14,23 +14,3 @@ in the file 'pkgfiles/ccncsa4.txt'.
 Copyright (c) 2016-2017 Jorge Giner Cordero
 
 Home page: http://jorgicor.sdfeu.org/planetvc
-
-Map of the package
-==================
-
-src/		The source of the game, ready for distribution.
-datapak/	The data.pak with the game assets, ready for distribution.
-data/		The assets of the game, unoptimized.
-pakcloak/	Utility to obfuscate a zip file.
-pkfiles/	Files for the binary distributions.
-android-project/	Android project.
-mkdatapak	Takes data/ and builds datapak/data.pak.
-mkpkg		To build the binary distributions.
-mkdatatest	Generates a data directory for full, build, demo, etc.
-mkdist		Generates a package with all files under version control.
-mkandroid	To build the android apks.
-
-----
-
-April 2017
-Jorge Giner

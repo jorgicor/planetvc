@@ -1,0 +1,138 @@
+How to work with the package
+============================
+
+To work with the game source I usually do it from two different folders: in one
+folder I have the package with the source, in another a make the builds.
+
+For example, I have the package in a `pkg/` folder:
+
+pkg/
+
+And then I create a `src.build/` folder to make the builds:
+
+pkg/
+src.build/
+
+Then I use two terminals: one is usually inside `pkg/src` to modify the source,
+the other is inside `src.build/`. Inside `src.build/`, I first run
+
+    ../pkg/src/configure --enable-x11 --enable-sdl-datadir
+    make
+
+so the generated build objects are in this folder and not in the original
+`pkg/src` folder.
+
+Each time I change the source files and I want to compile, I do it inside
+`src.build/`.
+
+I run the game as well from inside `src.build/`, but first we need the game
+data in that folder. For that, we have two options: either we do a symbolic
+link named `data` to point to `../pkg/data`; or we use `../pkg/mkdatatest` to
+copy the data to our folder. `mkdatatest` can be used to copy the data for
+specific builds, for example to test the data that goes into a mobile version
+or a demo version.
+
+Making a release
+================
+
+We use the mkpkg script to make a release.
+
+0. Preparing Ubuntu:
+
+We install Ubuntu 12.04 on VirtualBox and update it.
+
+Compiling everything on Ubuntu 12.04 will mean that we link at maximum with
+glibc version 2.15, so our binaries will work on any distro with at least that
+version of glibc.
+
+We install the guest additions on the Ubuntu system:
+
+sudo apt-get install virtualbox-guest-dkms
+
+The desktop can be then set to 800x600.
+
+Next we need to run:
+
+sudo apt-get install libasound2-dev libpulse-dev libaudio-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxi-dev libxinerama-dev libxxf86vm-dev libxss-deb libgl1-mesa-dev libesd0-dev libdbus-1-dev libudev-dev libgles1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev libibus-1.0-dev libdirectfb-dev libtool make cmake autoconf automake imagemagick sox
+
+This ensures we have all the library headers to enable all the SDL library
+features.
+
+Then we take our SDL2-2.0.5-patched.tar.gz, unpack it and:
+
+./configure
+make
+sudo make install
+
+Or SDL library is patched to solve something that happens when we run the game
+on a system with the XDM login manager: here we will get 'XDM authorization
+key matches an existing client!'. 
+
+The patch only takes the file SDL_x11video.c, adds the '#include "SDL_timer.h"'
+and changes this line:
+
+#if defined(__osf__) && defined(SDL_VIDEO_DRIVER_X11_DYNAMIC)
+
+to
+
+#if defined(SDL_VIDEO_DRIVER_X11_DYNAMIC)
+
+to enable the workaround.
+
+After we have installed the SDL library, we take it and place it in the
+corresponding pkgfiles/x86 or x86_64, after running strip on it.
+
+This is only done once in the 32 bits and 64 bits version and the libraries
+are added to the main trunk of our game.
+
+We can run 'ldd <sdl-library-name>' to see the libraries needed.  Or 'objdump
+-p <sdl-library-name>' to see the glibc version and libraries needed by it. 
+The same can be done for the executables.
+
+1. On a Ubuntu 12.04 (glibc 2.15) 32 bits we run:
+
+	./mkpkg 1 05 /media/USB DISK/planetvc/v105
+
+The number 1 05 is an example of the version number. The second path, is a
+place where to generate an incremental build.tar file with the builds.
+
+We choose '1' in the menu to make the data. Then '2' to compile. Then '3' to copy the first files to 'build.tar' .
+
+2. On a Ubuntu 12.04 (glibc 2.15) 64 bits we run:
+
+	./mkpkg 1 05 /media/USB DISK/planetvc/v105
+
+We choose '2' to build the 64 bits version and then '3' to copy it to the
+'build.tar'.
+
+3. On Windows with cygwin and i686-w64-mingw32-gcc we run:
+
+	./mkpkg 1 05 /cygdrive/f/planetvc/v105
+
+We choose '2' to make the full version and the demo version. Then choose '3' to move it to the 'build.tar'.
+
+4. In /media/USB DISK/planetvc/v105/build.tar we have all the builds.
+
+Android
+=======
+
+To make the android builds I do something similar. We have a folder with
+
+pkg/
+src.build/
+
+Inside this folder we can run `pkg/mkandroid demo (or full) version_code
+version path_to_sdl`.  That will create an `android.build.demo/` or
+`android.build.full/` folder and inside those folders the android project will
+be copied, patched, and compilation will happen.
+
+For example:
+
+pkg/mkandroid full 34 1.23 ../SDL2.0.5
+
+Will be used to make the full version for Android, with code 34, version number
+1.23 and assuming that the SDL 2.0.5 source code is at `../SDL2.0.5` .
+
+---
+April 2017
+Jorge Giner

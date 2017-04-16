@@ -8,7 +8,11 @@ This Demo version of the Software is distributed under the Creative Commons
 Attribution-NonCommercial-NoDerivatives 4.0 International Public License. The
 full license is included in the file 'ccncnd4.txt'.
 
+--------------------------------------------------------------------------
+
 The file SDL2.dll comes with its own license. Please read 'README-SDL.txt'.
+
+--------------------------------------------------------------------------
 
 The program uses libxmp-lite:
 
@@ -34,4 +38,3 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 --------------------------------------------------------------------------
-

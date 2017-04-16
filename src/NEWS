@@ -1,0 +1,31 @@
+2017-03-26
+
+	* Version 1.10
+
+	* Fixed wrong pixels when enabling Stargate symbols.
+
+2016-12-30
+
+	* kernel.c: we use a texture one pixel bigger than the game canvas, so
+	we avoid strange pixels bleeding on the top and left from the bottom
+	and right of the texture, probably only when linear filtering is on.
+
+2016-08-25
+
+	* log.c (log_init): using explicit format string for fprintf to fix
+	security warnings.
+
+	* main.c: including SDL.h so that main become SDL_main on Android.
+
+2016-08-24
+
+	* This changes are for Haiku mainly.
+
+	* spider.c, stargate.c: fallback to math.h if not tgmath.h .
+
+	* stargate.c: fixed declarations after statement.
+
+	* kassert.c: checking for va_copy, if not, fallback to memcpy.
+
+	* configure.ac: checking for tgmath and
+	--Wdeclaration-aflter-statement.
