@@ -7,7 +7,7 @@ We have two packages. One is planetvc, the other planetvc-data. 'planetvc'
 builds the engine of the game. 'planetvc-data' contains the graphics, music,
 levels, etc. of the game.  The game is separated in these two packages to allow
 GNU/Linux distributions to separate them between free, non-free, etc. planetvc
-is MIT/Expat licensed, but planetvc-data is CC-NC-SA.
+is MIT/Expat licensed, but planetvc-data (bmp, wav and xm files) is CC-NC-SA.
 
 Both packages come with a GNU build system, meaning that you can follow the
 instructions in INSTALL to build and install the packages (that is, use a

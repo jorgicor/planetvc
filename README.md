@@ -7,9 +7,9 @@ requiring memorization and skills.
 
 `planetvc` is free software. See the file `COPYING` for copying conditions.
 
-The assets under `data/` are released under the Creative Commons
-Attribution-NonCommercial-ShareAlike 4.0 International Public License, included
-in the file 'pkgfiles/ccncsa4.txt'.
+The assets under `data/` (bmp, wav and xm files) are released under the
+Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public
+License, included in the file 'pkgfiles/ccncsa4.txt'.
 
 Copyright (c) 2016-2017 Jorge Giner Cordero
 

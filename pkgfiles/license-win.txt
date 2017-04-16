@@ -31,9 +31,9 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 --------------------------------------------------------------------------
 
-The file 'data.pak' and its contents are under the Creative Commons
-Attribution-NonCommercial-ShareAlike 4.0 International Public License,
-included in the file 'ccncsa4.txt'.
+The assets inside the file `data.pak` (bmp, wav and xm files) are released
+under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+International Public License, included in the file 'ccncsa4.txt'.
 
 Copyright (c) 2016-2017 Jorge Giner Cordero
 
