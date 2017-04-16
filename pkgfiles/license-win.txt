@@ -2,6 +2,8 @@
 
                          * Full version for Windows *
 
+				  April 2017
+
 --------------------------------------------------------------------------
 
 This is free software under a MIT/Expat license:
