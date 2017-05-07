@@ -3,7 +3,7 @@ planetvc - The Planet of the Vicious Creatures
 
 The Planet of the Vicious Creatures is a videogame released for GNU/Linux,
 Windows and Android. It is an old-school platformer set in outer space,
-requiring memorization and skills.
+requiring memorization and reflexes.
 
 `planetvc` is free software. See the file `COPYING` for copying conditions.
 

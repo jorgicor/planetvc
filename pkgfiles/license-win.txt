@@ -6,7 +6,8 @@
 
 --------------------------------------------------------------------------
 
-This is free software under a MIT/Expat license:
+This is free software under a MIT/Expat license, except the game assets and
+the SDL library:
 
 --------------------------------------------------------------------------
 Copyright (c) 2016-2017 Jorge Giner Cordero
