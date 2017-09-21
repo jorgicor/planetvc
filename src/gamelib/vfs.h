@@ -32,7 +32,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endif
 
 enum {
-	OPEN_FILE_MAX_PATH_LEN = 259,	/* 259 + \0 on Windows ? */
+	OPEN_FILE_MAX_PATH_LEN = 259,	/* 259 + \0 on Windows */
 };
 
 #ifdef __cplusplus
