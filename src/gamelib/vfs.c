@@ -28,6 +28,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <string.h>
 #include <limits.h>
 
+#if defined(_WIN32)
+#	include <windows.h>
+#endif
+
 #if PP_ANDROID
 #	include <errno.h>
 #	include <jni.h>
@@ -107,12 +111,6 @@ struct zip_cdh {
 
 static const char *s_base_path;
 
-#if !PP_ANDROID
-
-#define platform_fopen fopen
-
-#endif	/* if !PP_ANDROID */
-
 #if PP_ANDROID
 static AAssetManager *s_android_asset_manager;
 
@@ -163,9 +161,47 @@ static FILE *android_file_open(const char *fname, const char *mode)
 	return NULL;
 }
 
-#define platform_fopen android_file_open
-
 #endif	/* if PP_ANDROID */
+
+static FILE *platform_fopen(const char *fname, const char *mode)
+{
+#if PP_ANDROID
+
+	return android_file_open(fname, mode);
+
+#elif defined(_WIN32)
+
+	int len;
+	wchar_t wfname[OPEN_FILE_MAX_PATH_LEN + 1];
+	wchar_t wmode[OPEN_FILE_MAX_PATH_LEN + 1];
+	
+	len = strlen(fname);
+	if (len <= 0 || len > OPEN_FILE_MAX_PATH_LEN) {
+		return NULL;
+	}
+	len = MultiByteToWideChar(CP_UTF8, 0, fname, len, wfname, len);
+	if (len <= 0 || len > OPEN_FILE_MAX_PATH_LEN) {
+		return NULL;
+	}
+	wfname[len] = L'\0';
+	
+	len = strlen(mode);
+	if (len <= 0 || len > OPEN_FILE_MAX_PATH_LEN) {
+		return NULL;
+	}
+	len = MultiByteToWideChar(CP_UTF8, 0, mode, len, wmode, len);
+	if (len <= 0 || len > OPEN_FILE_MAX_PATH_LEN) {
+		return NULL;
+	}
+	wmode[len] = L'\0';
+
+	return _wfopen(wfname, wmode);
+#else
+
+	return fopen(fname, mode);
+
+#endif
+}
 
 /**
  * Seeks the central directory in a .zip file.
@@ -200,12 +236,6 @@ static int seek_central_dir(FILE *fp)
 	/* Find 'end of central directory' signature. */
 	for (i = read - EOF_CENTRAL_DIR_LEN; i >= 0; i--) {
 		/* Check signature. */
-		/*
-		if (win[i] != 0x50 || win[i + 1] != 0x4b ||
-		    win[i + 2] != 0x05 || win[i + 3] != 0x06)
-			continue;
-		*/
-
 		if (!((win[i] == 0x50 && win[i + 1] == 0x4b &&
 		       win[i + 2] == 0x05 && win[i + 3] == 0x06) ||
 		      (win[i] == 0x05 && win[i + 1] == 0xb4 &&

@@ -1,3 +1,19 @@
+2017-09-21
+
+	* Version 1.12
+
+	* Fixed opening files on Windows when the path has something like Tö.
+	SDL was returning the path as UTF-8 but Windows' fopen does not
+	support this, we need to use _wfopen and translate the UTF-8 string
+	to wide characters.
+
+
+2017-05-14
+
+	* Version 1.11
+
+	* Released under MIT/Expat license, except the game assets.
+
 2017-03-26
 
 	* Version 1.10

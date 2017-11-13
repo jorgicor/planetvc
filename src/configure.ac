@@ -23,7 +23,7 @@
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 AC_INIT([Planet of the Vicious Creatures],
-	[1.10],
+	[1.12],
 	[jorge.giner@hotmail.com],
 	planetvc,
 	[http://jorgicor.sdfeu.org/planetvc])
